@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { APITypes, PlyrProps } from "plyr-react";
 import "plyr-react/plyr.css";
 import { useCallback, useEffect, useRef } from "react";
+import Hls from "hls.js";
 
 // Define local interface if import fails or verify import
 interface PlyrConfigurationProps extends PlyrProps {}
@@ -23,7 +24,7 @@ export const VideoPlayer = ({
   initialProgress = 0,
 }: {
   src: string;
-  subtitles: { lang: string; url: string }[];
+  subtitles: { label: string; file: string }[];
   animeId?: string;
   episodeId?: string;
   episodeNumber?: number;
@@ -41,22 +42,25 @@ export const VideoPlayer = ({
     image,
   });
 
-  const englishSubtitle = subtitles.filter((s) => s.lang === "English");
+  const englishSubtitle = subtitles.filter((s) => s.label === "English");
 
   const plyrOptions: PlyrConfigurationProps = {
     source: {
       type: "video" as "video",
       sources: [
         {
-          src: src,
+          src:
+            src && src.startsWith("http")
+              ? `/api/proxy/stream?url=${encodeURIComponent(src)}`
+              : src,
         },
       ],
       tracks: englishSubtitle.map((s) => ({
-        src: `/api/proxy/subtitle?url=${encodeURIComponent(s.url)}`,
+        src: `/api/proxy/subtitle?url=${encodeURIComponent(s.file)}`,
         kind: "subtitles" as const,
-        srclang: s.lang,
-        label: s.lang === "English" ? "English" : s.lang,
-        default: s.lang === "English",
+        srclang: s.label,
+        label: s.label === "English" ? "English" : s.label,
+        default: s.label === "English",
       })),
     },
     options: {
@@ -71,10 +75,42 @@ export const VideoPlayer = ({
         "pip",
         "airplay",
         "fullscreen",
+        "quality",
       ],
       settings: ["captions", "quality", "speed"],
     },
   };
+
+  useEffect(() => {
+    const player = playerRef.current?.plyr;
+    if (!player || !src) return;
+
+    // Use Hls.js if supported and not natively supported (like in Firefox)
+    // Note: Safari supports HLS natively, so this block won't run there usually.
+    if (Hls.isSupported()) {
+      // You might want to check if the src extension is indeed m3u8.
+      // Assuming src is HLS based on typical failures in Firefox (which lacks native HLS).
+      if (src.includes(".m3u8")) {
+        const hls = new Hls();
+        const proxiedSrc =
+          src && src.startsWith("http")
+            ? `/api/proxy/stream?url=${encodeURIComponent(src)}`
+            : src;
+        hls.loadSource(proxiedSrc);
+        const media = (player as any).media;
+        
+        // Ensure media element exists
+        if (media) {
+           hls.attachMedia(media as HTMLMediaElement);
+        }
+        
+        // Cleanup HLS instance on unmount or src change
+        return () => {
+          hls.destroy();
+        };
+      }
+    }
+  }, [src]);
 
   useEffect(() => {
     const player = playerRef.current?.plyr;

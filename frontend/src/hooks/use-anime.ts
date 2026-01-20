@@ -1,11 +1,11 @@
 import {
-  AnimeListData,
+  AnimeDetail,
+  AnimeListEpisode,
+  AnimeStreamData,
+  AnimeWithEpisodes,
   BackendIP,
-  IHiAnimeCard,
-  IHiAnimeDetail,
-  IHiAnimeSpotlight,
-  IHiAnimeStreamData,
-  TopAnimeData,
+  SpotlightAnime,
+  TopTenSection,
 } from "@/lib/utils";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
@@ -16,30 +16,51 @@ const DEFAULT_QUERY_OPTIONS = {
   staleTime: 720 * 60 * 1000,
 };
 
-export const useWatchEpisode = (episode_id: string) => {
+export const useWatchEpisode = (episodeNow: number, slug: string) => {
+  const { data: episodes = [] } = useQuery<AnimeListEpisode[]>({
+    queryKey: ["episode", `${slug}-${episodeNow}`],
+    queryFn: async () => {
+      const response = await fetch(`${BackendIP}/episodes/${slug}`, {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Response was not ok");
+      }
+      const data = await response.json();
+      return data.data;
+    },
+    ...DEFAULT_QUERY_OPTIONS,
+  });
+
+  const episode_id = episodes?.filter(
+    (ep) => ep.episodeNumber === episodeNow,
+  )[0]?.id;
+
   const {
     data: streamData,
     isLoading,
     isError,
-  } = useQuery<IHiAnimeStreamData>({
+  } = useQuery<AnimeStreamData>({
     queryKey: ["watch", episode_id],
     queryFn: async () => {
       const response = await fetch(
-        `${BackendIP}/watch?episodeId=${episode_id}&type=sub`,
+        `${BackendIP}/stream?server=hd-2&type=sub&id=${episode_id}`,
         {
-          method: "GET",
-        }
+          headers: {
+            Accept: "*/*",
+          },
+        },
       );
       if (!response.ok) {
         throw new Error("Response was not ok");
       }
       const data = await response.json();
-      return data;
+      return data.data;
     },
     ...DEFAULT_QUERY_OPTIONS,
   });
 
-  return { streamData, isLoading, isError };
+  return { episodes, streamData, isLoading, isError };
 };
 
 export const useDetailAnime = (slug: string) => {
@@ -47,17 +68,17 @@ export const useDetailAnime = (slug: string) => {
     data: anime,
     isLoading,
     isError,
-  } = useQuery<IHiAnimeDetail>({
+  } = useQuery<AnimeDetail>({
     queryKey: ["detail", slug],
     queryFn: async () => {
-      const response = await fetch(`${BackendIP}/info/${slug}`, {
+      const response = await fetch(`${BackendIP}/anime/${slug}`, {
         method: "GET",
       });
       if (!response.ok) {
         throw new Error("Response was not ok");
       }
       const data = await response.json();
-      return data;
+      return data.data;
     },
     ...DEFAULT_QUERY_OPTIONS,
   });
@@ -65,7 +86,7 @@ export const useDetailAnime = (slug: string) => {
 };
 
 export const usePopularAnime = () => {
-  const { data: anime, isLoading } = useQuery<TopAnimeData>({
+  const { data: anime, isLoading } = useQuery<TopTenSection>({
     queryKey: ["top"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3030/api/v1/topten`, {
@@ -83,26 +104,23 @@ export const usePopularAnime = () => {
   return { anime, isLoading };
 };
 
-export const useLatestAnime = (page: number = 1) => {
+export const useLatestAnime = () => {
   const {
     data: anime = [],
     isLoading,
     error,
-  } = useQuery<IHiAnimeCard[]>({
-    queryKey: ["latest", page],
+  } = useQuery<AnimeWithEpisodes[]>({
+    queryKey: ["latest"],
     queryFn: async () => {
-      const response = await fetch(
-        `${BackendIP}/recent-episodes?page=${page}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`${BackendIP}/home`, {
+        method: "GET",
+      });
       if (!response.ok) {
         throw new Error("Response was not ok");
       }
       const data = await response.json();
       // console.log(data.data.spotlight);
-      return data.results;
+      return data.data.latestEpisode;
     },
     ...DEFAULT_QUERY_OPTIONS,
   });
@@ -119,7 +137,7 @@ export const useSpotlightAnime = () => {
     data: anime = [],
     isLoading,
     error,
-  } = useQuery<IHiAnimeSpotlight[]>({
+  } = useQuery<SpotlightAnime[]>({
     queryKey: ["popular-season"],
     queryFn: async () => {
       const response = await fetch(`${BackendIP}/spotlight`, {
@@ -130,7 +148,7 @@ export const useSpotlightAnime = () => {
       }
       const data = await response.json();
       // console.log(data.data.spotlight);
-      return data;
+      return data.data;
     },
     ...DEFAULT_QUERY_OPTIONS,
   });
@@ -143,18 +161,18 @@ export const useSpotlightAnime = () => {
 };
 
 export const useAnime = (page: number, letter: string) => {
-  const { data, isLoading, error } = useQuery<AnimeListData>({
+  const { data, isLoading, error } = useQuery<AnimeWithEpisodes[]>({
     queryKey: ["list", `${letter}-${page}`],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3030/api/v1/az-list/${letter}?page=${page}`
+        `${BackendIP}/az-list/${letter}?page=${page}`,
       );
       if (!response.ok) {
         throw new Error("Response was not ok");
       }
       const data = await response.json();
       // console.log(data.data.spotlight);
-      return data.data;
+      return data.data.responses;
     },
     placeholderData: keepPreviousData,
     ...DEFAULT_QUERY_OPTIONS,

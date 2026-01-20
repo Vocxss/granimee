@@ -1,25 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "./button";
 import { H3 } from "./typography";
-
-const list = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 export const Footer = () => {
   return (
     <div className="border-t border-border mx-auto w-full flex flex-col gap-8 px-8 pt-6 pb-10">
       <div className="flex items-center gap-8">
         <H3 text="Granime" />
-        <div className="flex items-center gap-2">
-          {list.map((item) => (
-            <Link key={item} href={`list-anime#${item}`}>
-              <Button className="text-xs" variant={"outline"} size={"sm"}>
-                {item}
-              </Button>
-            </Link>
-          ))}
-        </div>
       </div>
       <div className="flex flex-col gap-4">
         <p className="font-semibold">Copyright© Granime All Rights Reserved</p>

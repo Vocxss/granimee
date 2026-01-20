@@ -4,11 +4,13 @@ import * as React from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Archive, CalendarClock, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,6 +38,7 @@ const data = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const isMobile = useIsMobile();
   const [navList, setNavList] = React.useState(data);
   const pathname = usePathname();
 
@@ -43,12 +46,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     setNavList((prev) =>
       prev.map((item) => {
         return { ...item, isActive: item.url === pathname };
-      })
+      }),
     );
   }, [pathname]);
 
   return (
     <Sidebar collapsible="icon" {...props} className="relative">
+      {isMobile && (
+        <SidebarHeader className="mt-12 ml-6">
+          <Link href="/home" className="flex items-center gap-4 w-max">
+            <h3 className="scroll-m-20 pb-2 text-2xl font-bold tracking-tight first:mt-0 inline-block bg-linear-to-r from-primary to-accent-foreground text-transparent bg-clip-text">
+              Granime
+            </h3>{" "}
+          </Link>
+        </SidebarHeader>
+      )}
       <SidebarContent className="flex flex-col justify-center items-center px-4">
         <SidebarTrigger />
         <SidebarMenu className="flex flex-col gap-6">

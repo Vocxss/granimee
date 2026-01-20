@@ -25,25 +25,27 @@ export const EpisodeDetail = ({
   episodeNow: number;
 }) => {
   const { anime, isLoading: isLoadingDetail } = useDetailAnime(slug);
-  const episodeId = anime ? anime?.episodes[episodeNow - 1]?.id : "";
-  const { streamData, isLoading } = useWatchEpisode(episodeId);
+  const { episodes, streamData, isLoading } = useWatchEpisode(episodeNow, slug);
   console.log(streamData);
   const episodeListData = anime?.episodes;
 
   const [initialProgress, setInitialProgress] = useState(0);
 
+    const episode_id = episodes?.filter((ep) => ep.episodeNumber === episodeNow)[0]?.id;
+
+
   useEffect(() => {
     const fetchHistory = async () => {
-      if (anime?.id && episodeId) {
-        const history = await getWatchHistory(anime.id, episodeId);
+      if (anime?.id && episode_id) {
+        const history = await getWatchHistory(anime.id, episode_id);
         if (history?.progress) {
           setInitialProgress(history.progress);
         }
       }
     };
     fetchHistory();
-  }, [anime?.id, episodeId]);
-
+  }, [anime?.id, episode_id]);
+  const subtitle = streamData?.tracks.filter((t) => t.label === "English");
   // console.log(episodeData)
 
   if (isLoading || isLoadingDetail) {
@@ -86,13 +88,20 @@ export const EpisodeDetail = ({
         <div className="bg-card w-full aspect-video border border-border rounded-lg">
           <div className="w-full">
             <VideoPlayer
-              subtitles={streamData?.subtitles || []}
-              src={streamData?.sources[0]?.url || ""}
+              subtitles={
+                streamData?.tracks
+                  ?.filter((t) => t.kind === "captions")
+                  .map((t) => ({
+                    label: t.label || "Unknown",
+                    file: t.file,
+                  })) || []
+              }
+              src={streamData?.link?.file || ""}
               animeId={anime?.id}
-              episodeId={episodeId}
+              episodeId={episode_id}
               episodeNumber={episodeNow}
               title={anime?.title}
-              image={anime?.image}
+              image={anime?.poster}
               initialProgress={initialProgress}
             />
           </div>
@@ -102,7 +111,7 @@ export const EpisodeDetail = ({
             Episode List:
           </p>
           <div className="flex flex-wrap gap-4">
-            {episodeListData?.map((ep, index) => (
+            {episodes?.map((ep, index) => (
               <Link
                 key={index}
                 href={`/anime/${slug}/watch?ep=${index + 1}`}
@@ -123,7 +132,7 @@ export const EpisodeDetail = ({
           <div className="flex gap-8">
             <Image
               priority
-              src={anime?.image || ""}
+              src={anime?.poster || ""}
               width={480}
               height={720}
               className="object-cover w-1/4 aspect-[1/1.3] rounded-tl-lg rounded-bl-lg shadow-lg"
@@ -143,16 +152,16 @@ export const EpisodeDetail = ({
                 </p>
               </div>
               <div className="max-w-lg max-h-24 overflow-y-auto line-clamp-6 leading-relaxed text-xs">
-                {anime?.description}
+                {anime?.synopsis}
               </div>
             </div>
           </div>
           <div className="flex md:flex-col h-full rounded-tr-lg justify-center rounded-br-lg w-1/3 bg-white/10 flex-row gap-6">
             <div className="flex flex-col gap-4 p-4">
-              <p className="text-xs">Aired: {anime?.aired}</p>
+              <p className="text-xs">Aired: {anime?.aired?.from}</p>
               <p className="text-xs">Status: {anime?.status}</p>
               <p className="text-xs">Duration: {anime?.duration}</p>
-              <p className="text-xs">Rating: {anime?.mal_score}</p>
+              <p className="text-xs">Rating: {anime?.MAL_score}</p>
               {/* <div className="flex flex-wrap gap-4 items-center">
                 <p className="mb-2 text-xs">Genre:</p>
                 {(anime?.genres ?? [])

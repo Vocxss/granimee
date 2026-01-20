@@ -1,49 +1,47 @@
 "use client";
-import React from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Menu } from "lucide-react";
 import { ProfileButton } from "../profilebutton";
-import SearchBar from "./search";
+import { SearchTrigger } from "./search";
+import { useSidebar } from "./sidebar";
 import { H4 } from "./typography";
 
 const MobileNavbar = () => {
-  return <></>;
+  const { toggleSidebar } = useSidebar();
+  return (
+    <div className="justify-between flex items-center px-8 py-3 border-b border-white/30">
+      <div className="max-w-64 w-1/4">
+        <Menu
+          className="w-6 h-6 text-white cursor-pointer"
+          onClick={toggleSidebar}
+        />
+      </div>
+      <div className="w-2/3 flex justify-end items-center gap-2">
+        <SearchTrigger />
+        <ProfileButton />
+      </div>
+    </div>
+  );
 };
 
 const DekstopNavbar = () => {
   return (
-    <div className="fixed top-0 z-50 mx-auto w-full bg-black/30 backdrop-blur-xl justify-center flex items-center px-8 py-3 border-b border-white/30">
+    <div className="justify-between flex items-center px-8 py-3 border-b border-white/30">
       <div className="max-w-64 w-1/4">
         <H4 text="Granime" />
       </div>
-      <div className="w-full flex justify-between items-center gap-4">
-        <div className="w-2/3">
-          <SearchBar />
-        </div>
-        <div className="w-1/3 flex justify-end gap-4 items-center">
-          <ProfileButton />
-        </div>
+      <div className="w-1/3">
+        <SearchTrigger />
+      </div>
+      <div className="w-1/3 flex justify-end gap-4 items-center">
+        <ProfileButton />
       </div>
     </div>
   );
 };
 
 export const Navbar = () => {
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 480) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
+  const isMobile = useIsMobile();
 
   return isMobile ? <MobileNavbar /> : <DekstopNavbar />;
 };

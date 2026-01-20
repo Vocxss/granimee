@@ -4,8 +4,8 @@ import {
   useLatestAnime,
   usePopularAnime,
 } from "@/hooks/use-anime";
-import { AnimeItem } from "@/lib/utils";
-import { ChevronRight, Play } from "lucide-react";
+import { AnimeWithEpisodes } from "@/lib/utils";
+import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -18,17 +18,14 @@ export const List = ({
   anime,
   isLoading,
 }: {
-  anime?: AnimeItem[];
+  anime?: AnimeWithEpisodes[];
   isLoading: boolean;
 }) => {
   if (isLoading) {
     return (
-      <div className="w-full mx-auto bg-card rounded-sm py-12 px-12 flex flex-wrap gap-4 justify-center">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Skeleton
-            key={index}
-            className="w-full aspect-[1/1.45] h-auto flex-auto rounded-sm"
-          />
+      <div className="mx-auto grid grid-cols-3 sm:grid-cols-4 2xl:grid-cols-5 gap-6">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Skeleton key={index} className="w-full aspect-[1/1.45] rounded-lg" />
         ))}
       </div>
     );
@@ -59,20 +56,24 @@ export const List = ({
                 <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
                   Episode {anime.episodes.eps}
                 </p>
-                <p className="text-[9px] font-bold">{anime.type}</p>
+                {/* <p className="text-[9px] font-bold">{anime?.}</p> */}
               </div>
             </div>
 
             {/* <p className="absolute top-1 right-1 rounded-sm opacity-85 text-xs font-semibold p-2 bg-border text-primary">
               {anime?.}
             </p> */}
-            <Image
-              alt={`${index}`}
-              width={640}
-              height={960}
-              src={anime?.poster || ""}
-              className="object-cover w-full aspect-[1/1.45] rounded-lg"
-            />
+            {anime?.poster ? (
+              <Image
+                alt={`${index}`}
+                width={640}
+                height={960}
+                src={anime.poster}
+                className="object-cover w-full aspect-[1/1.45] rounded-lg"
+              />
+            ) : (
+              <Skeleton className="w-full aspect-[1/1.45] rounded-lg" />
+            )}
           </Link>
         ))}
       </div>
@@ -85,9 +86,9 @@ export const LatestList = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full mx-auto bg-card rounded-sm py-12 px-12 flex flex-wrap gap-4 justify-center">
+      <div className="mx-auto grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-6">
         {Array.from({ length: 10 }).map((_, index) => (
-          <Skeleton key={index} className="w-48 h-64 rounded-sm" />
+          <Skeleton key={index} className="w-full aspect-[1/1.45] rounded-lg" />
         ))}
       </div>
     );
@@ -116,9 +117,9 @@ export const LatestList = () => {
               </p>
               <div className="flex items-center justify-between">
                 <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
-                  Episode {anime.episodes}
+                  Episode {anime.episodes.eps}
                 </p>
-                <p className="text-[9px] font-bold">{anime.type}</p>
+                {/* <p className="text-[9px] font-bold">{anime.episodes.}</p> */}
               </div>
             </div>
 
@@ -129,7 +130,7 @@ export const LatestList = () => {
               alt={`${index}`}
               width={640}
               height={960}
-              src={anime?.image || ""}
+              src={anime?.poster || ""}
               className="object-cover w-full aspect-[1/1.45] rounded-lg"
             />
           </Link>
@@ -148,7 +149,7 @@ export const RelatedList = ({
 }) => {
   const { anime, isLoading, isError } = useDetailAnime(slug);
 
-  const relatedAnime = anime?.recommendations.slice(0, 4);
+  const relatedAnime = anime?.recommended.slice(0, 5);
 
   if (isError) {
     toast.error("Terjadi kesalahan saat pengambilan data :(");
@@ -165,47 +166,48 @@ export const RelatedList = ({
   }
 
   return (
-    <div className="z-20 overflow-hidden bg-background gap-8 md:my-12 my-8 md:mx-12 mx-4 flex flex-col">
+    <div className="z-20 overflow-hidden gap-8 md:my-12 my-8 md:mx-12 mx-4 flex flex-col">
       <div className="flex items-center justify-between">
         <H3 text={"Recommended for you"} />
-        <Link
-          href="/latest"
-          className="text-foreground text-xs flex items-center"
-        >
-          View more <ChevronRight className="w-4 h-4" />
-        </Link>
       </div>
-      <div className="flex flex-wrap gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 md:gap-6 gap-4">
         {relatedAnime?.map((anime, index: number) => (
           <Link
             href={`/anime/${anime.id}`}
-            className="relative group max-w-full md:w-40 w-28 aspect-[1/1.45] flex-auto h-auto flex flex-col gap-2"
+            className="relative group rounded-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-sm h-auto flex flex-col gap-2"
             key={index}
           >
-            <div className="absolute w-full aspect-[1/1.45] rounded-sm group-hover:bg-black/30 group-hover:backdrop-blur-xs flex justify-center items-center transition-all duration-500">
+            <div className="absolute w-full rounded-lg aspect-[1/1.45] group-hover:bg-black/30 group-hover:backdrop-blur-xs flex justify-center items-center transition-all duration-500">
               <span className="p-4 rounded-full bg-muted text-muted-foreground hidden group-hover:block">
                 <Play className="w-5 h-5" />
               </span>
             </div>
-            <p className="absolute bottom-8 left-1 rounded-sm text-xs opacity-85 font-bold p-2 bg-primary text-primary-foreground">
-              Episode {anime.episodes}
-            </p>
-            <p className="absolute top-1 right-1 rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
-              {anime.type}
-            </p>
+            <div className="absolute w-full max-h-24 h-full bottom-0 justify-center px-3 rounded-br-lg rounded-bl-lg bg-black/30 backdrop-blur-sm flex flex-col gap-4">
+              <p className="md:text-sm text-xs text-left max-w-4/5 line-clamp-2 font-semibold">
+                {anime?.title}
+              </p>
+              <div className="flex items-center justify-between">
+                <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
+                  Episode {anime.type}
+                </p>
+                {/* <p className="text-[9px] font-bold">{anime?.}</p> */}
+              </div>
+            </div>
+
             {/* <p className="absolute top-1 right-1 rounded-sm opacity-85 text-xs font-semibold p-2 bg-border text-primary">
               {anime?.}
             </p> */}
-            <Image
-              alt={`${index}`}
-              width={640}
-              height={960}
-              src={anime?.image || ""}
-              className="object-cover w-full aspect-[1/1.45] rounded-sm"
-            />
-            <p className="ml-1 text-sm truncate w-full text-white">
-              {anime?.title}
-            </p>
+            {anime?.poster ? (
+              <Image
+                alt={`${index}`}
+                width={640}
+                height={960}
+                src={anime.poster}
+                className="object-cover w-full aspect-[1/1.45] rounded-lg"
+              />
+            ) : (
+              <Skeleton className="w-full aspect-[1/1.45] rounded-lg" />
+            )}
           </Link>
         ))}
       </div>
@@ -224,8 +226,8 @@ export const TopList = () => {
     selected === "today"
       ? anime?.today.slice(0, 10)
       : selected === "week"
-      ? anime?.week.slice(0, 10)
-      : anime?.month.slice(0, 10);
+        ? anime?.week.slice(0, 10)
+        : anime?.month.slice(0, 10);
 
   if (isLoading) {
     return (
@@ -254,13 +256,17 @@ export const TopList = () => {
             <p className="text-lg text-accent-foreground font-bold">
               {index < 9 ? `0${index + 1}` : index + 1}
             </p>
-            <Image
-              alt={`${index}`}
-              width={480}
-              height={720}
-              src={anime?.poster || ""}
-              className="object-cover w-12 aspect-square rounded-full"
-            />
+            {anime?.poster ? (
+              <Image
+                alt={`${index}`}
+                width={480}
+                height={720}
+                src={anime.poster}
+                className="object-cover w-12 aspect-square rounded-full"
+              />
+            ) : (
+              <Skeleton className="w-12 aspect-square rounded-full" />
+            )}
             <div className="flex flex-col gap-2">
               <p className="text-sm line-clamp-2 max-w-28 w-full">
                 {anime?.title}

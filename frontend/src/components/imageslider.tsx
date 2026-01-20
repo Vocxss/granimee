@@ -28,8 +28,8 @@ export const ImageSlider = () => {
 
   const { anime, isLoading } = useSpotlightAnime();
 
-  const imagesList = anime.map((item) => item.image).splice(0, 10);
-
+  const imagesList = anime.map((item) => item.poster).splice(0, 10);
+  console.log(imagesList);
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex(([prevPage]) => {
@@ -106,7 +106,7 @@ export const ImageSlider = () => {
                 {anime[index]?.title}
               </p>
               <p className="text-xs max-w-4/5 w-full text-wrap line-clamp-2 leading-5 tracking-wide">
-                {anime[index]?.other_data.description}
+                {anime[index]?.synopsis}
               </p>
               <div className="flex gap-2 items-center">
                 <Link

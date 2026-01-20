@@ -33,15 +33,15 @@ export const ProfileButton = () => {
     }
   }, [session]);
 
-  console.log(session)
+  console.log(session);
 
   return (
     <div>
       {isProfile ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="border-none" asChild>
-            <DropdownMenuLabel className="p-0 font-normal size-12 flex flex-col items-center gap-2">
-              <Avatar className="w-full h-full">
+            <DropdownMenuLabel className="p-0 font-normal size-12 flex flex-col justify-center items-center gap-2">
+              <Avatar className="md:w-full md:h-full w-10 h-10">
                 {session?.user.user_metadata?.picture ? (
                   <AvatarImage
                     src={session?.user.user_metadata?.picture}

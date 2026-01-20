@@ -28,10 +28,10 @@ export default function AnimeDetailPage({
         /> */}
       </div>
       <ReactQueryProvider>
-        <div className="flex justify-center bg-transparent items-center">
-          <Navbar />
-        </div>
         <SidebarProvider className="">
+          <div className="fixed top-0 z-50 mx-auto w-full bg-black/30 backdrop-blur-xl  ">
+            <Navbar />
+          </div>
           <AppSidebar />
           <SidebarInset className="md:px-4 md:mt-12">{children}</SidebarInset>
           <Toaster />
@@ -41,5 +41,3 @@ export default function AnimeDetailPage({
     </div>
   );
 }
-
-

@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const BackendIP = process.env.BACKEND_IP
   ? process.env.BACKEND_IP
-  : "https://yumaapi.vercel.app";
+  : "http://localhost:3030/api/v1";
 
 // User tanpa relasi
 export interface IUser {
@@ -78,152 +78,151 @@ export interface IWatchHistoryWithEpisode extends IWatchHistory {
 
 // HIANIME API
 
-export interface IHiAnimeStreamData {
-  headers: {
-    Referer: string;
-  };
-  intro: {
-    end: number;
-    start: number;
-  };
-  outro: {
-    end: number;
-    start: number;
-  };
-  previews: {
-    type: string;
-    url: string;
-  }[];
-  sources: {
-    isM3U8: boolean;
-    quality: string;
-    url: string;
-  }[];
-  subtitles: {
-    lang: string;
-    url: string;
-  }[];
+// Root response
+export interface AnimeStreamResponse {
+  success: boolean;
+  data: AnimeStreamData;
 }
 
-export interface IHiAnimeEpisode {
+// Main data object
+export interface AnimeStreamData {
   id: string;
-  is_dubbed: boolean;
-  is_filler: boolean;
-  is_subbed: boolean;
-  number: number;
-  title: string;
-  url: string;
+  type: "sub" | "dub";
+  link: StreamLink;
+  tracks: StreamTrack[];
+  intro: TimeRange;
+  outro: TimeRange;
+  server: string;
+  usedFallback: boolean;
+  referer: string;
 }
 
-export interface IHiAnimeCard {
-  dub: number;
-  duration: string;
-  episodes: number;
-  id: string;
-  image: string;
-  japanese_title: string;
-  nsfw: boolean;
-  other_data?: Record<string, unknown>;
-  sub: number;
-  title: string;
-  type: string;
-  url: string;
+// Stream link (video source)
+export interface StreamLink {
+  file: string;
+  type: "hls" | "mp4";
 }
 
-export interface IHiAnimeDetail {
-  aired: string;
-  anilist_id: string;
-  cover: string;
-  description: string;
-  dub: number;
-  duration: string;
-  episodes: IHiAnimeEpisode[];
-  genres: string[];
-  has_dub: boolean;
-  has_sub: boolean;
-  id: string;
-  image: string;
-  japanese_title: string;
-  mal_id: string;
-  mal_score: string;
-  premiered: string;
-  producers: string[];
-  recommendations: IHiAnimeCard[];
-  status: string;
-  studios: string[];
-  sub: number;
-  sub_or_dub: string;
-  title: string;
-  total_episodes: number;
-  type: string;
-  url: string;
+// Subtitle / thumbnail tracks
+export interface StreamTrack {
+  file: string;
+  label?: string;
+  kind: "captions" | "thumbnails";
+  default?: boolean;
 }
 
-export interface IHiAnimeRecentEpisode {
-  current_page: number;
-  has_next_page: boolean;
-  results: IHiAnimeCard[];
+// Intro / Outro timing
+export interface TimeRange {
+  start: number;
+  end: number;
 }
 
-export interface IHiAnimeSpotlight {
-  dub: number;
-  duration: string;
-  episodes: number;
-  id: string;
-  image: string;
-  japanese_title: string;
-  nsfw: boolean;
-  other_data: {
-    description: string;
-    rank: string;
-    releaseDate: string;
-  };
-  sub: number;
-  title: string;
-  type: string;
-  url: string;
-}
-
-export interface PageInfo {
-  currentPage: number;
-  hasNextPage: boolean;
-  totalPages: number;
-}
-
-export interface AnimeItem {
-  title: string;
-  alternativeTitle: string;
-  id: string;
-  poster: string; // URL
-  episodes: Episodes;
-  type: string;
-  duration: string;
-}
-
-export interface Episodes {
+export interface AnimeEpisodes {
   sub: number;
   dub: number;
   eps: number;
 }
 
-export interface AnimeListResponse {
+export interface AnimeListEpisode {
+  title: string;
+  alternativeTitle: string;
+  id: string;
+  isFiller: boolean;
+  episodeNumber: number;
+}
+
+export interface AnimeAired {
+  from: string;
+  to: string;
+}
+
+export interface RelatedAnime {
+  id: string;
+  title: string;
+  poster: string;
+  type?: string;
+}
+
+export interface BaseAnime {
+  title: string;
+  alternativeTitle: string;
+  id: string;
+  poster: string;
+}
+
+export interface AnimeDetail extends BaseAnime {
+  episodes: AnimeEpisodes;
+  rating: string;
+  type: string;
+  is18Plus: boolean;
+  synopsis: string;
+  synonyms: string;
+  aired: AnimeAired;
+  premiered: string;
+  duration: string;
+  status: string;
+  MAL_score: string;
+  genres: string[];
+  studios: string[];
+  producers: string[];
+  related: RelatedAnime[];
+  mostPopular: RelatedAnime[];
+  recommended: RelatedAnime[];
+}
+
+export interface SpotlightAnime extends BaseAnime {
+  episodes: AnimeEpisodes;
+  rank: number;
+  type: string;
+  quality: string;
+  duration: string;
+  aired: string;
+  synopsis: string;
+}
+
+export interface SpotlightResponse {
   status: boolean;
-  data: AnimeListData;
+  data: SpotlightAnime[];
 }
 
-export interface AnimeListData {
-  pageInfo: PageInfo;
-  response: AnimeItem[];
+export interface AnimeWithEpisodes extends BaseAnime {
+  episodes: AnimeEpisodes;
 }
 
-export interface TopAnimeData {
-  today: AnimeItem[];
-  week: AnimeItem[];
-  month: AnimeItem[];
+export interface AnimeWithEpisodesAndType extends AnimeWithEpisodes {
+  type: string;
 }
 
-// Root response
-export interface TopAnimeResponse {
-  status: boolean;
-  data: TopAnimeData;
+export interface TrendingAnime extends BaseAnime {
+  rank: number;
+}
+
+export interface TopTenSection {
+  today: AnimeWithEpisodes[];
+  week: AnimeWithEpisodes[];
+  month: AnimeWithEpisodes[];
+}
+
+export interface HomeData {
+  spotlight: SpotlightAnime[];
+  trending: TrendingAnime[];
+  topAiring: AnimeWithEpisodesAndType[];
+  mostPopular: AnimeWithEpisodesAndType[];
+  mostFavorite: AnimeWithEpisodesAndType[];
+  latestCompleted: AnimeWithEpisodesAndType[];
+  latestEpisode: AnimeWithEpisodes[];
+  newAdded: AnimeWithEpisodes[];
+  topUpcoming: AnimeWithEpisodes[];
+  topTen: TopTenSection;
+  genres: (string | null)[];
+}
+
+export interface SearchedAnime {
+  title: string;
+  alternativeTitle: string;
+  id: string;
+  poster: string;
+  aired: string;
+  type: string;
+  duration: string;
 }
