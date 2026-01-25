@@ -1,82 +1,55 @@
 import { getAllWatchHistory } from "@/app/actions/watchHistory";
+import CircularProgress from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export const WatchHistory = async () => {
   const history = await getAllWatchHistory();
   return (
-    <div className="flex w-full flex-col gap-6">
-      <div className="border-b border-border py-2">
-        <p className="text-sm font-semibold">Watch History</p>
+    <div className="flex bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 p-8 w-full flex-col gap-6">
+      <div className="border-b-2 border-border py-4">
+        <p className="md:text-2xl text-lg font-bold">Watch History</p>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 rounded-lg">
         {history.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             You haven't watched any anime yet.
           </p>
         ) : (
-          <ScrollArea className="w-full h-[500px] rounded-lg bg-background border border-border">
-            <div className="flex flex-col">
+          <ScrollArea className="w-full max-h-[500px] rounded-lg bg-background/30 border border-border">
+            <div className="flex flex-col gap-8 rounded-lg">
               {history.map((item: any, index) => (
                 <Link
                   key={item.id}
                   href={`/anime/${item.anime_id}/watch?ep=${item.episode_number}`}
-                  className={`w-full aspect-[1/0.3] flex gap-4 relative group-hover:-scale-y-110 group-hover:-translate-y-1 items-center ${
-                    index === 1 || index === history.length - 1
-                      ? "rounded-tr-md rounded-tl-md"
-                      : "rounded-none"
-                  } hover:bg-accent/50 transition-colors group`}
+                  className={`w-full h-[200px] flex justify-between px-6 relative group-hover:-scale-y-110 group-hover:-translate-y-1 items-center rounded-md hover:bg-accent/50 transition-colors group`}
                 >
-                  <div className="w-full h-full absolute top-0 left-0 bg-linear-to-r from-15% from-background/60 to-100% to-transparent"></div>
-                  <div className="w-full h-full absolute top-0 left-0 bg-linear-to-l from-background to-20% to-transparent"></div>
-                  <div className="absolute w-full h-full top-0 left-0 rounded-sm group-hover:bg-black/30 group-hover:backdrop-blur-xs flex justify-end items-center transition-all duration-500">
-                    <span className="p-4 mr-8 rounded-full bg-muted text-muted-foreground hidden group-hover:block">
-                      <Play className="w-5 h-5" />
-                    </span>
-                  </div>
-                  <div
-                    className={`w-full aspect-[1/0.3]  ${
-                      index === 1 || index === history.length - 1
-                        ? "rounded-tr-md rounded-tl-md"
-                        : "rounded-none"
-                    } overflow-hidden`}
-                  >
-                    {item.image ? (
-                      <Image
-                        loading="eager"
-                        width={720}
-                        height={1080}
-                        src={item.image}
-                        alt={item.title || "Episode"}
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-muted flex items-center justify-center">
-                        <Play className="w-8 h-8 text-muted-foreground" />
-                      </div>
-                    )}
-                    <div
-                      className="absolute bottom-0 left-0 h-1 bg-primary"
-                      style={{
-                        width: `${(item.progress / item.duration) * 100}%`,
-                      }}
+                  <div className="flex items-center gap-6">
+                    <Image
+                      loading="eager"
+                      width={720}
+                      height={1080}
+                      src={item.image}
+                      alt={item.title || "Episode"}
+                      className="object-cover rounded-md max-w-48 aspect-[1/0.8] animate-in fade-in-0 zoom-in-95 dat group-hover:zoom-in-110 transition-transform"
                     />
+                    <div className="flex flex-col gap-2">
+                      <p className="text-base font-medium truncate">
+                        {item.title || `Episode ${item.episode_number}`}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Episode {item.episode_number}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {Math.floor(item.progress / 60)}m /{" "}
+                        {Math.floor(item.duration / 60)}m
+                      </p>
+                    </div>
                   </div>
-                  <div className="absolute bottom-1/2 translate-y-1/2 left-6 flex flex-col gap-2 overflow-hidden">
-                    <p className="text-base font-medium truncate">
-                      {item.title || `Episode ${item.episode_number}`}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Episode {item.episode_number}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {Math.floor(item.progress / 60)}m /{" "}
-                      {Math.floor(item.duration / 60)}m
-                    </p>
-                  </div>
+              <CircularProgress value={Math.floor((item.progress / item.duration) * 100)} />
+
                 </Link>
               ))}
             </div>

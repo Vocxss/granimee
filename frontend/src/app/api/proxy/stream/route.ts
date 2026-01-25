@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -20,8 +20,6 @@ export async function GET(req: NextRequest) {
   const range = req.headers.get("range");
   if (range) {
     headers["Range"] = range;
-  } else {
-    headers["Range"] = "bytes=0-";
   }
 
   let upstream;

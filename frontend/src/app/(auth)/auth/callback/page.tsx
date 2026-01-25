@@ -11,17 +11,17 @@ export default function AuthCallback() {
     const getSession = async () => {
       try {
         const {
-          data: { user },
+          data: { session },
           error,
-        } = await supabase.auth.getUser();
+        } = await supabase.auth.getSession();
 
         if (error) {
-          // console.error("Session error:", error.message);
+          console.error("Session error:", error.message);
           router.push("/auth/login");
           return;
         }
 
-        if (user) {
+        if (session) {
           // console.log("Session established for:", user.email);
 
           // Initialize user data for new OAuth users

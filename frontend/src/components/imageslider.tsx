@@ -29,7 +29,7 @@ export const ImageSlider = () => {
   const { anime, isLoading } = useSpotlightAnime();
 
   const imagesList = anime.map((item) => item.poster).splice(0, 10);
-  console.log(imagesList);
+  // console.log(imagesList);
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex(([prevPage]) => {

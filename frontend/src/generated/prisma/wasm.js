@@ -93,15 +93,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  username: 'username',
-  role: 'role',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.AnimeScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -126,12 +117,27 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.WatchHistoryScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  episodeId: 'episodeId',
-  progress: 'progress',
+  email: 'email',
+  username: 'username',
+  picture: 'picture',
+  role: 'role',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Watch_historyScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  anime_id: 'anime_id',
+  episode_id: 'episode_id',
+  episode_number: 'episode_number',
+  title: 'title',
+  image: 'image',
+  progress: 'progress',
+  duration: 'duration',
+  last_watched_at: 'last_watched_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -151,10 +157,10 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  user: 'user',
   anime: 'anime',
   episode: 'episode',
-  watchHistory: 'watchHistory'
+  user: 'user',
+  watch_history: 'watch_history'
 };
 /**
  * Create the Client
@@ -167,7 +173,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "I:\\Project Coding\\granime.v2\\src\\generated\\prisma",
+      "value": "/media/vocxss/Punya acuu/Coding/granimee/frontend/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -176,12 +182,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "I:\\Project Coding\\granime.v2\\prisma\\schema.prisma",
+    "sourceFilePath": "/media/vocxss/Punya acuu/Coding/granimee/frontend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -195,22 +201,22 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
+        "fromEnvVar": "DIRECT_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel user {\n  id             String         @id @default(cuid())\n  email          String         @unique\n  username       String?\n  role           String         @default(\"user\")\n  createdAt      DateTime       @default(now())\n  updatedAt      DateTime       @updatedAt\n  watchHistories watchHistory[]\n}\n\nmodel anime {\n  id          String    @id @default(cuid())\n  title       String\n  synopsis    String?\n  coverImage  String?\n  bannerImage String?\n  genre       String[]\n  status      String    @default(\"ongoing\")\n  rating      Float\n  releaseDate Int\n  episodes    episode[]\n}\n\nmodel episode {\n  id             String         @id @default(cuid())\n  animeId        String\n  title          String\n  episodeNum     Int\n  duration       String\n  videoUrl       String\n  subtitleUrl    String?\n  createdAt      DateTime       @default(now())\n  updatedAt      DateTime       @updatedAt\n  anime          anime          @relation(fields: [animeId], references: [id])\n  watchHistories watchHistory[]\n}\n\nmodel watchHistory {\n  id        String   @id @default(cuid())\n  userId    String\n  episodeId String\n  progress  Int\n  updatedAt DateTime @updatedAt\n  episode   episode  @relation(fields: [episodeId], references: [id])\n  user      user     @relation(fields: [userId], references: [id])\n}\n",
-  "inlineSchemaHash": "4d6b1da4f71b50e24b75e7c1d1f611ad8015617ade1ef7712d98d5e279a6f508",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DIRECT_URL\")\n  schemas  = [\"public\"]\n}\n\nmodel anime {\n  id          String   @id\n  title       String\n  synopsis    String?\n  coverImage  String?\n  bannerImage String?\n  genre       String[]\n  status      String   @default(\"ongoing\")\n  rating      Float\n  releaseDate Int\n\n  episodes episode[]\n\n  @@schema(\"public\")\n}\n\nmodel episode {\n  id          String   @id\n  animeId     String\n  title       String\n  episodeNum  Int\n  duration    String\n  videoUrl    String\n  subtitleUrl String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  anime anime @relation(fields: [animeId], references: [id])\n\n  @@index([animeId])\n  @@schema(\"public\")\n}\n\nmodel user {\n  id        String   @id @db.Uuid\n  email     String   @unique\n  username  String?\n  picture   String?\n  role      String   @default(\"user\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  watchHistory watch_history[]\n\n  @@schema(\"public\")\n}\n\nmodel watch_history {\n  id              String   @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  user_id         String   @db.Uuid\n  anime_id        String\n  episode_id      String\n  episode_number  Int\n  title           String?\n  image           String?\n  progress        Int      @default(0)\n  duration        Int      @default(0)\n  last_watched_at DateTime @default(now()) @db.Timestamptz(6)\n\n  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)\n\n  @@unique([user_id, anime_id, episode_id])\n  @@index([user_id])\n  @@schema(\"public\")\n}\n",
+  "inlineSchemaHash": "7a6f9270538bf5eec9ad6745c30233ccf056459ef7b6f4bba96d97affbf4e460",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"watchHistories\",\"kind\":\"object\",\"type\":\"watchHistory\",\"relationName\":\"userTowatchHistory\"}],\"dbName\":null},\"anime\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"synopsis\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bannerImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"releaseDate\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"episodes\",\"kind\":\"object\",\"type\":\"episode\",\"relationName\":\"animeToepisode\"}],\"dbName\":null},\"episode\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"animeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeNum\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"videoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"subtitleUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"anime\",\"kind\":\"object\",\"type\":\"anime\",\"relationName\":\"animeToepisode\"},{\"name\":\"watchHistories\",\"kind\":\"object\",\"type\":\"watchHistory\",\"relationName\":\"episodeTowatchHistory\"}],\"dbName\":null},\"watchHistory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"progress\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"episode\",\"kind\":\"object\",\"type\":\"episode\",\"relationName\":\"episodeTowatchHistory\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"user\",\"relationName\":\"userTowatchHistory\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"anime\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"synopsis\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bannerImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"releaseDate\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"episodes\",\"kind\":\"object\",\"type\":\"episode\",\"relationName\":\"animeToepisode\"}],\"dbName\":null},\"episode\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"animeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeNum\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"videoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"subtitleUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"anime\",\"kind\":\"object\",\"type\":\"anime\",\"relationName\":\"animeToepisode\"}],\"dbName\":null},\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"picture\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"watchHistory\",\"kind\":\"object\",\"type\":\"watch_history\",\"relationName\":\"userTowatch_history\"}],\"dbName\":null},\"watch_history\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"anime_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episode_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episode_number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"progress\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"last_watched_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"user\",\"relationName\":\"userTowatch_history\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
@@ -224,7 +230,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+    DIRECT_URL: typeof globalThis !== 'undefined' && globalThis['DIRECT_URL'] || typeof process !== 'undefined' && process.env && process.env.DIRECT_URL || undefined
   }
 })
 

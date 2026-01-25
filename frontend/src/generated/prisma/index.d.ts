@@ -14,11 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model user
- * 
- */
-export type user = $Result.DefaultSelection<Prisma.$userPayload>
-/**
  * Model anime
  * 
  */
@@ -29,10 +24,15 @@ export type anime = $Result.DefaultSelection<Prisma.$animePayload>
  */
 export type episode = $Result.DefaultSelection<Prisma.$episodePayload>
 /**
- * Model watchHistory
+ * Model user
  * 
  */
-export type watchHistory = $Result.DefaultSelection<Prisma.$watchHistoryPayload>
+export type user = $Result.DefaultSelection<Prisma.$userPayload>
+/**
+ * Model watch_history
+ * 
+ */
+export type watch_history = $Result.DefaultSelection<Prisma.$watch_historyPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -41,8 +41,8 @@ export type watchHistory = $Result.DefaultSelection<Prisma.$watchHistoryPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Anime
+ * const anime = await prisma.anime.findMany()
  * ```
  *
  *
@@ -62,8 +62,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Anime
+   * const anime = await prisma.anime.findMany()
    * ```
    *
    *
@@ -153,16 +153,6 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **user** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): Prisma.userDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.anime`: Exposes CRUD operations for the **anime** model.
     * Example usage:
     * ```ts
@@ -183,14 +173,24 @@ export class PrismaClient<
   get episode(): Prisma.episodeDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.watchHistory`: Exposes CRUD operations for the **watchHistory** model.
+   * `prisma.user`: Exposes CRUD operations for the **user** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more WatchHistories
-    * const watchHistories = await prisma.watchHistory.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get watchHistory(): Prisma.watchHistoryDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.userDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.watch_history`: Exposes CRUD operations for the **watch_history** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Watch_histories
+    * const watch_histories = await prisma.watch_history.findMany()
+    * ```
+    */
+  get watch_history(): Prisma.watch_historyDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -632,10 +632,10 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    user: 'user',
     anime: 'anime',
     episode: 'episode',
-    watchHistory: 'watchHistory'
+    user: 'user',
+    watch_history: 'watch_history'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -654,84 +654,10 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "anime" | "episode" | "watchHistory"
+      modelProps: "anime" | "episode" | "user" | "watch_history"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      user: {
-        payload: Prisma.$userPayload<ExtArgs>
-        fields: Prisma.userFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.userFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.userFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          findFirst: {
-            args: Prisma.userFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.userFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          findMany: {
-            args: Prisma.userFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
-          }
-          create: {
-            args: Prisma.userCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          createMany: {
-            args: Prisma.userCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.userCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
-          }
-          delete: {
-            args: Prisma.userDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          update: {
-            args: Prisma.userUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          deleteMany: {
-            args: Prisma.userDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.userUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.userUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
-          }
-          upsert: {
-            args: Prisma.userUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$userPayload>
-          }
-          aggregate: {
-            args: Prisma.UserAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUser>
-          }
-          groupBy: {
-            args: Prisma.userGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.userCountArgs<ExtArgs>
-            result: $Utils.Optional<UserCountAggregateOutputType> | number
-          }
-        }
-      }
       anime: {
         payload: Prisma.$animePayload<ExtArgs>
         fields: Prisma.animeFieldRefs
@@ -880,77 +806,151 @@ export namespace Prisma {
           }
         }
       }
-      watchHistory: {
-        payload: Prisma.$watchHistoryPayload<ExtArgs>
-        fields: Prisma.watchHistoryFieldRefs
+      user: {
+        payload: Prisma.$userPayload<ExtArgs>
+        fields: Prisma.userFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.watchHistoryFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload> | null
+            args: Prisma.userFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.watchHistoryFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           findFirst: {
-            args: Prisma.watchHistoryFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload> | null
+            args: Prisma.userFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.watchHistoryFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           findMany: {
-            args: Prisma.watchHistoryFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>[]
+            args: Prisma.userFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
           }
           create: {
-            args: Prisma.watchHistoryCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           createMany: {
-            args: Prisma.watchHistoryCreateManyArgs<ExtArgs>
+            args: Prisma.userCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.watchHistoryCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>[]
+            args: Prisma.userCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
           }
           delete: {
-            args: Prisma.watchHistoryDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           update: {
-            args: Prisma.watchHistoryUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           deleteMany: {
-            args: Prisma.watchHistoryDeleteManyArgs<ExtArgs>
+            args: Prisma.userDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.watchHistoryUpdateManyArgs<ExtArgs>
+            args: Prisma.userUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.watchHistoryUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>[]
+            args: Prisma.userUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>[]
           }
           upsert: {
-            args: Prisma.watchHistoryUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$watchHistoryPayload>
+            args: Prisma.userUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$userPayload>
           }
           aggregate: {
-            args: Prisma.WatchHistoryAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWatchHistory>
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.watchHistoryGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WatchHistoryGroupByOutputType>[]
+            args: Prisma.userGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.watchHistoryCountArgs<ExtArgs>
-            result: $Utils.Optional<WatchHistoryCountAggregateOutputType> | number
+            args: Prisma.userCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      watch_history: {
+        payload: Prisma.$watch_historyPayload<ExtArgs>
+        fields: Prisma.watch_historyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.watch_historyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.watch_historyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          findFirst: {
+            args: Prisma.watch_historyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.watch_historyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          findMany: {
+            args: Prisma.watch_historyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>[]
+          }
+          create: {
+            args: Prisma.watch_historyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          createMany: {
+            args: Prisma.watch_historyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.watch_historyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>[]
+          }
+          delete: {
+            args: Prisma.watch_historyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          update: {
+            args: Prisma.watch_historyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          deleteMany: {
+            args: Prisma.watch_historyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.watch_historyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.watch_historyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>[]
+          }
+          upsert: {
+            args: Prisma.watch_historyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$watch_historyPayload>
+          }
+          aggregate: {
+            args: Prisma.Watch_historyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWatch_history>
+          }
+          groupBy: {
+            args: Prisma.watch_historyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Watch_historyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.watch_historyCountArgs<ExtArgs>
+            result: $Utils.Optional<Watch_historyCountAggregateOutputType> | number
           }
         }
       }
@@ -1050,10 +1050,10 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    user?: userOmit
     anime?: animeOmit
     episode?: episodeOmit
-    watchHistory?: watchHistoryOmit
+    user?: userOmit
+    watch_history?: watch_historyOmit
   }
 
   /* Types for Logging */
@@ -1130,37 +1130,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
-   */
-
-  export type UserCountOutputType = {
-    watchHistories: number
-  }
-
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    watchHistories?: boolean | UserCountOutputTypeCountWatchHistoriesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: UserCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountWatchHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: watchHistoryWhereInput
-  }
-
-
-  /**
    * Count Type AnimeCountOutputType
    */
 
@@ -1192,1122 +1161,39 @@ export namespace Prisma {
 
 
   /**
-   * Count Type EpisodeCountOutputType
+   * Count Type UserCountOutputType
    */
 
-  export type EpisodeCountOutputType = {
-    watchHistories: number
+  export type UserCountOutputType = {
+    watchHistory: number
   }
 
-  export type EpisodeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    watchHistories?: boolean | EpisodeCountOutputTypeCountWatchHistoriesArgs
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    watchHistory?: boolean | UserCountOutputTypeCountWatchHistoryArgs
   }
 
   // Custom InputTypes
   /**
-   * EpisodeCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type EpisodeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the EpisodeCountOutputType
+     * Select specific fields to fetch from the UserCountOutputType
      */
-    select?: EpisodeCountOutputTypeSelect<ExtArgs> | null
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * EpisodeCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type EpisodeCountOutputTypeCountWatchHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: watchHistoryWhereInput
+  export type UserCountOutputTypeCountWatchHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: watch_historyWhereInput
   }
 
 
   /**
    * Models
    */
-
-  /**
-   * Model user
-   */
-
-  export type AggregateUser = {
-    _count: UserCountAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  export type UserMinAggregateOutputType = {
-    id: string | null
-    email: string | null
-    username: string | null
-    role: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type UserMaxAggregateOutputType = {
-    id: string | null
-    email: string | null
-    username: string | null
-    role: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type UserCountAggregateOutputType = {
-    id: number
-    email: number
-    username: number
-    role: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type UserMinAggregateInputType = {
-    id?: true
-    email?: true
-    username?: true
-    role?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type UserMaxAggregateInputType = {
-    id?: true
-    email?: true
-    username?: true
-    role?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type UserCountAggregateInputType = {
-    id?: true
-    email?: true
-    username?: true
-    role?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which user to aggregate.
-     */
-    where?: userWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of users to fetch.
-     */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: userWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned users
-    **/
-    _count?: true | UserCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserMaxAggregateInputType
-  }
-
-  export type GetUserAggregateType<T extends UserAggregateArgs> = {
-        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUser[P]>
-      : GetScalarType<T[P], AggregateUser[P]>
-  }
-
-
-
-
-  export type userGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: userWhereInput
-    orderBy?: userOrderByWithAggregationInput | userOrderByWithAggregationInput[]
-    by: UserScalarFieldEnum[] | UserScalarFieldEnum
-    having?: userScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserCountAggregateInputType | true
-    _min?: UserMinAggregateInputType
-    _max?: UserMaxAggregateInputType
-  }
-
-  export type UserGroupByOutputType = {
-    id: string
-    email: string
-    username: string | null
-    role: string
-    createdAt: Date
-    updatedAt: Date
-    _count: UserCountAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  type GetUserGroupByPayload<T extends userGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<UserGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserGroupByOutputType[P]>
-            : GetScalarType<T[P], UserGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type userSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    username?: boolean
-    role?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    watchHistories?: boolean | user$watchHistoriesArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["user"]>
-
-  export type userSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    username?: boolean
-    role?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["user"]>
-
-  export type userSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    username?: boolean
-    role?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["user"]>
-
-  export type userSelectScalar = {
-    id?: boolean
-    email?: boolean
-    username?: boolean
-    role?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
-  export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    watchHistories?: boolean | user$watchHistoriesArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type userIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type userIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "user"
-    objects: {
-      watchHistories: Prisma.$watchHistoryPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      email: string
-      username: string | null
-      role: string
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["user"]>
-    composites: {}
-  }
-
-  type userGetPayload<S extends boolean | null | undefined | userDefaultArgs> = $Result.GetResult<Prisma.$userPayload, S>
-
-  type userCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<userFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserCountAggregateInputType | true
-    }
-
-  export interface userDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['user'], meta: { name: 'user' } }
-    /**
-     * Find zero or one User that matches the filter.
-     * @param {userFindUniqueArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends userFindUniqueArgs>(args: SelectSubset<T, userFindUniqueArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one User that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {userFindUniqueOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends userFindUniqueOrThrowArgs>(args: SelectSubset<T, userFindUniqueOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first User that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindFirstArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends userFindFirstArgs>(args?: SelectSubset<T, userFindFirstArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first User that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindFirstOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends userFindFirstOrThrowArgs>(args?: SelectSubset<T, userFindFirstOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Users that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Users
-     * const users = await prisma.user.findMany()
-     * 
-     * // Get first 10 Users
-     * const users = await prisma.user.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends userFindManyArgs>(args?: SelectSubset<T, userFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a User.
-     * @param {userCreateArgs} args - Arguments to create a User.
-     * @example
-     * // Create one User
-     * const User = await prisma.user.create({
-     *   data: {
-     *     // ... data to create a User
-     *   }
-     * })
-     * 
-     */
-    create<T extends userCreateArgs>(args: SelectSubset<T, userCreateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Users.
-     * @param {userCreateManyArgs} args - Arguments to create many Users.
-     * @example
-     * // Create many Users
-     * const user = await prisma.user.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends userCreateManyArgs>(args?: SelectSubset<T, userCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Users and returns the data saved in the database.
-     * @param {userCreateManyAndReturnArgs} args - Arguments to create many Users.
-     * @example
-     * // Create many Users
-     * const user = await prisma.user.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Users and only return the `id`
-     * const userWithIdOnly = await prisma.user.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends userCreateManyAndReturnArgs>(args?: SelectSubset<T, userCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a User.
-     * @param {userDeleteArgs} args - Arguments to delete one User.
-     * @example
-     * // Delete one User
-     * const User = await prisma.user.delete({
-     *   where: {
-     *     // ... filter to delete one User
-     *   }
-     * })
-     * 
-     */
-    delete<T extends userDeleteArgs>(args: SelectSubset<T, userDeleteArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one User.
-     * @param {userUpdateArgs} args - Arguments to update one User.
-     * @example
-     * // Update one User
-     * const user = await prisma.user.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends userUpdateArgs>(args: SelectSubset<T, userUpdateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Users.
-     * @param {userDeleteManyArgs} args - Arguments to filter Users to delete.
-     * @example
-     * // Delete a few Users
-     * const { count } = await prisma.user.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends userDeleteManyArgs>(args?: SelectSubset<T, userDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends userUpdateManyArgs>(args: SelectSubset<T, userUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users and returns the data updated in the database.
-     * @param {userUpdateManyAndReturnArgs} args - Arguments to update many Users.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Users and only return the `id`
-     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends userUpdateManyAndReturnArgs>(args: SelectSubset<T, userUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one User.
-     * @param {userUpsertArgs} args - Arguments to update or create a User.
-     * @example
-     * // Update or create a User
-     * const user = await prisma.user.upsert({
-     *   create: {
-     *     // ... data to create a User
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the User we want to update
-     *   }
-     * })
-     */
-    upsert<T extends userUpsertArgs>(args: SelectSubset<T, userUpsertArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userCountArgs} args - Arguments to filter Users to count.
-     * @example
-     * // Count the number of Users
-     * const count = await prisma.user.count({
-     *   where: {
-     *     // ... the filter for the Users we want to count
-     *   }
-     * })
-    **/
-    count<T extends userCountArgs>(
-      args?: Subset<T, userCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
-
-    /**
-     * Group by User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {userGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends userGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: userGroupByArgs['orderBy'] }
-        : { orderBy?: userGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, userGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the user model
-   */
-  readonly fields: userFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for user.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__userClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    watchHistories<T extends user$watchHistoriesArgs<ExtArgs> = {}>(args?: Subset<T, user$watchHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the user model
-   */
-  interface userFieldRefs {
-    readonly id: FieldRef<"user", 'String'>
-    readonly email: FieldRef<"user", 'String'>
-    readonly username: FieldRef<"user", 'String'>
-    readonly role: FieldRef<"user", 'String'>
-    readonly createdAt: FieldRef<"user", 'DateTime'>
-    readonly updatedAt: FieldRef<"user", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * user findUnique
-   */
-  export type userFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter, which user to fetch.
-     */
-    where: userWhereUniqueInput
-  }
-
-  /**
-   * user findUniqueOrThrow
-   */
-  export type userFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter, which user to fetch.
-     */
-    where: userWhereUniqueInput
-  }
-
-  /**
-   * user findFirst
-   */
-  export type userFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter, which user to fetch.
-     */
-    where?: userWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of users to fetch.
-     */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for users.
-     */
-    cursor?: userWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of users.
-     */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * user findFirstOrThrow
-   */
-  export type userFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter, which user to fetch.
-     */
-    where?: userWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of users to fetch.
-     */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for users.
-     */
-    cursor?: userWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of users.
-     */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * user findMany
-   */
-  export type userFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter, which users to fetch.
-     */
-    where?: userWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of users to fetch.
-     */
-    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing users.
-     */
-    cursor?: userWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` users.
-     */
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * user create
-   */
-  export type userCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * The data needed to create a user.
-     */
-    data: XOR<userCreateInput, userUncheckedCreateInput>
-  }
-
-  /**
-   * user createMany
-   */
-  export type userCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many users.
-     */
-    data: userCreateManyInput | userCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * user createManyAndReturn
-   */
-  export type userCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * The data used to create many users.
-     */
-    data: userCreateManyInput | userCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * user update
-   */
-  export type userUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * The data needed to update a user.
-     */
-    data: XOR<userUpdateInput, userUncheckedUpdateInput>
-    /**
-     * Choose, which user to update.
-     */
-    where: userWhereUniqueInput
-  }
-
-  /**
-   * user updateMany
-   */
-  export type userUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update users.
-     */
-    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
-    /**
-     * Filter which users to update
-     */
-    where?: userWhereInput
-    /**
-     * Limit how many users to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * user updateManyAndReturn
-   */
-  export type userUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * The data used to update users.
-     */
-    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
-    /**
-     * Filter which users to update
-     */
-    where?: userWhereInput
-    /**
-     * Limit how many users to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * user upsert
-   */
-  export type userUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * The filter to search for the user to update in case it exists.
-     */
-    where: userWhereUniqueInput
-    /**
-     * In case the user found by the `where` argument doesn't exist, create a new user with this data.
-     */
-    create: XOR<userCreateInput, userUncheckedCreateInput>
-    /**
-     * In case the user was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<userUpdateInput, userUncheckedUpdateInput>
-  }
-
-  /**
-   * user delete
-   */
-  export type userDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-    /**
-     * Filter which user to delete.
-     */
-    where: userWhereUniqueInput
-  }
-
-  /**
-   * user deleteMany
-   */
-  export type userDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which users to delete
-     */
-    where?: userWhereInput
-    /**
-     * Limit how many users to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * user.watchHistories
-   */
-  export type user$watchHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the watchHistory
-     */
-    select?: watchHistorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the watchHistory
-     */
-    omit?: watchHistoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: watchHistoryInclude<ExtArgs> | null
-    where?: watchHistoryWhereInput
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
-    cursor?: watchHistoryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WatchHistoryScalarFieldEnum | WatchHistoryScalarFieldEnum[]
-  }
-
-  /**
-   * user without action
-   */
-  export type userDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the user
-     */
-    select?: userSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the user
-     */
-    omit?: userOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: userInclude<ExtArgs> | null
-  }
-
 
   /**
    * Model anime
@@ -3696,8 +2582,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     anime?: boolean | animeDefaultArgs<ExtArgs>
-    watchHistories?: boolean | episode$watchHistoriesArgs<ExtArgs>
-    _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["episode"]>
 
   export type episodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3741,8 +2625,6 @@ export namespace Prisma {
   export type episodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "animeId" | "title" | "episodeNum" | "duration" | "videoUrl" | "subtitleUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["episode"]>
   export type episodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     anime?: boolean | animeDefaultArgs<ExtArgs>
-    watchHistories?: boolean | episode$watchHistoriesArgs<ExtArgs>
-    _count?: boolean | EpisodeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type episodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     anime?: boolean | animeDefaultArgs<ExtArgs>
@@ -3755,7 +2637,6 @@ export namespace Prisma {
     name: "episode"
     objects: {
       anime: Prisma.$animePayload<ExtArgs>
-      watchHistories: Prisma.$watchHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4162,7 +3043,6 @@ export namespace Prisma {
   export interface Prisma__episodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     anime<T extends animeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, animeDefaultArgs<ExtArgs>>): Prisma__animeClient<$Result.GetResult<Prisma.$animePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    watchHistories<T extends episode$watchHistoriesArgs<ExtArgs> = {}>(args?: Subset<T, episode$watchHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4597,30 +3477,6 @@ export namespace Prisma {
   }
 
   /**
-   * episode.watchHistories
-   */
-  export type episode$watchHistoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the watchHistory
-     */
-    select?: watchHistorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the watchHistory
-     */
-    omit?: watchHistoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: watchHistoryInclude<ExtArgs> | null
-    where?: watchHistoryWhereInput
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
-    cursor?: watchHistoryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WatchHistoryScalarFieldEnum | WatchHistoryScalarFieldEnum[]
-  }
-
-  /**
    * episode without action
    */
   export type episodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4640,391 +3496,370 @@ export namespace Prisma {
 
 
   /**
-   * Model watchHistory
+   * Model user
    */
 
-  export type AggregateWatchHistory = {
-    _count: WatchHistoryCountAggregateOutputType | null
-    _avg: WatchHistoryAvgAggregateOutputType | null
-    _sum: WatchHistorySumAggregateOutputType | null
-    _min: WatchHistoryMinAggregateOutputType | null
-    _max: WatchHistoryMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type WatchHistoryAvgAggregateOutputType = {
-    progress: number | null
-  }
-
-  export type WatchHistorySumAggregateOutputType = {
-    progress: number | null
-  }
-
-  export type WatchHistoryMinAggregateOutputType = {
+  export type UserMinAggregateOutputType = {
     id: string | null
-    userId: string | null
-    episodeId: string | null
-    progress: number | null
+    email: string | null
+    username: string | null
+    picture: string | null
+    role: string | null
+    createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type WatchHistoryMaxAggregateOutputType = {
+  export type UserMaxAggregateOutputType = {
     id: string | null
-    userId: string | null
-    episodeId: string | null
-    progress: number | null
+    email: string | null
+    username: string | null
+    picture: string | null
+    role: string | null
+    createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type WatchHistoryCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
-    userId: number
-    episodeId: number
-    progress: number
+    email: number
+    username: number
+    picture: number
+    role: number
+    createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type WatchHistoryAvgAggregateInputType = {
-    progress?: true
-  }
-
-  export type WatchHistorySumAggregateInputType = {
-    progress?: true
-  }
-
-  export type WatchHistoryMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
-    userId?: true
-    episodeId?: true
-    progress?: true
+    email?: true
+    username?: true
+    picture?: true
+    role?: true
+    createdAt?: true
     updatedAt?: true
   }
 
-  export type WatchHistoryMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
-    userId?: true
-    episodeId?: true
-    progress?: true
+    email?: true
+    username?: true
+    picture?: true
+    role?: true
+    createdAt?: true
     updatedAt?: true
   }
 
-  export type WatchHistoryCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
-    userId?: true
-    episodeId?: true
-    progress?: true
+    email?: true
+    username?: true
+    picture?: true
+    role?: true
+    createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type WatchHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which watchHistory to aggregate.
+     * Filter which user to aggregate.
      */
-    where?: watchHistoryWhereInput
+    where?: userWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of watchHistories to fetch.
+     * Determine the order of users to fetch.
      */
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
+    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: watchHistoryWhereUniqueInput
+    cursor?: userWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` watchHistories from the position of the cursor.
+     * Take `±n` users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` watchHistories.
+     * Skip the first `n` users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned watchHistories
+     * Count returned users
     **/
-    _count?: true | WatchHistoryCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: WatchHistoryAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: WatchHistorySumAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: WatchHistoryMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: WatchHistoryMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetWatchHistoryAggregateType<T extends WatchHistoryAggregateArgs> = {
-        [P in keyof T & keyof AggregateWatchHistory]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateWatchHistory[P]>
-      : GetScalarType<T[P], AggregateWatchHistory[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type watchHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: watchHistoryWhereInput
-    orderBy?: watchHistoryOrderByWithAggregationInput | watchHistoryOrderByWithAggregationInput[]
-    by: WatchHistoryScalarFieldEnum[] | WatchHistoryScalarFieldEnum
-    having?: watchHistoryScalarWhereWithAggregatesInput
+  export type userGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: userWhereInput
+    orderBy?: userOrderByWithAggregationInput | userOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: userScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: WatchHistoryCountAggregateInputType | true
-    _avg?: WatchHistoryAvgAggregateInputType
-    _sum?: WatchHistorySumAggregateInputType
-    _min?: WatchHistoryMinAggregateInputType
-    _max?: WatchHistoryMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type WatchHistoryGroupByOutputType = {
+  export type UserGroupByOutputType = {
     id: string
-    userId: string
-    episodeId: string
-    progress: number
+    email: string
+    username: string | null
+    picture: string | null
+    role: string
+    createdAt: Date
     updatedAt: Date
-    _count: WatchHistoryCountAggregateOutputType | null
-    _avg: WatchHistoryAvgAggregateOutputType | null
-    _sum: WatchHistorySumAggregateOutputType | null
-    _min: WatchHistoryMinAggregateOutputType | null
-    _max: WatchHistoryMaxAggregateOutputType | null
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetWatchHistoryGroupByPayload<T extends watchHistoryGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends userGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<WatchHistoryGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof WatchHistoryGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], WatchHistoryGroupByOutputType[P]>
-            : GetScalarType<T[P], WatchHistoryGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type watchHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type userSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    episodeId?: boolean
-    progress?: boolean
+    email?: boolean
+    username?: boolean
+    picture?: boolean
+    role?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["watchHistory"]>
+    watchHistory?: boolean | user$watchHistoryArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
 
-  export type watchHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type userSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    episodeId?: boolean
-    progress?: boolean
+    email?: boolean
+    username?: boolean
+    picture?: boolean
+    role?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["watchHistory"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type watchHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type userSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    episodeId?: boolean
-    progress?: boolean
+    email?: boolean
+    username?: boolean
+    picture?: boolean
+    role?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["watchHistory"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type watchHistorySelectScalar = {
+  export type userSelectScalar = {
     id?: boolean
-    userId?: boolean
-    episodeId?: boolean
-    progress?: boolean
+    email?: boolean
+    username?: boolean
+    picture?: boolean
+    role?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type watchHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "episodeId" | "progress" | "updatedAt", ExtArgs["result"]["watchHistory"]>
-  export type watchHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
+  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "picture" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    watchHistory?: boolean | user$watchHistoryArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type watchHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
-  }
-  export type watchHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    episode?: boolean | episodeDefaultArgs<ExtArgs>
-    user?: boolean | userDefaultArgs<ExtArgs>
-  }
+  export type userIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type userIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $watchHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "watchHistory"
+  export type $userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "user"
     objects: {
-      episode: Prisma.$episodePayload<ExtArgs>
-      user: Prisma.$userPayload<ExtArgs>
+      watchHistory: Prisma.$watch_historyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
-      episodeId: string
-      progress: number
+      email: string
+      username: string | null
+      picture: string | null
+      role: string
+      createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["watchHistory"]>
+    }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type watchHistoryGetPayload<S extends boolean | null | undefined | watchHistoryDefaultArgs> = $Result.GetResult<Prisma.$watchHistoryPayload, S>
+  type userGetPayload<S extends boolean | null | undefined | userDefaultArgs> = $Result.GetResult<Prisma.$userPayload, S>
 
-  type watchHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<watchHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: WatchHistoryCountAggregateInputType | true
+  type userCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<userFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface watchHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['watchHistory'], meta: { name: 'watchHistory' } }
+  export interface userDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['user'], meta: { name: 'user' } }
     /**
-     * Find zero or one WatchHistory that matches the filter.
-     * @param {watchHistoryFindUniqueArgs} args - Arguments to find a WatchHistory
+     * Find zero or one User that matches the filter.
+     * @param {userFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one WatchHistory
-     * const watchHistory = await prisma.watchHistory.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends watchHistoryFindUniqueArgs>(args: SelectSubset<T, watchHistoryFindUniqueArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends userFindUniqueArgs>(args: SelectSubset<T, userFindUniqueArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one WatchHistory that matches the filter or throw an error with `error.code='P2025'`
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {watchHistoryFindUniqueOrThrowArgs} args - Arguments to find a WatchHistory
+     * @param {userFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one WatchHistory
-     * const watchHistory = await prisma.watchHistory.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends watchHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, watchHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends userFindUniqueOrThrowArgs>(args: SelectSubset<T, userFindUniqueOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first WatchHistory that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryFindFirstArgs} args - Arguments to find a WatchHistory
+     * @param {userFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one WatchHistory
-     * const watchHistory = await prisma.watchHistory.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends watchHistoryFindFirstArgs>(args?: SelectSubset<T, watchHistoryFindFirstArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends userFindFirstArgs>(args?: SelectSubset<T, userFindFirstArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first WatchHistory that matches the filter or
+     * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryFindFirstOrThrowArgs} args - Arguments to find a WatchHistory
+     * @param {userFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one WatchHistory
-     * const watchHistory = await prisma.watchHistory.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends watchHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, watchHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends userFindFirstOrThrowArgs>(args?: SelectSubset<T, userFindFirstOrThrowArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more WatchHistories that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {userFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all WatchHistories
-     * const watchHistories = await prisma.watchHistory.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 WatchHistories
-     * const watchHistories = await prisma.watchHistory.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const watchHistoryWithIdOnly = await prisma.watchHistory.findMany({ select: { id: true } })
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends watchHistoryFindManyArgs>(args?: SelectSubset<T, watchHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends userFindManyArgs>(args?: SelectSubset<T, userFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a WatchHistory.
-     * @param {watchHistoryCreateArgs} args - Arguments to create a WatchHistory.
+     * Create a User.
+     * @param {userCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one WatchHistory
-     * const WatchHistory = await prisma.watchHistory.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a WatchHistory
+     *     // ... data to create a User
      *   }
      * })
      * 
      */
-    create<T extends watchHistoryCreateArgs>(args: SelectSubset<T, watchHistoryCreateArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends userCreateArgs>(args: SelectSubset<T, userCreateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many WatchHistories.
-     * @param {watchHistoryCreateManyArgs} args - Arguments to create many WatchHistories.
+     * Create many Users.
+     * @param {userCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many WatchHistories
-     * const watchHistory = await prisma.watchHistory.createMany({
+     * // Create many Users
+     * const user = await prisma.user.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends watchHistoryCreateManyArgs>(args?: SelectSubset<T, watchHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends userCreateManyArgs>(args?: SelectSubset<T, userCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many WatchHistories and returns the data saved in the database.
-     * @param {watchHistoryCreateManyAndReturnArgs} args - Arguments to create many WatchHistories.
+     * Create many Users and returns the data saved in the database.
+     * @param {userCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many WatchHistories
-     * const watchHistory = await prisma.watchHistory.createManyAndReturn({
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many WatchHistories and only return the `id`
-     * const watchHistoryWithIdOnly = await prisma.watchHistory.createManyAndReturn({
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -5034,28 +3869,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends watchHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, watchHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends userCreateManyAndReturnArgs>(args?: SelectSubset<T, userCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a WatchHistory.
-     * @param {watchHistoryDeleteArgs} args - Arguments to delete one WatchHistory.
+     * Delete a User.
+     * @param {userDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one WatchHistory
-     * const WatchHistory = await prisma.watchHistory.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one WatchHistory
+     *     // ... filter to delete one User
      *   }
      * })
      * 
      */
-    delete<T extends watchHistoryDeleteArgs>(args: SelectSubset<T, watchHistoryDeleteArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends userDeleteArgs>(args: SelectSubset<T, userDeleteArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one WatchHistory.
-     * @param {watchHistoryUpdateArgs} args - Arguments to update one WatchHistory.
+     * Update one User.
+     * @param {userUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one WatchHistory
-     * const watchHistory = await prisma.watchHistory.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5065,30 +3900,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends watchHistoryUpdateArgs>(args: SelectSubset<T, watchHistoryUpdateArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends userUpdateArgs>(args: SelectSubset<T, userUpdateArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more WatchHistories.
-     * @param {watchHistoryDeleteManyArgs} args - Arguments to filter WatchHistories to delete.
+     * Delete zero or more Users.
+     * @param {userDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few WatchHistories
-     * const { count } = await prisma.watchHistory.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends watchHistoryDeleteManyArgs>(args?: SelectSubset<T, watchHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends userDeleteManyArgs>(args?: SelectSubset<T, userDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more WatchHistories.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {userUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many WatchHistories
-     * const watchHistory = await prisma.watchHistory.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5098,14 +3933,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends watchHistoryUpdateManyArgs>(args: SelectSubset<T, watchHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends userUpdateManyArgs>(args: SelectSubset<T, userUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more WatchHistories and returns the data updated in the database.
-     * @param {watchHistoryUpdateManyAndReturnArgs} args - Arguments to update many WatchHistories.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {userUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many WatchHistories
-     * const watchHistory = await prisma.watchHistory.updateManyAndReturn({
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5114,8 +3949,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more WatchHistories and only return the `id`
-     * const watchHistoryWithIdOnly = await prisma.watchHistory.updateManyAndReturn({
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5128,56 +3963,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends watchHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, watchHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends userUpdateManyAndReturnArgs>(args: SelectSubset<T, userUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one WatchHistory.
-     * @param {watchHistoryUpsertArgs} args - Arguments to update or create a WatchHistory.
+     * Create or update one User.
+     * @param {userUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a WatchHistory
-     * const watchHistory = await prisma.watchHistory.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a WatchHistory
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the WatchHistory we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
      */
-    upsert<T extends watchHistoryUpsertArgs>(args: SelectSubset<T, watchHistoryUpsertArgs<ExtArgs>>): Prisma__watchHistoryClient<$Result.GetResult<Prisma.$watchHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends userUpsertArgs>(args: SelectSubset<T, userUpsertArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of WatchHistories.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryCountArgs} args - Arguments to filter WatchHistories to count.
+     * @param {userCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of WatchHistories
-     * const count = await prisma.watchHistory.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the WatchHistories we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends watchHistoryCountArgs>(
-      args?: Subset<T, watchHistoryCountArgs>,
+    count<T extends userCountArgs>(
+      args?: Subset<T, userCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], WatchHistoryCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a WatchHistory.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WatchHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5197,13 +4032,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends WatchHistoryAggregateArgs>(args: Subset<T, WatchHistoryAggregateArgs>): Prisma.PrismaPromise<GetWatchHistoryAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by WatchHistory.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {watchHistoryGroupByArgs} args - Group by arguments.
+     * @param {userGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5218,14 +4053,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends watchHistoryGroupByArgs,
+      T extends userGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: watchHistoryGroupByArgs['orderBy'] }
-        : { orderBy?: watchHistoryGroupByArgs['orderBy'] },
+        ? { orderBy: userGroupByArgs['orderBy'] }
+        : { orderBy?: userGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5274,22 +4109,1199 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, watchHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWatchHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, userGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the watchHistory model
+   * Fields of the user model
    */
-  readonly fields: watchHistoryFieldRefs;
+  readonly fields: userFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for watchHistory.
+   * The delegate class that acts as a "Promise-like" for user.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__watchHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__userClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    episode<T extends episodeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, episodeDefaultArgs<ExtArgs>>): Prisma__episodeClient<$Result.GetResult<Prisma.$episodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    watchHistory<T extends user$watchHistoryArgs<ExtArgs> = {}>(args?: Subset<T, user$watchHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the user model
+   */
+  interface userFieldRefs {
+    readonly id: FieldRef<"user", 'String'>
+    readonly email: FieldRef<"user", 'String'>
+    readonly username: FieldRef<"user", 'String'>
+    readonly picture: FieldRef<"user", 'String'>
+    readonly role: FieldRef<"user", 'String'>
+    readonly createdAt: FieldRef<"user", 'DateTime'>
+    readonly updatedAt: FieldRef<"user", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * user findUnique
+   */
+  export type userFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where: userWhereUniqueInput
+  }
+
+  /**
+   * user findUniqueOrThrow
+   */
+  export type userFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where: userWhereUniqueInput
+  }
+
+  /**
+   * user findFirst
+   */
+  export type userFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * user findFirstOrThrow
+   */
+  export type userFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * user findMany
+   */
+  export type userFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter, which users to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * user create
+   */
+  export type userCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * The data needed to create a user.
+     */
+    data: XOR<userCreateInput, userUncheckedCreateInput>
+  }
+
+  /**
+   * user createMany
+   */
+  export type userCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many users.
+     */
+    data: userCreateManyInput | userCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * user createManyAndReturn
+   */
+  export type userCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * The data used to create many users.
+     */
+    data: userCreateManyInput | userCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * user update
+   */
+  export type userUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * The data needed to update a user.
+     */
+    data: XOR<userUpdateInput, userUncheckedUpdateInput>
+    /**
+     * Choose, which user to update.
+     */
+    where: userWhereUniqueInput
+  }
+
+  /**
+   * user updateMany
+   */
+  export type userUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update users.
+     */
+    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
+    /**
+     * Filter which users to update
+     */
+    where?: userWhereInput
+    /**
+     * Limit how many users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * user updateManyAndReturn
+   */
+  export type userUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * The data used to update users.
+     */
+    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
+    /**
+     * Filter which users to update
+     */
+    where?: userWhereInput
+    /**
+     * Limit how many users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * user upsert
+   */
+  export type userUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * The filter to search for the user to update in case it exists.
+     */
+    where: userWhereUniqueInput
+    /**
+     * In case the user found by the `where` argument doesn't exist, create a new user with this data.
+     */
+    create: XOR<userCreateInput, userUncheckedCreateInput>
+    /**
+     * In case the user was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<userUpdateInput, userUncheckedUpdateInput>
+  }
+
+  /**
+   * user delete
+   */
+  export type userDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
+     * Filter which user to delete.
+     */
+    where: userWhereUniqueInput
+  }
+
+  /**
+   * user deleteMany
+   */
+  export type userDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which users to delete
+     */
+    where?: userWhereInput
+    /**
+     * Limit how many users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * user.watchHistory
+   */
+  export type user$watchHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the watch_history
+     */
+    select?: watch_historySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the watch_history
+     */
+    omit?: watch_historyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: watch_historyInclude<ExtArgs> | null
+    where?: watch_historyWhereInput
+    orderBy?: watch_historyOrderByWithRelationInput | watch_historyOrderByWithRelationInput[]
+    cursor?: watch_historyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Watch_historyScalarFieldEnum | Watch_historyScalarFieldEnum[]
+  }
+
+  /**
+   * user without action
+   */
+  export type userDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user
+     */
+    omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model watch_history
+   */
+
+  export type AggregateWatch_history = {
+    _count: Watch_historyCountAggregateOutputType | null
+    _avg: Watch_historyAvgAggregateOutputType | null
+    _sum: Watch_historySumAggregateOutputType | null
+    _min: Watch_historyMinAggregateOutputType | null
+    _max: Watch_historyMaxAggregateOutputType | null
+  }
+
+  export type Watch_historyAvgAggregateOutputType = {
+    episode_number: number | null
+    progress: number | null
+    duration: number | null
+  }
+
+  export type Watch_historySumAggregateOutputType = {
+    episode_number: number | null
+    progress: number | null
+    duration: number | null
+  }
+
+  export type Watch_historyMinAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    anime_id: string | null
+    episode_id: string | null
+    episode_number: number | null
+    title: string | null
+    image: string | null
+    progress: number | null
+    duration: number | null
+    last_watched_at: Date | null
+  }
+
+  export type Watch_historyMaxAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    anime_id: string | null
+    episode_id: string | null
+    episode_number: number | null
+    title: string | null
+    image: string | null
+    progress: number | null
+    duration: number | null
+    last_watched_at: Date | null
+  }
+
+  export type Watch_historyCountAggregateOutputType = {
+    id: number
+    user_id: number
+    anime_id: number
+    episode_id: number
+    episode_number: number
+    title: number
+    image: number
+    progress: number
+    duration: number
+    last_watched_at: number
+    _all: number
+  }
+
+
+  export type Watch_historyAvgAggregateInputType = {
+    episode_number?: true
+    progress?: true
+    duration?: true
+  }
+
+  export type Watch_historySumAggregateInputType = {
+    episode_number?: true
+    progress?: true
+    duration?: true
+  }
+
+  export type Watch_historyMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    anime_id?: true
+    episode_id?: true
+    episode_number?: true
+    title?: true
+    image?: true
+    progress?: true
+    duration?: true
+    last_watched_at?: true
+  }
+
+  export type Watch_historyMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    anime_id?: true
+    episode_id?: true
+    episode_number?: true
+    title?: true
+    image?: true
+    progress?: true
+    duration?: true
+    last_watched_at?: true
+  }
+
+  export type Watch_historyCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    anime_id?: true
+    episode_id?: true
+    episode_number?: true
+    title?: true
+    image?: true
+    progress?: true
+    duration?: true
+    last_watched_at?: true
+    _all?: true
+  }
+
+  export type Watch_historyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which watch_history to aggregate.
+     */
+    where?: watch_historyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of watch_histories to fetch.
+     */
+    orderBy?: watch_historyOrderByWithRelationInput | watch_historyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: watch_historyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` watch_histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` watch_histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned watch_histories
+    **/
+    _count?: true | Watch_historyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Watch_historyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Watch_historySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Watch_historyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Watch_historyMaxAggregateInputType
+  }
+
+  export type GetWatch_historyAggregateType<T extends Watch_historyAggregateArgs> = {
+        [P in keyof T & keyof AggregateWatch_history]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWatch_history[P]>
+      : GetScalarType<T[P], AggregateWatch_history[P]>
+  }
+
+
+
+
+  export type watch_historyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: watch_historyWhereInput
+    orderBy?: watch_historyOrderByWithAggregationInput | watch_historyOrderByWithAggregationInput[]
+    by: Watch_historyScalarFieldEnum[] | Watch_historyScalarFieldEnum
+    having?: watch_historyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Watch_historyCountAggregateInputType | true
+    _avg?: Watch_historyAvgAggregateInputType
+    _sum?: Watch_historySumAggregateInputType
+    _min?: Watch_historyMinAggregateInputType
+    _max?: Watch_historyMaxAggregateInputType
+  }
+
+  export type Watch_historyGroupByOutputType = {
+    id: string
+    user_id: string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title: string | null
+    image: string | null
+    progress: number
+    duration: number
+    last_watched_at: Date
+    _count: Watch_historyCountAggregateOutputType | null
+    _avg: Watch_historyAvgAggregateOutputType | null
+    _sum: Watch_historySumAggregateOutputType | null
+    _min: Watch_historyMinAggregateOutputType | null
+    _max: Watch_historyMaxAggregateOutputType | null
+  }
+
+  type GetWatch_historyGroupByPayload<T extends watch_historyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Watch_historyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Watch_historyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Watch_historyGroupByOutputType[P]>
+            : GetScalarType<T[P], Watch_historyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type watch_historySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    anime_id?: boolean
+    episode_id?: boolean
+    episode_number?: boolean
+    title?: boolean
+    image?: boolean
+    progress?: boolean
+    duration?: boolean
+    last_watched_at?: boolean
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watch_history"]>
+
+  export type watch_historySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    anime_id?: boolean
+    episode_id?: boolean
+    episode_number?: boolean
+    title?: boolean
+    image?: boolean
+    progress?: boolean
+    duration?: boolean
+    last_watched_at?: boolean
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watch_history"]>
+
+  export type watch_historySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    anime_id?: boolean
+    episode_id?: boolean
+    episode_number?: boolean
+    title?: boolean
+    image?: boolean
+    progress?: boolean
+    duration?: boolean
+    last_watched_at?: boolean
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["watch_history"]>
+
+  export type watch_historySelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    anime_id?: boolean
+    episode_id?: boolean
+    episode_number?: boolean
+    title?: boolean
+    image?: boolean
+    progress?: boolean
+    duration?: boolean
+    last_watched_at?: boolean
+  }
+
+  export type watch_historyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "anime_id" | "episode_id" | "episode_number" | "title" | "image" | "progress" | "duration" | "last_watched_at", ExtArgs["result"]["watch_history"]>
+  export type watch_historyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }
+  export type watch_historyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }
+  export type watch_historyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | userDefaultArgs<ExtArgs>
+  }
+
+  export type $watch_historyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "watch_history"
+    objects: {
+      user: Prisma.$userPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user_id: string
+      anime_id: string
+      episode_id: string
+      episode_number: number
+      title: string | null
+      image: string | null
+      progress: number
+      duration: number
+      last_watched_at: Date
+    }, ExtArgs["result"]["watch_history"]>
+    composites: {}
+  }
+
+  type watch_historyGetPayload<S extends boolean | null | undefined | watch_historyDefaultArgs> = $Result.GetResult<Prisma.$watch_historyPayload, S>
+
+  type watch_historyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<watch_historyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Watch_historyCountAggregateInputType | true
+    }
+
+  export interface watch_historyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['watch_history'], meta: { name: 'watch_history' } }
+    /**
+     * Find zero or one Watch_history that matches the filter.
+     * @param {watch_historyFindUniqueArgs} args - Arguments to find a Watch_history
+     * @example
+     * // Get one Watch_history
+     * const watch_history = await prisma.watch_history.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends watch_historyFindUniqueArgs>(args: SelectSubset<T, watch_historyFindUniqueArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Watch_history that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {watch_historyFindUniqueOrThrowArgs} args - Arguments to find a Watch_history
+     * @example
+     * // Get one Watch_history
+     * const watch_history = await prisma.watch_history.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends watch_historyFindUniqueOrThrowArgs>(args: SelectSubset<T, watch_historyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Watch_history that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyFindFirstArgs} args - Arguments to find a Watch_history
+     * @example
+     * // Get one Watch_history
+     * const watch_history = await prisma.watch_history.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends watch_historyFindFirstArgs>(args?: SelectSubset<T, watch_historyFindFirstArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Watch_history that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyFindFirstOrThrowArgs} args - Arguments to find a Watch_history
+     * @example
+     * // Get one Watch_history
+     * const watch_history = await prisma.watch_history.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends watch_historyFindFirstOrThrowArgs>(args?: SelectSubset<T, watch_historyFindFirstOrThrowArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Watch_histories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Watch_histories
+     * const watch_histories = await prisma.watch_history.findMany()
+     * 
+     * // Get first 10 Watch_histories
+     * const watch_histories = await prisma.watch_history.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const watch_historyWithIdOnly = await prisma.watch_history.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends watch_historyFindManyArgs>(args?: SelectSubset<T, watch_historyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Watch_history.
+     * @param {watch_historyCreateArgs} args - Arguments to create a Watch_history.
+     * @example
+     * // Create one Watch_history
+     * const Watch_history = await prisma.watch_history.create({
+     *   data: {
+     *     // ... data to create a Watch_history
+     *   }
+     * })
+     * 
+     */
+    create<T extends watch_historyCreateArgs>(args: SelectSubset<T, watch_historyCreateArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Watch_histories.
+     * @param {watch_historyCreateManyArgs} args - Arguments to create many Watch_histories.
+     * @example
+     * // Create many Watch_histories
+     * const watch_history = await prisma.watch_history.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends watch_historyCreateManyArgs>(args?: SelectSubset<T, watch_historyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Watch_histories and returns the data saved in the database.
+     * @param {watch_historyCreateManyAndReturnArgs} args - Arguments to create many Watch_histories.
+     * @example
+     * // Create many Watch_histories
+     * const watch_history = await prisma.watch_history.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Watch_histories and only return the `id`
+     * const watch_historyWithIdOnly = await prisma.watch_history.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends watch_historyCreateManyAndReturnArgs>(args?: SelectSubset<T, watch_historyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Watch_history.
+     * @param {watch_historyDeleteArgs} args - Arguments to delete one Watch_history.
+     * @example
+     * // Delete one Watch_history
+     * const Watch_history = await prisma.watch_history.delete({
+     *   where: {
+     *     // ... filter to delete one Watch_history
+     *   }
+     * })
+     * 
+     */
+    delete<T extends watch_historyDeleteArgs>(args: SelectSubset<T, watch_historyDeleteArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Watch_history.
+     * @param {watch_historyUpdateArgs} args - Arguments to update one Watch_history.
+     * @example
+     * // Update one Watch_history
+     * const watch_history = await prisma.watch_history.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends watch_historyUpdateArgs>(args: SelectSubset<T, watch_historyUpdateArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Watch_histories.
+     * @param {watch_historyDeleteManyArgs} args - Arguments to filter Watch_histories to delete.
+     * @example
+     * // Delete a few Watch_histories
+     * const { count } = await prisma.watch_history.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends watch_historyDeleteManyArgs>(args?: SelectSubset<T, watch_historyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Watch_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Watch_histories
+     * const watch_history = await prisma.watch_history.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends watch_historyUpdateManyArgs>(args: SelectSubset<T, watch_historyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Watch_histories and returns the data updated in the database.
+     * @param {watch_historyUpdateManyAndReturnArgs} args - Arguments to update many Watch_histories.
+     * @example
+     * // Update many Watch_histories
+     * const watch_history = await prisma.watch_history.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Watch_histories and only return the `id`
+     * const watch_historyWithIdOnly = await prisma.watch_history.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends watch_historyUpdateManyAndReturnArgs>(args: SelectSubset<T, watch_historyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Watch_history.
+     * @param {watch_historyUpsertArgs} args - Arguments to update or create a Watch_history.
+     * @example
+     * // Update or create a Watch_history
+     * const watch_history = await prisma.watch_history.upsert({
+     *   create: {
+     *     // ... data to create a Watch_history
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Watch_history we want to update
+     *   }
+     * })
+     */
+    upsert<T extends watch_historyUpsertArgs>(args: SelectSubset<T, watch_historyUpsertArgs<ExtArgs>>): Prisma__watch_historyClient<$Result.GetResult<Prisma.$watch_historyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Watch_histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyCountArgs} args - Arguments to filter Watch_histories to count.
+     * @example
+     * // Count the number of Watch_histories
+     * const count = await prisma.watch_history.count({
+     *   where: {
+     *     // ... the filter for the Watch_histories we want to count
+     *   }
+     * })
+    **/
+    count<T extends watch_historyCountArgs>(
+      args?: Subset<T, watch_historyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Watch_historyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Watch_history.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Watch_historyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Watch_historyAggregateArgs>(args: Subset<T, Watch_historyAggregateArgs>): Prisma.PrismaPromise<GetWatch_historyAggregateType<T>>
+
+    /**
+     * Group by Watch_history.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {watch_historyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends watch_historyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: watch_historyGroupByArgs['orderBy'] }
+        : { orderBy?: watch_historyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, watch_historyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWatch_historyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the watch_history model
+   */
+  readonly fields: watch_historyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for watch_history.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__watch_historyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5317,425 +5329,430 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the watchHistory model
+   * Fields of the watch_history model
    */
-  interface watchHistoryFieldRefs {
-    readonly id: FieldRef<"watchHistory", 'String'>
-    readonly userId: FieldRef<"watchHistory", 'String'>
-    readonly episodeId: FieldRef<"watchHistory", 'String'>
-    readonly progress: FieldRef<"watchHistory", 'Int'>
-    readonly updatedAt: FieldRef<"watchHistory", 'DateTime'>
+  interface watch_historyFieldRefs {
+    readonly id: FieldRef<"watch_history", 'String'>
+    readonly user_id: FieldRef<"watch_history", 'String'>
+    readonly anime_id: FieldRef<"watch_history", 'String'>
+    readonly episode_id: FieldRef<"watch_history", 'String'>
+    readonly episode_number: FieldRef<"watch_history", 'Int'>
+    readonly title: FieldRef<"watch_history", 'String'>
+    readonly image: FieldRef<"watch_history", 'String'>
+    readonly progress: FieldRef<"watch_history", 'Int'>
+    readonly duration: FieldRef<"watch_history", 'Int'>
+    readonly last_watched_at: FieldRef<"watch_history", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * watchHistory findUnique
+   * watch_history findUnique
    */
-  export type watchHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter, which watchHistory to fetch.
+     * Filter, which watch_history to fetch.
      */
-    where: watchHistoryWhereUniqueInput
+    where: watch_historyWhereUniqueInput
   }
 
   /**
-   * watchHistory findUniqueOrThrow
+   * watch_history findUniqueOrThrow
    */
-  export type watchHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter, which watchHistory to fetch.
+     * Filter, which watch_history to fetch.
      */
-    where: watchHistoryWhereUniqueInput
+    where: watch_historyWhereUniqueInput
   }
 
   /**
-   * watchHistory findFirst
+   * watch_history findFirst
    */
-  export type watchHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter, which watchHistory to fetch.
+     * Filter, which watch_history to fetch.
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of watchHistories to fetch.
+     * Determine the order of watch_histories to fetch.
      */
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
+    orderBy?: watch_historyOrderByWithRelationInput | watch_historyOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for watchHistories.
+     * Sets the position for searching for watch_histories.
      */
-    cursor?: watchHistoryWhereUniqueInput
+    cursor?: watch_historyWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` watchHistories from the position of the cursor.
+     * Take `±n` watch_histories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` watchHistories.
+     * Skip the first `n` watch_histories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of watchHistories.
+     * Filter by unique combinations of watch_histories.
      */
-    distinct?: WatchHistoryScalarFieldEnum | WatchHistoryScalarFieldEnum[]
+    distinct?: Watch_historyScalarFieldEnum | Watch_historyScalarFieldEnum[]
   }
 
   /**
-   * watchHistory findFirstOrThrow
+   * watch_history findFirstOrThrow
    */
-  export type watchHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter, which watchHistory to fetch.
+     * Filter, which watch_history to fetch.
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of watchHistories to fetch.
+     * Determine the order of watch_histories to fetch.
      */
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
+    orderBy?: watch_historyOrderByWithRelationInput | watch_historyOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for watchHistories.
+     * Sets the position for searching for watch_histories.
      */
-    cursor?: watchHistoryWhereUniqueInput
+    cursor?: watch_historyWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` watchHistories from the position of the cursor.
+     * Take `±n` watch_histories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` watchHistories.
+     * Skip the first `n` watch_histories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of watchHistories.
+     * Filter by unique combinations of watch_histories.
      */
-    distinct?: WatchHistoryScalarFieldEnum | WatchHistoryScalarFieldEnum[]
+    distinct?: Watch_historyScalarFieldEnum | Watch_historyScalarFieldEnum[]
   }
 
   /**
-   * watchHistory findMany
+   * watch_history findMany
    */
-  export type watchHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter, which watchHistories to fetch.
+     * Filter, which watch_histories to fetch.
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of watchHistories to fetch.
+     * Determine the order of watch_histories to fetch.
      */
-    orderBy?: watchHistoryOrderByWithRelationInput | watchHistoryOrderByWithRelationInput[]
+    orderBy?: watch_historyOrderByWithRelationInput | watch_historyOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing watchHistories.
+     * Sets the position for listing watch_histories.
      */
-    cursor?: watchHistoryWhereUniqueInput
+    cursor?: watch_historyWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` watchHistories from the position of the cursor.
+     * Take `±n` watch_histories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` watchHistories.
+     * Skip the first `n` watch_histories.
      */
     skip?: number
-    distinct?: WatchHistoryScalarFieldEnum | WatchHistoryScalarFieldEnum[]
+    distinct?: Watch_historyScalarFieldEnum | Watch_historyScalarFieldEnum[]
   }
 
   /**
-   * watchHistory create
+   * watch_history create
    */
-  export type watchHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * The data needed to create a watchHistory.
+     * The data needed to create a watch_history.
      */
-    data: XOR<watchHistoryCreateInput, watchHistoryUncheckedCreateInput>
+    data: XOR<watch_historyCreateInput, watch_historyUncheckedCreateInput>
   }
 
   /**
-   * watchHistory createMany
+   * watch_history createMany
    */
-  export type watchHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many watchHistories.
+     * The data used to create many watch_histories.
      */
-    data: watchHistoryCreateManyInput | watchHistoryCreateManyInput[]
+    data: watch_historyCreateManyInput | watch_historyCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * watchHistory createManyAndReturn
+   * watch_history createManyAndReturn
    */
-  export type watchHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelectCreateManyAndReturn<ExtArgs> | null
+    select?: watch_historySelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
-     * The data used to create many watchHistories.
+     * The data used to create many watch_histories.
      */
-    data: watchHistoryCreateManyInput | watchHistoryCreateManyInput[]
+    data: watch_historyCreateManyInput | watch_historyCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: watch_historyIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * watchHistory update
+   * watch_history update
    */
-  export type watchHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * The data needed to update a watchHistory.
+     * The data needed to update a watch_history.
      */
-    data: XOR<watchHistoryUpdateInput, watchHistoryUncheckedUpdateInput>
+    data: XOR<watch_historyUpdateInput, watch_historyUncheckedUpdateInput>
     /**
-     * Choose, which watchHistory to update.
+     * Choose, which watch_history to update.
      */
-    where: watchHistoryWhereUniqueInput
+    where: watch_historyWhereUniqueInput
   }
 
   /**
-   * watchHistory updateMany
+   * watch_history updateMany
    */
-  export type watchHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update watchHistories.
+     * The data used to update watch_histories.
      */
-    data: XOR<watchHistoryUpdateManyMutationInput, watchHistoryUncheckedUpdateManyInput>
+    data: XOR<watch_historyUpdateManyMutationInput, watch_historyUncheckedUpdateManyInput>
     /**
-     * Filter which watchHistories to update
+     * Filter which watch_histories to update
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
-     * Limit how many watchHistories to update.
+     * Limit how many watch_histories to update.
      */
     limit?: number
   }
 
   /**
-   * watchHistory updateManyAndReturn
+   * watch_history updateManyAndReturn
    */
-  export type watchHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    select?: watch_historySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
-     * The data used to update watchHistories.
+     * The data used to update watch_histories.
      */
-    data: XOR<watchHistoryUpdateManyMutationInput, watchHistoryUncheckedUpdateManyInput>
+    data: XOR<watch_historyUpdateManyMutationInput, watch_historyUncheckedUpdateManyInput>
     /**
-     * Filter which watchHistories to update
+     * Filter which watch_histories to update
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
-     * Limit how many watchHistories to update.
+     * Limit how many watch_histories to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: watch_historyIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * watchHistory upsert
+   * watch_history upsert
    */
-  export type watchHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * The filter to search for the watchHistory to update in case it exists.
+     * The filter to search for the watch_history to update in case it exists.
      */
-    where: watchHistoryWhereUniqueInput
+    where: watch_historyWhereUniqueInput
     /**
-     * In case the watchHistory found by the `where` argument doesn't exist, create a new watchHistory with this data.
+     * In case the watch_history found by the `where` argument doesn't exist, create a new watch_history with this data.
      */
-    create: XOR<watchHistoryCreateInput, watchHistoryUncheckedCreateInput>
+    create: XOR<watch_historyCreateInput, watch_historyUncheckedCreateInput>
     /**
-     * In case the watchHistory was found with the provided `where` argument, update it with this data.
+     * In case the watch_history was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<watchHistoryUpdateInput, watchHistoryUncheckedUpdateInput>
+    update: XOR<watch_historyUpdateInput, watch_historyUncheckedUpdateInput>
   }
 
   /**
-   * watchHistory delete
+   * watch_history delete
    */
-  export type watchHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
     /**
-     * Filter which watchHistory to delete.
+     * Filter which watch_history to delete.
      */
-    where: watchHistoryWhereUniqueInput
+    where: watch_historyWhereUniqueInput
   }
 
   /**
-   * watchHistory deleteMany
+   * watch_history deleteMany
    */
-  export type watchHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which watchHistories to delete
+     * Filter which watch_histories to delete
      */
-    where?: watchHistoryWhereInput
+    where?: watch_historyWhereInput
     /**
-     * Limit how many watchHistories to delete.
+     * Limit how many watch_histories to delete.
      */
     limit?: number
   }
 
   /**
-   * watchHistory without action
+   * watch_history without action
    */
-  export type watchHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type watch_historyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the watchHistory
+     * Select specific fields to fetch from the watch_history
      */
-    select?: watchHistorySelect<ExtArgs> | null
+    select?: watch_historySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the watchHistory
+     * Omit specific fields from the watch_history
      */
-    omit?: watchHistoryOmit<ExtArgs> | null
+    omit?: watch_historyOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: watchHistoryInclude<ExtArgs> | null
+    include?: watch_historyInclude<ExtArgs> | null
   }
 
 
@@ -5751,18 +5768,6 @@ export namespace Prisma {
   };
 
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
-
-
-  export const UserScalarFieldEnum: {
-    id: 'id',
-    email: 'email',
-    username: 'username',
-    role: 'role',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const AnimeScalarFieldEnum: {
@@ -5795,15 +5800,33 @@ export namespace Prisma {
   export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
 
 
-  export const WatchHistoryScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
-    episodeId: 'episodeId',
-    progress: 'progress',
+    email: 'email',
+    username: 'username',
+    picture: 'picture',
+    role: 'role',
+    createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type WatchHistoryScalarFieldEnum = (typeof WatchHistoryScalarFieldEnum)[keyof typeof WatchHistoryScalarFieldEnum]
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const Watch_historyScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    anime_id: 'anime_id',
+    episode_id: 'episode_id',
+    episode_number: 'episode_number',
+    title: 'title',
+    image: 'image',
+    progress: 'progress',
+    duration: 'duration',
+    last_watched_at: 'last_watched_at'
+  };
+
+  export type Watch_historyScalarFieldEnum = (typeof Watch_historyScalarFieldEnum)[keyof typeof Watch_historyScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5850,20 +5873,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -5889,70 +5898,24 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
   /**
    * Deep Input Types
    */
 
-
-  export type userWhereInput = {
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    id?: StringFilter<"user"> | string
-    email?: StringFilter<"user"> | string
-    username?: StringNullableFilter<"user"> | string | null
-    role?: StringFilter<"user"> | string
-    createdAt?: DateTimeFilter<"user"> | Date | string
-    updatedAt?: DateTimeFilter<"user"> | Date | string
-    watchHistories?: WatchHistoryListRelationFilter
-  }
-
-  export type userOrderByWithRelationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    username?: SortOrderInput | SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    watchHistories?: watchHistoryOrderByRelationAggregateInput
-  }
-
-  export type userWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    email?: string
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    username?: StringNullableFilter<"user"> | string | null
-    role?: StringFilter<"user"> | string
-    createdAt?: DateTimeFilter<"user"> | Date | string
-    updatedAt?: DateTimeFilter<"user"> | Date | string
-    watchHistories?: WatchHistoryListRelationFilter
-  }, "id" | "email">
-
-  export type userOrderByWithAggregationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    username?: SortOrderInput | SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: userCountOrderByAggregateInput
-    _max?: userMaxOrderByAggregateInput
-    _min?: userMinOrderByAggregateInput
-  }
-
-  export type userScalarWhereWithAggregatesInput = {
-    AND?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    OR?: userScalarWhereWithAggregatesInput[]
-    NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"user"> | string
-    email?: StringWithAggregatesFilter<"user"> | string
-    username?: StringNullableWithAggregatesFilter<"user"> | string | null
-    role?: StringWithAggregatesFilter<"user"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
-  }
 
   export type animeWhereInput = {
     AND?: animeWhereInput | animeWhereInput[]
@@ -6045,7 +6008,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"episode"> | Date | string
     updatedAt?: DateTimeFilter<"episode"> | Date | string
     anime?: XOR<AnimeScalarRelationFilter, animeWhereInput>
-    watchHistories?: WatchHistoryListRelationFilter
   }
 
   export type episodeOrderByWithRelationInput = {
@@ -6059,7 +6021,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     anime?: animeOrderByWithRelationInput
-    watchHistories?: watchHistoryOrderByRelationAggregateInput
   }
 
   export type episodeWhereUniqueInput = Prisma.AtLeast<{
@@ -6076,7 +6037,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"episode"> | Date | string
     updatedAt?: DateTimeFilter<"episode"> | Date | string
     anime?: XOR<AnimeScalarRelationFilter, animeWhereInput>
-    watchHistories?: WatchHistoryListRelationFilter
   }, "id">
 
   export type episodeOrderByWithAggregationInput = {
@@ -6111,135 +6071,156 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"episode"> | Date | string
   }
 
-  export type watchHistoryWhereInput = {
-    AND?: watchHistoryWhereInput | watchHistoryWhereInput[]
-    OR?: watchHistoryWhereInput[]
-    NOT?: watchHistoryWhereInput | watchHistoryWhereInput[]
-    id?: StringFilter<"watchHistory"> | string
-    userId?: StringFilter<"watchHistory"> | string
-    episodeId?: StringFilter<"watchHistory"> | string
-    progress?: IntFilter<"watchHistory"> | number
-    updatedAt?: DateTimeFilter<"watchHistory"> | Date | string
-    episode?: XOR<EpisodeScalarRelationFilter, episodeWhereInput>
+  export type userWhereInput = {
+    AND?: userWhereInput | userWhereInput[]
+    OR?: userWhereInput[]
+    NOT?: userWhereInput | userWhereInput[]
+    id?: UuidFilter<"user"> | string
+    email?: StringFilter<"user"> | string
+    username?: StringNullableFilter<"user"> | string | null
+    picture?: StringNullableFilter<"user"> | string | null
+    role?: StringFilter<"user"> | string
+    createdAt?: DateTimeFilter<"user"> | Date | string
+    updatedAt?: DateTimeFilter<"user"> | Date | string
+    watchHistory?: Watch_historyListRelationFilter
+  }
+
+  export type userOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrderInput | SortOrder
+    picture?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    watchHistory?: watch_historyOrderByRelationAggregateInput
+  }
+
+  export type userWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: userWhereInput | userWhereInput[]
+    OR?: userWhereInput[]
+    NOT?: userWhereInput | userWhereInput[]
+    username?: StringNullableFilter<"user"> | string | null
+    picture?: StringNullableFilter<"user"> | string | null
+    role?: StringFilter<"user"> | string
+    createdAt?: DateTimeFilter<"user"> | Date | string
+    updatedAt?: DateTimeFilter<"user"> | Date | string
+    watchHistory?: Watch_historyListRelationFilter
+  }, "id" | "email">
+
+  export type userOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrderInput | SortOrder
+    picture?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: userCountOrderByAggregateInput
+    _max?: userMaxOrderByAggregateInput
+    _min?: userMinOrderByAggregateInput
+  }
+
+  export type userScalarWhereWithAggregatesInput = {
+    AND?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
+    OR?: userScalarWhereWithAggregatesInput[]
+    NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"user"> | string
+    email?: StringWithAggregatesFilter<"user"> | string
+    username?: StringNullableWithAggregatesFilter<"user"> | string | null
+    picture?: StringNullableWithAggregatesFilter<"user"> | string | null
+    role?: StringWithAggregatesFilter<"user"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
+  }
+
+  export type watch_historyWhereInput = {
+    AND?: watch_historyWhereInput | watch_historyWhereInput[]
+    OR?: watch_historyWhereInput[]
+    NOT?: watch_historyWhereInput | watch_historyWhereInput[]
+    id?: UuidFilter<"watch_history"> | string
+    user_id?: UuidFilter<"watch_history"> | string
+    anime_id?: StringFilter<"watch_history"> | string
+    episode_id?: StringFilter<"watch_history"> | string
+    episode_number?: IntFilter<"watch_history"> | number
+    title?: StringNullableFilter<"watch_history"> | string | null
+    image?: StringNullableFilter<"watch_history"> | string | null
+    progress?: IntFilter<"watch_history"> | number
+    duration?: IntFilter<"watch_history"> | number
+    last_watched_at?: DateTimeFilter<"watch_history"> | Date | string
     user?: XOR<UserScalarRelationFilter, userWhereInput>
   }
 
-  export type watchHistoryOrderByWithRelationInput = {
+  export type watch_historyOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    episodeId?: SortOrder
+    user_id?: SortOrder
+    anime_id?: SortOrder
+    episode_id?: SortOrder
+    episode_number?: SortOrder
+    title?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
     progress?: SortOrder
-    updatedAt?: SortOrder
-    episode?: episodeOrderByWithRelationInput
+    duration?: SortOrder
+    last_watched_at?: SortOrder
     user?: userOrderByWithRelationInput
   }
 
-  export type watchHistoryWhereUniqueInput = Prisma.AtLeast<{
+  export type watch_historyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: watchHistoryWhereInput | watchHistoryWhereInput[]
-    OR?: watchHistoryWhereInput[]
-    NOT?: watchHistoryWhereInput | watchHistoryWhereInput[]
-    userId?: StringFilter<"watchHistory"> | string
-    episodeId?: StringFilter<"watchHistory"> | string
-    progress?: IntFilter<"watchHistory"> | number
-    updatedAt?: DateTimeFilter<"watchHistory"> | Date | string
-    episode?: XOR<EpisodeScalarRelationFilter, episodeWhereInput>
+    user_id_anime_id_episode_id?: watch_historyUser_idAnime_idEpisode_idCompoundUniqueInput
+    AND?: watch_historyWhereInput | watch_historyWhereInput[]
+    OR?: watch_historyWhereInput[]
+    NOT?: watch_historyWhereInput | watch_historyWhereInput[]
+    user_id?: UuidFilter<"watch_history"> | string
+    anime_id?: StringFilter<"watch_history"> | string
+    episode_id?: StringFilter<"watch_history"> | string
+    episode_number?: IntFilter<"watch_history"> | number
+    title?: StringNullableFilter<"watch_history"> | string | null
+    image?: StringNullableFilter<"watch_history"> | string | null
+    progress?: IntFilter<"watch_history"> | number
+    duration?: IntFilter<"watch_history"> | number
+    last_watched_at?: DateTimeFilter<"watch_history"> | Date | string
     user?: XOR<UserScalarRelationFilter, userWhereInput>
-  }, "id">
+  }, "id" | "user_id_anime_id_episode_id">
 
-  export type watchHistoryOrderByWithAggregationInput = {
+  export type watch_historyOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    episodeId?: SortOrder
+    user_id?: SortOrder
+    anime_id?: SortOrder
+    episode_id?: SortOrder
+    episode_number?: SortOrder
+    title?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
     progress?: SortOrder
-    updatedAt?: SortOrder
-    _count?: watchHistoryCountOrderByAggregateInput
-    _avg?: watchHistoryAvgOrderByAggregateInput
-    _max?: watchHistoryMaxOrderByAggregateInput
-    _min?: watchHistoryMinOrderByAggregateInput
-    _sum?: watchHistorySumOrderByAggregateInput
+    duration?: SortOrder
+    last_watched_at?: SortOrder
+    _count?: watch_historyCountOrderByAggregateInput
+    _avg?: watch_historyAvgOrderByAggregateInput
+    _max?: watch_historyMaxOrderByAggregateInput
+    _min?: watch_historyMinOrderByAggregateInput
+    _sum?: watch_historySumOrderByAggregateInput
   }
 
-  export type watchHistoryScalarWhereWithAggregatesInput = {
-    AND?: watchHistoryScalarWhereWithAggregatesInput | watchHistoryScalarWhereWithAggregatesInput[]
-    OR?: watchHistoryScalarWhereWithAggregatesInput[]
-    NOT?: watchHistoryScalarWhereWithAggregatesInput | watchHistoryScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"watchHistory"> | string
-    userId?: StringWithAggregatesFilter<"watchHistory"> | string
-    episodeId?: StringWithAggregatesFilter<"watchHistory"> | string
-    progress?: IntWithAggregatesFilter<"watchHistory"> | number
-    updatedAt?: DateTimeWithAggregatesFilter<"watchHistory"> | Date | string
-  }
-
-  export type userCreateInput = {
-    id?: string
-    email: string
-    username?: string | null
-    role?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    watchHistories?: watchHistoryCreateNestedManyWithoutUserInput
-  }
-
-  export type userUncheckedCreateInput = {
-    id?: string
-    email: string
-    username?: string | null
-    role?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    watchHistories?: watchHistoryUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type userUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    watchHistories?: watchHistoryUpdateManyWithoutUserNestedInput
-  }
-
-  export type userUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    watchHistories?: watchHistoryUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type userCreateManyInput = {
-    id?: string
-    email: string
-    username?: string | null
-    role?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type userUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type userUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type watch_historyScalarWhereWithAggregatesInput = {
+    AND?: watch_historyScalarWhereWithAggregatesInput | watch_historyScalarWhereWithAggregatesInput[]
+    OR?: watch_historyScalarWhereWithAggregatesInput[]
+    NOT?: watch_historyScalarWhereWithAggregatesInput | watch_historyScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"watch_history"> | string
+    user_id?: UuidWithAggregatesFilter<"watch_history"> | string
+    anime_id?: StringWithAggregatesFilter<"watch_history"> | string
+    episode_id?: StringWithAggregatesFilter<"watch_history"> | string
+    episode_number?: IntWithAggregatesFilter<"watch_history"> | number
+    title?: StringNullableWithAggregatesFilter<"watch_history"> | string | null
+    image?: StringNullableWithAggregatesFilter<"watch_history"> | string | null
+    progress?: IntWithAggregatesFilter<"watch_history"> | number
+    duration?: IntWithAggregatesFilter<"watch_history"> | number
+    last_watched_at?: DateTimeWithAggregatesFilter<"watch_history"> | Date | string
   }
 
   export type animeCreateInput = {
-    id?: string
+    id: string
     title: string
     synopsis?: string | null
     coverImage?: string | null
@@ -6252,7 +6233,7 @@ export namespace Prisma {
   }
 
   export type animeUncheckedCreateInput = {
-    id?: string
+    id: string
     title: string
     synopsis?: string | null
     coverImage?: string | null
@@ -6291,7 +6272,7 @@ export namespace Prisma {
   }
 
   export type animeCreateManyInput = {
-    id?: string
+    id: string
     title: string
     synopsis?: string | null
     coverImage?: string | null
@@ -6327,7 +6308,7 @@ export namespace Prisma {
   }
 
   export type episodeCreateInput = {
-    id?: string
+    id: string
     title: string
     episodeNum: number
     duration: string
@@ -6336,11 +6317,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     anime: animeCreateNestedOneWithoutEpisodesInput
-    watchHistories?: watchHistoryCreateNestedManyWithoutEpisodeInput
   }
 
   export type episodeUncheckedCreateInput = {
-    id?: string
+    id: string
     animeId: string
     title: string
     episodeNum: number
@@ -6349,7 +6329,6 @@ export namespace Prisma {
     subtitleUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    watchHistories?: watchHistoryUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
   export type episodeUpdateInput = {
@@ -6362,7 +6341,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     anime?: animeUpdateOneRequiredWithoutEpisodesNestedInput
-    watchHistories?: watchHistoryUpdateManyWithoutEpisodeNestedInput
   }
 
   export type episodeUncheckedUpdateInput = {
@@ -6375,11 +6353,10 @@ export namespace Prisma {
     subtitleUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    watchHistories?: watchHistoryUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
   export type episodeCreateManyInput = {
-    id?: string
+    id: string
     animeId: string
     title: string
     episodeNum: number
@@ -6413,58 +6390,168 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type watchHistoryCreateInput = {
-    id?: string
-    progress: number
+  export type userCreateInput = {
+    id: string
+    email: string
+    username?: string | null
+    picture?: string | null
+    role?: string
+    createdAt?: Date | string
     updatedAt?: Date | string
-    episode: episodeCreateNestedOneWithoutWatchHistoriesInput
-    user: userCreateNestedOneWithoutWatchHistoriesInput
+    watchHistory?: watch_historyCreateNestedManyWithoutUserInput
   }
 
-  export type watchHistoryUncheckedCreateInput = {
-    id?: string
-    userId: string
-    episodeId: string
-    progress: number
+  export type userUncheckedCreateInput = {
+    id: string
+    email: string
+    username?: string | null
+    picture?: string | null
+    role?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    watchHistory?: watch_historyUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type userUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    watchHistory?: watch_historyUpdateManyWithoutUserNestedInput
+  }
+
+  export type userUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    watchHistory?: watch_historyUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type userCreateManyInput = {
+    id: string
+    email: string
+    username?: string | null
+    picture?: string | null
+    role?: string
+    createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type watchHistoryUpdateInput = {
+  export type userUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    episode?: episodeUpdateOneRequiredWithoutWatchHistoriesNestedInput
-    user?: userUpdateOneRequiredWithoutWatchHistoriesNestedInput
-  }
-
-  export type watchHistoryUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    episodeId?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type watchHistoryCreateManyInput = {
+  export type userUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type watch_historyCreateInput = {
     id?: string
-    userId: string
-    episodeId: string
-    progress: number
-    updatedAt?: Date | string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
+    user: userCreateNestedOneWithoutWatchHistoryInput
   }
 
-  export type watchHistoryUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type watch_historyUncheckedCreateInput = {
+    id?: string
+    user_id: string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
   }
 
-  export type watchHistoryUncheckedUpdateManyInput = {
+  export type watch_historyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    episodeId?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: userUpdateOneRequiredWithoutWatchHistoryNestedInput
+  }
+
+  export type watch_historyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type watch_historyCreateManyInput = {
+    id?: string
+    user_id: string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
+  }
+
+  export type watch_historyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type watch_historyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -6495,109 +6582,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type WatchHistoryListRelationFilter = {
-    every?: watchHistoryWhereInput
-    some?: watchHistoryWhereInput
-    none?: watchHistoryWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
-  export type watchHistoryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type userCountOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    username?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type userMaxOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    username?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type userMinOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    username?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -6634,6 +6618,11 @@ export namespace Prisma {
     every?: episodeWhereInput
     some?: episodeWhereInput
     none?: episodeWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type episodeOrderByRelationAggregateInput = {
@@ -6684,6 +6673,42 @@ export namespace Prisma {
     releaseDate?: SortOrder
   }
 
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -6714,6 +6739,17 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type AnimeScalarRelationFilter = {
@@ -6765,9 +6801,85 @@ export namespace Prisma {
     episodeNum?: SortOrder
   }
 
-  export type EpisodeScalarRelationFilter = {
-    is?: episodeWhereInput
-    isNot?: episodeWhereInput
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type Watch_historyListRelationFilter = {
+    every?: watch_historyWhereInput
+    some?: watch_historyWhereInput
+    none?: watch_historyWhereInput
+  }
+
+  export type watch_historyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type userCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    picture?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type userMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    picture?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type userMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    picture?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -6775,90 +6887,61 @@ export namespace Prisma {
     isNot?: userWhereInput
   }
 
-  export type watchHistoryCountOrderByAggregateInput = {
+  export type watch_historyUser_idAnime_idEpisode_idCompoundUniqueInput = {
+    user_id: string
+    anime_id: string
+    episode_id: string
+  }
+
+  export type watch_historyCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    episodeId?: SortOrder
+    user_id?: SortOrder
+    anime_id?: SortOrder
+    episode_id?: SortOrder
+    episode_number?: SortOrder
+    title?: SortOrder
+    image?: SortOrder
     progress?: SortOrder
-    updatedAt?: SortOrder
+    duration?: SortOrder
+    last_watched_at?: SortOrder
   }
 
-  export type watchHistoryAvgOrderByAggregateInput = {
+  export type watch_historyAvgOrderByAggregateInput = {
+    episode_number?: SortOrder
     progress?: SortOrder
+    duration?: SortOrder
   }
 
-  export type watchHistoryMaxOrderByAggregateInput = {
+  export type watch_historyMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    episodeId?: SortOrder
+    user_id?: SortOrder
+    anime_id?: SortOrder
+    episode_id?: SortOrder
+    episode_number?: SortOrder
+    title?: SortOrder
+    image?: SortOrder
     progress?: SortOrder
-    updatedAt?: SortOrder
+    duration?: SortOrder
+    last_watched_at?: SortOrder
   }
 
-  export type watchHistoryMinOrderByAggregateInput = {
+  export type watch_historyMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    episodeId?: SortOrder
+    user_id?: SortOrder
+    anime_id?: SortOrder
+    episode_id?: SortOrder
+    episode_number?: SortOrder
+    title?: SortOrder
+    image?: SortOrder
     progress?: SortOrder
-    updatedAt?: SortOrder
+    duration?: SortOrder
+    last_watched_at?: SortOrder
   }
 
-  export type watchHistorySumOrderByAggregateInput = {
+  export type watch_historySumOrderByAggregateInput = {
+    episode_number?: SortOrder
     progress?: SortOrder
-  }
-
-  export type watchHistoryCreateNestedManyWithoutUserInput = {
-    create?: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput> | watchHistoryCreateWithoutUserInput[] | watchHistoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutUserInput | watchHistoryCreateOrConnectWithoutUserInput[]
-    createMany?: watchHistoryCreateManyUserInputEnvelope
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-  }
-
-  export type watchHistoryUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput> | watchHistoryCreateWithoutUserInput[] | watchHistoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutUserInput | watchHistoryCreateOrConnectWithoutUserInput[]
-    createMany?: watchHistoryCreateManyUserInputEnvelope
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type watchHistoryUpdateManyWithoutUserNestedInput = {
-    create?: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput> | watchHistoryCreateWithoutUserInput[] | watchHistoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutUserInput | watchHistoryCreateOrConnectWithoutUserInput[]
-    upsert?: watchHistoryUpsertWithWhereUniqueWithoutUserInput | watchHistoryUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: watchHistoryCreateManyUserInputEnvelope
-    set?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    disconnect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    delete?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    update?: watchHistoryUpdateWithWhereUniqueWithoutUserInput | watchHistoryUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: watchHistoryUpdateManyWithWhereWithoutUserInput | watchHistoryUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
-  }
-
-  export type watchHistoryUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput> | watchHistoryCreateWithoutUserInput[] | watchHistoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutUserInput | watchHistoryCreateOrConnectWithoutUserInput[]
-    upsert?: watchHistoryUpsertWithWhereUniqueWithoutUserInput | watchHistoryUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: watchHistoryCreateManyUserInputEnvelope
-    set?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    disconnect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    delete?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    update?: watchHistoryUpdateWithWhereUniqueWithoutUserInput | watchHistoryUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: watchHistoryUpdateManyWithWhereWithoutUserInput | watchHistoryUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
+    duration?: SortOrder
   }
 
   export type animeCreategenreInput = {
@@ -6877,6 +6960,14 @@ export namespace Prisma {
     connectOrCreate?: episodeCreateOrConnectWithoutAnimeInput | episodeCreateOrConnectWithoutAnimeInput[]
     createMany?: episodeCreateManyAnimeInputEnvelope
     connect?: episodeWhereUniqueInput | episodeWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type animeUpdategenreInput = {
@@ -6934,18 +7025,8 @@ export namespace Prisma {
     connect?: animeWhereUniqueInput
   }
 
-  export type watchHistoryCreateNestedManyWithoutEpisodeInput = {
-    create?: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput> | watchHistoryCreateWithoutEpisodeInput[] | watchHistoryUncheckedCreateWithoutEpisodeInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutEpisodeInput | watchHistoryCreateOrConnectWithoutEpisodeInput[]
-    createMany?: watchHistoryCreateManyEpisodeInputEnvelope
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-  }
-
-  export type watchHistoryUncheckedCreateNestedManyWithoutEpisodeInput = {
-    create?: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput> | watchHistoryCreateWithoutEpisodeInput[] | watchHistoryUncheckedCreateWithoutEpisodeInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutEpisodeInput | watchHistoryCreateOrConnectWithoutEpisodeInput[]
-    createMany?: watchHistoryCreateManyEpisodeInputEnvelope
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type animeUpdateOneRequiredWithoutEpisodesNestedInput = {
@@ -6956,60 +7037,60 @@ export namespace Prisma {
     update?: XOR<XOR<animeUpdateToOneWithWhereWithoutEpisodesInput, animeUpdateWithoutEpisodesInput>, animeUncheckedUpdateWithoutEpisodesInput>
   }
 
-  export type watchHistoryUpdateManyWithoutEpisodeNestedInput = {
-    create?: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput> | watchHistoryCreateWithoutEpisodeInput[] | watchHistoryUncheckedCreateWithoutEpisodeInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutEpisodeInput | watchHistoryCreateOrConnectWithoutEpisodeInput[]
-    upsert?: watchHistoryUpsertWithWhereUniqueWithoutEpisodeInput | watchHistoryUpsertWithWhereUniqueWithoutEpisodeInput[]
-    createMany?: watchHistoryCreateManyEpisodeInputEnvelope
-    set?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    disconnect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    delete?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    update?: watchHistoryUpdateWithWhereUniqueWithoutEpisodeInput | watchHistoryUpdateWithWhereUniqueWithoutEpisodeInput[]
-    updateMany?: watchHistoryUpdateManyWithWhereWithoutEpisodeInput | watchHistoryUpdateManyWithWhereWithoutEpisodeInput[]
-    deleteMany?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
+  export type watch_historyCreateNestedManyWithoutUserInput = {
+    create?: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput> | watch_historyCreateWithoutUserInput[] | watch_historyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: watch_historyCreateOrConnectWithoutUserInput | watch_historyCreateOrConnectWithoutUserInput[]
+    createMany?: watch_historyCreateManyUserInputEnvelope
+    connect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
   }
 
-  export type watchHistoryUncheckedUpdateManyWithoutEpisodeNestedInput = {
-    create?: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput> | watchHistoryCreateWithoutEpisodeInput[] | watchHistoryUncheckedCreateWithoutEpisodeInput[]
-    connectOrCreate?: watchHistoryCreateOrConnectWithoutEpisodeInput | watchHistoryCreateOrConnectWithoutEpisodeInput[]
-    upsert?: watchHistoryUpsertWithWhereUniqueWithoutEpisodeInput | watchHistoryUpsertWithWhereUniqueWithoutEpisodeInput[]
-    createMany?: watchHistoryCreateManyEpisodeInputEnvelope
-    set?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    disconnect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    delete?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    connect?: watchHistoryWhereUniqueInput | watchHistoryWhereUniqueInput[]
-    update?: watchHistoryUpdateWithWhereUniqueWithoutEpisodeInput | watchHistoryUpdateWithWhereUniqueWithoutEpisodeInput[]
-    updateMany?: watchHistoryUpdateManyWithWhereWithoutEpisodeInput | watchHistoryUpdateManyWithWhereWithoutEpisodeInput[]
-    deleteMany?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
+  export type watch_historyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput> | watch_historyCreateWithoutUserInput[] | watch_historyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: watch_historyCreateOrConnectWithoutUserInput | watch_historyCreateOrConnectWithoutUserInput[]
+    createMany?: watch_historyCreateManyUserInputEnvelope
+    connect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
   }
 
-  export type episodeCreateNestedOneWithoutWatchHistoriesInput = {
-    create?: XOR<episodeCreateWithoutWatchHistoriesInput, episodeUncheckedCreateWithoutWatchHistoriesInput>
-    connectOrCreate?: episodeCreateOrConnectWithoutWatchHistoriesInput
-    connect?: episodeWhereUniqueInput
+  export type watch_historyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput> | watch_historyCreateWithoutUserInput[] | watch_historyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: watch_historyCreateOrConnectWithoutUserInput | watch_historyCreateOrConnectWithoutUserInput[]
+    upsert?: watch_historyUpsertWithWhereUniqueWithoutUserInput | watch_historyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: watch_historyCreateManyUserInputEnvelope
+    set?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    disconnect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    delete?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    connect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    update?: watch_historyUpdateWithWhereUniqueWithoutUserInput | watch_historyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: watch_historyUpdateManyWithWhereWithoutUserInput | watch_historyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: watch_historyScalarWhereInput | watch_historyScalarWhereInput[]
   }
 
-  export type userCreateNestedOneWithoutWatchHistoriesInput = {
-    create?: XOR<userCreateWithoutWatchHistoriesInput, userUncheckedCreateWithoutWatchHistoriesInput>
-    connectOrCreate?: userCreateOrConnectWithoutWatchHistoriesInput
+  export type watch_historyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput> | watch_historyCreateWithoutUserInput[] | watch_historyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: watch_historyCreateOrConnectWithoutUserInput | watch_historyCreateOrConnectWithoutUserInput[]
+    upsert?: watch_historyUpsertWithWhereUniqueWithoutUserInput | watch_historyUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: watch_historyCreateManyUserInputEnvelope
+    set?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    disconnect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    delete?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    connect?: watch_historyWhereUniqueInput | watch_historyWhereUniqueInput[]
+    update?: watch_historyUpdateWithWhereUniqueWithoutUserInput | watch_historyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: watch_historyUpdateManyWithWhereWithoutUserInput | watch_historyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: watch_historyScalarWhereInput | watch_historyScalarWhereInput[]
+  }
+
+  export type userCreateNestedOneWithoutWatchHistoryInput = {
+    create?: XOR<userCreateWithoutWatchHistoryInput, userUncheckedCreateWithoutWatchHistoryInput>
+    connectOrCreate?: userCreateOrConnectWithoutWatchHistoryInput
     connect?: userWhereUniqueInput
   }
 
-  export type episodeUpdateOneRequiredWithoutWatchHistoriesNestedInput = {
-    create?: XOR<episodeCreateWithoutWatchHistoriesInput, episodeUncheckedCreateWithoutWatchHistoriesInput>
-    connectOrCreate?: episodeCreateOrConnectWithoutWatchHistoriesInput
-    upsert?: episodeUpsertWithoutWatchHistoriesInput
-    connect?: episodeWhereUniqueInput
-    update?: XOR<XOR<episodeUpdateToOneWithWhereWithoutWatchHistoriesInput, episodeUpdateWithoutWatchHistoriesInput>, episodeUncheckedUpdateWithoutWatchHistoriesInput>
-  }
-
-  export type userUpdateOneRequiredWithoutWatchHistoriesNestedInput = {
-    create?: XOR<userCreateWithoutWatchHistoriesInput, userUncheckedCreateWithoutWatchHistoriesInput>
-    connectOrCreate?: userCreateOrConnectWithoutWatchHistoriesInput
-    upsert?: userUpsertWithoutWatchHistoriesInput
+  export type userUpdateOneRequiredWithoutWatchHistoryNestedInput = {
+    create?: XOR<userCreateWithoutWatchHistoryInput, userUncheckedCreateWithoutWatchHistoryInput>
+    connectOrCreate?: userCreateOrConnectWithoutWatchHistoryInput
+    upsert?: userUpsertWithoutWatchHistoryInput
     connect?: userWhereUniqueInput
-    update?: XOR<XOR<userUpdateToOneWithWhereWithoutWatchHistoriesInput, userUpdateWithoutWatchHistoriesInput>, userUncheckedUpdateWithoutWatchHistoriesInput>
+    update?: XOR<XOR<userUpdateToOneWithWhereWithoutWatchHistoryInput, userUpdateWithoutWatchHistoryInput>, userUncheckedUpdateWithoutWatchHistoryInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7040,15 +7121,26 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -7066,17 +7158,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7105,31 +7186,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -7164,59 +7220,58 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type watchHistoryCreateWithoutUserInput = {
-    id?: string
-    progress: number
-    updatedAt?: Date | string
-    episode: episodeCreateNestedOneWithoutWatchHistoriesInput
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type watchHistoryUncheckedCreateWithoutUserInput = {
-    id?: string
-    episodeId: string
-    progress: number
-    updatedAt?: Date | string
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type watchHistoryCreateOrConnectWithoutUserInput = {
-    where: watchHistoryWhereUniqueInput
-    create: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput>
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
-  export type watchHistoryCreateManyUserInputEnvelope = {
-    data: watchHistoryCreateManyUserInput | watchHistoryCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type watchHistoryUpsertWithWhereUniqueWithoutUserInput = {
-    where: watchHistoryWhereUniqueInput
-    update: XOR<watchHistoryUpdateWithoutUserInput, watchHistoryUncheckedUpdateWithoutUserInput>
-    create: XOR<watchHistoryCreateWithoutUserInput, watchHistoryUncheckedCreateWithoutUserInput>
-  }
-
-  export type watchHistoryUpdateWithWhereUniqueWithoutUserInput = {
-    where: watchHistoryWhereUniqueInput
-    data: XOR<watchHistoryUpdateWithoutUserInput, watchHistoryUncheckedUpdateWithoutUserInput>
-  }
-
-  export type watchHistoryUpdateManyWithWhereWithoutUserInput = {
-    where: watchHistoryScalarWhereInput
-    data: XOR<watchHistoryUpdateManyMutationInput, watchHistoryUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type watchHistoryScalarWhereInput = {
-    AND?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
-    OR?: watchHistoryScalarWhereInput[]
-    NOT?: watchHistoryScalarWhereInput | watchHistoryScalarWhereInput[]
-    id?: StringFilter<"watchHistory"> | string
-    userId?: StringFilter<"watchHistory"> | string
-    episodeId?: StringFilter<"watchHistory"> | string
-    progress?: IntFilter<"watchHistory"> | number
-    updatedAt?: DateTimeFilter<"watchHistory"> | Date | string
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type episodeCreateWithoutAnimeInput = {
-    id?: string
+    id: string
     title: string
     episodeNum: number
     duration: string
@@ -7224,11 +7279,10 @@ export namespace Prisma {
     subtitleUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    watchHistories?: watchHistoryCreateNestedManyWithoutEpisodeInput
   }
 
   export type episodeUncheckedCreateWithoutAnimeInput = {
-    id?: string
+    id: string
     title: string
     episodeNum: number
     duration: string
@@ -7236,7 +7290,6 @@ export namespace Prisma {
     subtitleUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    watchHistories?: watchHistoryUncheckedCreateNestedManyWithoutEpisodeInput
   }
 
   export type episodeCreateOrConnectWithoutAnimeInput = {
@@ -7281,7 +7334,7 @@ export namespace Prisma {
   }
 
   export type animeCreateWithoutEpisodesInput = {
-    id?: string
+    id: string
     title: string
     synopsis?: string | null
     coverImage?: string | null
@@ -7293,7 +7346,7 @@ export namespace Prisma {
   }
 
   export type animeUncheckedCreateWithoutEpisodesInput = {
-    id?: string
+    id: string
     title: string
     synopsis?: string | null
     coverImage?: string | null
@@ -7307,30 +7360,6 @@ export namespace Prisma {
   export type animeCreateOrConnectWithoutEpisodesInput = {
     where: animeWhereUniqueInput
     create: XOR<animeCreateWithoutEpisodesInput, animeUncheckedCreateWithoutEpisodesInput>
-  }
-
-  export type watchHistoryCreateWithoutEpisodeInput = {
-    id?: string
-    progress: number
-    updatedAt?: Date | string
-    user: userCreateNestedOneWithoutWatchHistoriesInput
-  }
-
-  export type watchHistoryUncheckedCreateWithoutEpisodeInput = {
-    id?: string
-    userId: string
-    progress: number
-    updatedAt?: Date | string
-  }
-
-  export type watchHistoryCreateOrConnectWithoutEpisodeInput = {
-    where: watchHistoryWhereUniqueInput
-    create: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput>
-  }
-
-  export type watchHistoryCreateManyEpisodeInputEnvelope = {
-    data: watchHistoryCreateManyEpisodeInput | watchHistoryCreateManyEpisodeInput[]
-    skipDuplicates?: boolean
   }
 
   export type animeUpsertWithoutEpisodesInput = {
@@ -7368,168 +7397,130 @@ export namespace Prisma {
     releaseDate?: IntFieldUpdateOperationsInput | number
   }
 
-  export type watchHistoryUpsertWithWhereUniqueWithoutEpisodeInput = {
-    where: watchHistoryWhereUniqueInput
-    update: XOR<watchHistoryUpdateWithoutEpisodeInput, watchHistoryUncheckedUpdateWithoutEpisodeInput>
-    create: XOR<watchHistoryCreateWithoutEpisodeInput, watchHistoryUncheckedCreateWithoutEpisodeInput>
-  }
-
-  export type watchHistoryUpdateWithWhereUniqueWithoutEpisodeInput = {
-    where: watchHistoryWhereUniqueInput
-    data: XOR<watchHistoryUpdateWithoutEpisodeInput, watchHistoryUncheckedUpdateWithoutEpisodeInput>
-  }
-
-  export type watchHistoryUpdateManyWithWhereWithoutEpisodeInput = {
-    where: watchHistoryScalarWhereInput
-    data: XOR<watchHistoryUpdateManyMutationInput, watchHistoryUncheckedUpdateManyWithoutEpisodeInput>
-  }
-
-  export type episodeCreateWithoutWatchHistoriesInput = {
+  export type watch_historyCreateWithoutUserInput = {
     id?: string
-    title: string
-    episodeNum: number
-    duration: string
-    videoUrl: string
-    subtitleUrl?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    anime: animeCreateNestedOneWithoutEpisodesInput
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
   }
 
-  export type episodeUncheckedCreateWithoutWatchHistoriesInput = {
+  export type watch_historyUncheckedCreateWithoutUserInput = {
     id?: string
-    animeId: string
-    title: string
-    episodeNum: number
-    duration: string
-    videoUrl: string
-    subtitleUrl?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
   }
 
-  export type episodeCreateOrConnectWithoutWatchHistoriesInput = {
-    where: episodeWhereUniqueInput
-    create: XOR<episodeCreateWithoutWatchHistoriesInput, episodeUncheckedCreateWithoutWatchHistoriesInput>
+  export type watch_historyCreateOrConnectWithoutUserInput = {
+    where: watch_historyWhereUniqueInput
+    create: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput>
   }
 
-  export type userCreateWithoutWatchHistoriesInput = {
-    id?: string
+  export type watch_historyCreateManyUserInputEnvelope = {
+    data: watch_historyCreateManyUserInput | watch_historyCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type watch_historyUpsertWithWhereUniqueWithoutUserInput = {
+    where: watch_historyWhereUniqueInput
+    update: XOR<watch_historyUpdateWithoutUserInput, watch_historyUncheckedUpdateWithoutUserInput>
+    create: XOR<watch_historyCreateWithoutUserInput, watch_historyUncheckedCreateWithoutUserInput>
+  }
+
+  export type watch_historyUpdateWithWhereUniqueWithoutUserInput = {
+    where: watch_historyWhereUniqueInput
+    data: XOR<watch_historyUpdateWithoutUserInput, watch_historyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type watch_historyUpdateManyWithWhereWithoutUserInput = {
+    where: watch_historyScalarWhereInput
+    data: XOR<watch_historyUpdateManyMutationInput, watch_historyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type watch_historyScalarWhereInput = {
+    AND?: watch_historyScalarWhereInput | watch_historyScalarWhereInput[]
+    OR?: watch_historyScalarWhereInput[]
+    NOT?: watch_historyScalarWhereInput | watch_historyScalarWhereInput[]
+    id?: UuidFilter<"watch_history"> | string
+    user_id?: UuidFilter<"watch_history"> | string
+    anime_id?: StringFilter<"watch_history"> | string
+    episode_id?: StringFilter<"watch_history"> | string
+    episode_number?: IntFilter<"watch_history"> | number
+    title?: StringNullableFilter<"watch_history"> | string | null
+    image?: StringNullableFilter<"watch_history"> | string | null
+    progress?: IntFilter<"watch_history"> | number
+    duration?: IntFilter<"watch_history"> | number
+    last_watched_at?: DateTimeFilter<"watch_history"> | Date | string
+  }
+
+  export type userCreateWithoutWatchHistoryInput = {
+    id: string
     email: string
     username?: string | null
+    picture?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type userUncheckedCreateWithoutWatchHistoriesInput = {
-    id?: string
+  export type userUncheckedCreateWithoutWatchHistoryInput = {
+    id: string
     email: string
     username?: string | null
+    picture?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type userCreateOrConnectWithoutWatchHistoriesInput = {
+  export type userCreateOrConnectWithoutWatchHistoryInput = {
     where: userWhereUniqueInput
-    create: XOR<userCreateWithoutWatchHistoriesInput, userUncheckedCreateWithoutWatchHistoriesInput>
+    create: XOR<userCreateWithoutWatchHistoryInput, userUncheckedCreateWithoutWatchHistoryInput>
   }
 
-  export type episodeUpsertWithoutWatchHistoriesInput = {
-    update: XOR<episodeUpdateWithoutWatchHistoriesInput, episodeUncheckedUpdateWithoutWatchHistoriesInput>
-    create: XOR<episodeCreateWithoutWatchHistoriesInput, episodeUncheckedCreateWithoutWatchHistoriesInput>
-    where?: episodeWhereInput
-  }
-
-  export type episodeUpdateToOneWithWhereWithoutWatchHistoriesInput = {
-    where?: episodeWhereInput
-    data: XOR<episodeUpdateWithoutWatchHistoriesInput, episodeUncheckedUpdateWithoutWatchHistoriesInput>
-  }
-
-  export type episodeUpdateWithoutWatchHistoriesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    episodeNum?: IntFieldUpdateOperationsInput | number
-    duration?: StringFieldUpdateOperationsInput | string
-    videoUrl?: StringFieldUpdateOperationsInput | string
-    subtitleUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    anime?: animeUpdateOneRequiredWithoutEpisodesNestedInput
-  }
-
-  export type episodeUncheckedUpdateWithoutWatchHistoriesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    animeId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    episodeNum?: IntFieldUpdateOperationsInput | number
-    duration?: StringFieldUpdateOperationsInput | string
-    videoUrl?: StringFieldUpdateOperationsInput | string
-    subtitleUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type userUpsertWithoutWatchHistoriesInput = {
-    update: XOR<userUpdateWithoutWatchHistoriesInput, userUncheckedUpdateWithoutWatchHistoriesInput>
-    create: XOR<userCreateWithoutWatchHistoriesInput, userUncheckedCreateWithoutWatchHistoriesInput>
+  export type userUpsertWithoutWatchHistoryInput = {
+    update: XOR<userUpdateWithoutWatchHistoryInput, userUncheckedUpdateWithoutWatchHistoryInput>
+    create: XOR<userCreateWithoutWatchHistoryInput, userUncheckedCreateWithoutWatchHistoryInput>
     where?: userWhereInput
   }
 
-  export type userUpdateToOneWithWhereWithoutWatchHistoriesInput = {
+  export type userUpdateToOneWithWhereWithoutWatchHistoryInput = {
     where?: userWhereInput
-    data: XOR<userUpdateWithoutWatchHistoriesInput, userUncheckedUpdateWithoutWatchHistoriesInput>
+    data: XOR<userUpdateWithoutWatchHistoryInput, userUncheckedUpdateWithoutWatchHistoryInput>
   }
 
-  export type userUpdateWithoutWatchHistoriesInput = {
+  export type userUpdateWithoutWatchHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type userUncheckedUpdateWithoutWatchHistoriesInput = {
+  export type userUncheckedUpdateWithoutWatchHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type watchHistoryCreateManyUserInput = {
-    id?: string
-    episodeId: string
-    progress: number
-    updatedAt?: Date | string
-  }
-
-  export type watchHistoryUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    episode?: episodeUpdateOneRequiredWithoutWatchHistoriesNestedInput
-  }
-
-  export type watchHistoryUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    episodeId?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type watchHistoryUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    episodeId?: StringFieldUpdateOperationsInput | string
-    progress?: IntFieldUpdateOperationsInput | number
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type episodeCreateManyAnimeInput = {
-    id?: string
+    id: string
     title: string
     episodeNum: number
     duration: string
@@ -7548,7 +7539,6 @@ export namespace Prisma {
     subtitleUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    watchHistories?: watchHistoryUpdateManyWithoutEpisodeNestedInput
   }
 
   export type episodeUncheckedUpdateWithoutAnimeInput = {
@@ -7560,7 +7550,6 @@ export namespace Prisma {
     subtitleUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    watchHistories?: watchHistoryUncheckedUpdateManyWithoutEpisodeNestedInput
   }
 
   export type episodeUncheckedUpdateManyWithoutAnimeInput = {
@@ -7574,32 +7563,52 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type watchHistoryCreateManyEpisodeInput = {
+  export type watch_historyCreateManyUserInput = {
     id?: string
-    userId: string
-    progress: number
-    updatedAt?: Date | string
+    anime_id: string
+    episode_id: string
+    episode_number: number
+    title?: string | null
+    image?: string | null
+    progress?: number
+    duration?: number
+    last_watched_at?: Date | string
   }
 
-  export type watchHistoryUpdateWithoutEpisodeInput = {
+  export type watch_historyUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: userUpdateOneRequiredWithoutWatchHistoriesNestedInput
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type watchHistoryUncheckedUpdateWithoutEpisodeInput = {
+  export type watch_historyUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type watchHistoryUncheckedUpdateManyWithoutEpisodeInput = {
+  export type watch_historyUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    anime_id?: StringFieldUpdateOperationsInput | string
+    episode_id?: StringFieldUpdateOperationsInput | string
+    episode_number?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     progress?: IntFieldUpdateOperationsInput | number
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    duration?: IntFieldUpdateOperationsInput | number
+    last_watched_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

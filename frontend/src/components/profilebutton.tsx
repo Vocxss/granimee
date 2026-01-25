@@ -1,4 +1,3 @@
-import { useSession } from "@/lib/getSession";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useProfile } from "@/lib/getProfile";
 
 export const ProfileButton = () => {
   const [isProfile, setIsProfile] = useState(false);
@@ -21,9 +21,7 @@ export const ProfileButton = () => {
     setIsProfile(false);
   };
 
-  const data = useSession();
-
-  const { session } = data;
+  const session = useProfile();
 
   useEffect(() => {
     if (session) {
@@ -33,7 +31,7 @@ export const ProfileButton = () => {
     }
   }, [session]);
 
-  console.log(session);
+  // console.log(session);
 
   return (
     <div>
@@ -42,16 +40,11 @@ export const ProfileButton = () => {
           <DropdownMenuTrigger className="border-none" asChild>
             <DropdownMenuLabel className="p-0 font-normal size-12 flex flex-col justify-center items-center gap-2">
               <Avatar className="md:w-full md:h-full w-10 h-10">
-                {session?.user.user_metadata?.picture ? (
-                  <AvatarImage
-                    src={session?.user.user_metadata?.picture}
-                    className=""
-                  />
+                {session?.picture ? (
+                  <AvatarImage src={session?.picture} className="" />
                 ) : (
                   <AvatarFallback className="w-6 h-6">
-                    {session?.user.user_metadata?.email
-                      ?.charAt(0)
-                      .toUpperCase()}
+                    {session?.email?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 )}
               </Avatar>
@@ -60,7 +53,7 @@ export const ProfileButton = () => {
           <DropdownMenuContent className="mr-4">
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href={`/profile/${session?.user.id}`} className="text-xs">
+                <Link href={`/profile/${session?.id}`} className="text-xs">
                   Profile
                 </Link>
               </DropdownMenuItem>

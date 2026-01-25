@@ -146,7 +146,7 @@ export const LoginForm = ({
                 </Button>
                 <div className="flex gap-4 w-4/5 items-center">
                   <span className="h-[1px] w-full bg-muted"></span>
-                  <p className="text-sm text-muted-foreground">Atau</p>
+                  <p className="text-sm text-muted-foreground">Or</p>
                   <span className="h-[1px] w-full bg-muted"></span>
                 </div>
                 <Button

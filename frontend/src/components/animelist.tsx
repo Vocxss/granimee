@@ -3,6 +3,7 @@ import {
   useDetailAnime,
   useLatestAnime,
   usePopularAnime,
+  useSchedule,
 } from "@/hooks/use-anime";
 import { AnimeWithEpisodes } from "@/lib/utils";
 import { Play } from "lucide-react";
@@ -13,6 +14,14 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 import { H3, H4 } from "./ui/typography";
+import { AnimeSchedule } from "@/lib/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export const List = ({
   anime,
@@ -39,7 +48,7 @@ export const List = ({
       <div className="grid grid-cols-3 sm:grid-cols-4 2xl:grid-cols-5 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
-            href={`/anime/${anime.id}/watch?ep=${anime.episodes}`}
+            href={`/anime/${anime.id}/watch?ep=${anime.episodes.eps}`}
             className="relative group rounded-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-sm h-auto flex flex-col gap-2"
             key={index}
           >
@@ -102,7 +111,7 @@ export const LatestList = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
-            href={`/anime/${anime.id}/watch?ep=${anime.episodes}`}
+            href={`/anime/${anime.id}/watch?ep=${anime.episodes.eps}`}
             className="relative group rounded-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-sm h-auto flex flex-col gap-2"
             key={index}
           >
@@ -279,5 +288,76 @@ export const TopList = () => {
         ))}
       </CardContent>
     </Card>
+  );
+};
+
+export const ScheduleList = () => {
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error } = useSchedule(page);
+  if (isLoading) {
+    return (
+      <div className="w-full mx-auto bg-card rounded-sm py-12 px-12 flex flex-wrap gap-4 justify-center">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Skeleton key={index} className="w-48 h-64 rounded" />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) return toast.error("Something wrong :(. Please try again.");
+
+  return (
+    <div className="flex flex-col gap-4 my-16 mx-6">
+      <div className="flex justify-between items-center">
+        <H3 text={"Schedules"} />
+        <Select
+          value={page.toString()}
+          onValueChange={(value) => setPage(Number(value))}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select Page" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <SelectItem key={index} value={String(index + 1)}>
+                {index + 1}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col gap-16 p-4 bg-black/30 rounded-lg border border-border/20">
+        {data &&
+          data.map((item) => (
+            <div className="flex flex-col gap-6" key={item.day}>
+              <h2 className="text-xl font-semibold">{item.day}</h2>
+              <div className="grid grid-cols-3 gap-12">
+                {item.animes.map((anime, index) => (
+                  <div
+                    key={anime.id}
+                    className="flex gap-6 items-center py-4 px-6 rounded-lg border border-border/10 bg-primary/10 backdrop-blur-lg transition-transform duration-300 hover:scale-105 hover:bg-accent/80 shadow-lg"
+                  >
+                    <Image
+                      alt={`${index}`}
+                      width={480}
+                      height={720}
+                      src={anime.image}
+                      className="object-cover rounded-md max-w-24 aspect-[1/0.8]"
+                    />
+                    <div className="flex flex-col gap-2">
+                      <p className="text-sm font-semibold line-clamp-2 w-full">
+                        {anime.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {anime.time}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
   );
 };

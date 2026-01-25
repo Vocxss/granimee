@@ -1,3 +1,4 @@
+import { AnimeSchedule, DaySchedule } from "@/lib/types";
 import {
   AnimeDetail,
   AnimeListEpisode,
@@ -175,6 +176,29 @@ export const useAnime = (page: number, letter: string) => {
       return data.data.responses;
     },
     placeholderData: keepPreviousData,
+    ...DEFAULT_QUERY_OPTIONS,
+  });
+
+  if (error) {
+    console.log(error);
+  }
+
+  return { data, isLoading, error };
+};
+
+export const useSchedule = (page: number) => {
+  const { data, isLoading, error } = useQuery<DaySchedule[]>({
+    queryKey: ["schedule", page],
+    queryFn: async () => {
+      const response = await fetch(
+        `http://localhost:3000/api/schedule?page=${page}`,
+      );
+      if (!response.ok) {
+        throw new Error("Response was not ok");
+      }
+      const data = await response.json();
+      return data.data;
+    },
     ...DEFAULT_QUERY_OPTIONS,
   });
 

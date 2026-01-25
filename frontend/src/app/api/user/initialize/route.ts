@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
 
     const userId = session.user.id;
     const userEmail = session.user.email;
-    const userName = userEmail?.split("@")[0] || "NPC";
+    const userName = session.user.user_metadata?.name || userEmail?.split("@")[0];
+    const userImage = session.user.user_metadata?.picture || "";
 
     const existingUser = await prisma.user.findUnique({
       where: { id: userId },
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
           id: userId,
           email: userEmail,
           username: userName,
+          picture: userImage,
           role: "user",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -43,12 +45,10 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    console.log(`✅ User initialized: ${userEmail} (${userId})`);
-
     return NextResponse.json({
       message: "User initialized successfully",
-      userId,
-      username: userName,
+    }, {
+      status: 200,
     });
   } catch (error) {
     console.error("Error initializing user:", error);

@@ -51,7 +51,7 @@ export async function middleware(req: NextRequest) {
 
  if (isAuthRoute && user) {
     const role = user.user_metadata?.role; 
-    console.log(role)
+    // console.log(role)
     return NextResponse.redirect(
       new URL(role === "kami" ? "/kami/upload/anime" : "/home", req.nextUrl.origin)
     );

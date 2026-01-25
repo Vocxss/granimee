@@ -4,7 +4,7 @@ import { H3 } from "./typography";
 
 export const Footer = () => {
   return (
-    <div className="border-t border-border mx-auto w-full flex flex-col gap-8 px-8 pt-6 pb-10">
+    <div className="border-t bg-black/60 backdrop-blur-xl border-border mx-auto w-full flex flex-col gap-8 px-8 pt-6 pb-10">
       <div className="flex items-center gap-8">
         <H3 text="Granime" />
       </div>

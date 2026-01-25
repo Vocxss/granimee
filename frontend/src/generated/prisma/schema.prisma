@@ -5,52 +5,72 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model user {
-  id             String         @id @default(cuid())
-  email          String         @unique
-  username       String?
-  role           String         @default("user")
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  watchHistories watchHistory[]
+  url      = env("DIRECT_URL")
+  schemas  = ["public"]
 }
 
 model anime {
-  id          String    @id @default(cuid())
+  id          String   @id
   title       String
   synopsis    String?
   coverImage  String?
   bannerImage String?
   genre       String[]
-  status      String    @default("ongoing")
+  status      String   @default("ongoing")
   rating      Float
   releaseDate Int
-  episodes    episode[]
+
+  episodes episode[]
+
+  @@schema("public")
 }
 
 model episode {
-  id             String         @id @default(cuid())
-  animeId        String
-  title          String
-  episodeNum     Int
-  duration       String
-  videoUrl       String
-  subtitleUrl    String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  anime          anime          @relation(fields: [animeId], references: [id])
-  watchHistories watchHistory[]
+  id          String   @id
+  animeId     String
+  title       String
+  episodeNum  Int
+  duration    String
+  videoUrl    String
+  subtitleUrl String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  anime anime @relation(fields: [animeId], references: [id])
+
+  @@index([animeId])
+  @@schema("public")
 }
 
-model watchHistory {
-  id        String   @id @default(cuid())
-  userId    String
-  episodeId String
-  progress  Int
+model user {
+  id        String   @id @db.Uuid
+  email     String   @unique
+  username  String?
+  picture   String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  episode   episode  @relation(fields: [episodeId], references: [id])
-  user      user     @relation(fields: [userId], references: [id])
+
+  watchHistory watch_history[]
+
+  @@schema("public")
+}
+
+model watch_history {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id         String   @db.Uuid
+  anime_id        String
+  episode_id      String
+  episode_number  Int
+  title           String?
+  image           String?
+  progress        Int      @default(0)
+  duration        Int      @default(0)
+  last_watched_at DateTime @default(now()) @db.Timestamptz(6)
+
+  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, anime_id, episode_id])
+  @@index([user_id])
+  @@schema("public")
 }

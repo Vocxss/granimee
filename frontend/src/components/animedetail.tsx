@@ -16,11 +16,11 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 export const AnimeDetail = ({ slug }: { slug: string }) => {
-  console.log(slug);
+  // console.log(slug);
 
   const { anime, isLoading, isError } = useDetailAnime(slug);
 
-  console.log(anime);
+  // console.log(anime);
 
   if (isLoading)
     return (

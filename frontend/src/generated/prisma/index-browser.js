@@ -121,15 +121,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  username: 'username',
-  role: 'role',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.AnimeScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -154,12 +145,27 @@ exports.Prisma.EpisodeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.WatchHistoryScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  episodeId: 'episodeId',
-  progress: 'progress',
+  email: 'email',
+  username: 'username',
+  picture: 'picture',
+  role: 'role',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Watch_historyScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  anime_id: 'anime_id',
+  episode_id: 'episode_id',
+  episode_number: 'episode_number',
+  title: 'title',
+  image: 'image',
+  progress: 'progress',
+  duration: 'duration',
+  last_watched_at: 'last_watched_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -179,10 +185,10 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  user: 'user',
   anime: 'anime',
   episode: 'episode',
-  watchHistory: 'watchHistory'
+  user: 'user',
+  watch_history: 'watch_history'
 };
 
 /**
