@@ -8,7 +8,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Archive, CalendarClock, Home } from "lucide-react";
@@ -72,16 +71,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 isActive={item.isActive}
                 className="p-6"
               >
-                <Link href={item.url} className="flex items-center gap-4">
-                <Tooltip key={item.title}>
-                  <TooltipTrigger className="relative flex items-center justify-center" asChild>
-                    <span className="absolute z-20">{item.icon}</span>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">
-                    {item.title}
-                  </TooltipContent>
-                </Tooltip>
-                </Link>
+                {isMobile ? (
+                  <Link href={item.url} className="flex items-center gap-4">
+                    {item.icon} {item.title}
+                  </Link>
+                ) : (
+                  <Link href={item.url} className="flex items-center gap-4">
+                    <Tooltip key={item.title}>
+                      <TooltipTrigger
+                        className="relative flex items-center justify-center"
+                        asChild
+                      >
+                        <span className="absolute z-20">{item.icon}</span>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">{item.title}</TooltipContent>
+                    </Tooltip>
+                  </Link>
+                )}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

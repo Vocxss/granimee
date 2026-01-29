@@ -156,7 +156,7 @@ export const SearchTrigger = () => {
           className="absolute w-full h-full "
           onClick={() => setIsOpen(false)}
         ></div>
-        <div className="relative w-1/2 z-50">
+        <div className="relative md:w-1/2 w-[95%] z-50">
           <SearchBar />
         </div>
       </div>,

@@ -19,7 +19,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center p-8 mx-8 my-16 gap-12">
+    <div className="flex flex-col justify-center items-center md:p-8 md:mx-8 my-16 gap-12">
       <ProfileDetail session={session} />
       <WatchHistory />
     </div>

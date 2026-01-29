@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import { NextRequest, NextResponse } from "next/server";
 
-// Query asli dari Anda
 const ANILIST_QUERY = `
 query (
     $weekStart: Int,
@@ -59,15 +58,12 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
-    // 1. Tentukan Rentang Waktu (Misal: 7 hari ke depan dari sekarang)
     const now = new Date();
-    // Set ke jam 00:00 hari ini agar rapi
     now.setHours(0, 0, 0, 0);
 
-    const weekStart = Math.floor(now.getTime() / 1000); // Unix timestamp (seconds)
-    const weekEnd = weekStart + 7 * 24 * 60 * 60; // +7 Hari
+    const weekStart = Math.floor(now.getTime() / 1000);
+    const weekEnd = weekStart + 7 * 24 * 60 * 60;
 
-    // 2. Request ke AniList API
     const response = await axios.post(
       "https://graphql.anilist.co",
       {
@@ -75,7 +71,7 @@ export async function GET(request: NextRequest) {
         variables: {
           weekStart: weekStart,
           weekEnd: weekEnd,
-          page: page, // Anda bisa membuat logika pagination jika datanya sangat banyak
+          page: page,
         },
       },
       {
@@ -88,8 +84,6 @@ export async function GET(request: NextRequest) {
 
     const schedules = response.data.data.Page.airingSchedules;
 
-    // 3. Transformasi & Grouping Data berdasarkan Hari
-    // Format AniList: Linear List (Array lurus) -> Kita ubah jadi Grouped by Day
     const groupedSchedule = groupSchedulesByDay(schedules);
 
     return NextResponse.json(
@@ -112,35 +106,25 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// --- Helper Functions ---
-
-// --- Helper Functions ---
-
 function groupSchedulesByDay(schedules: any[]) {
   const daysMap = new Map<string, any[]>();
 
-  // PENTING: Tentukan Timezone target (Misal: WIB 'Asia/Jakarta' atau JST 'Asia/Tokyo')
   const TARGET_TIMEZONE = "Asia/Tokyo";
-
-  // Format Hari
   const dayFormatter = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
-    timeZone: TARGET_TIMEZONE, // <--- INI KUNCINYA
+    timeZone: TARGET_TIMEZONE,
   });
 
-  // Format Jam
   const timeFormatter = new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,
-    timeZone: TARGET_TIMEZONE, // <--- INI JUGA PENTING
+    timeZone: TARGET_TIMEZONE,
   });
 
   schedules.forEach((item: any) => {
-    // Konversi Unix Timestamp ke JS Date
     const date = new Date(item.airingAt * 1000);
 
-    // Format nama hari berdasarkan Timezone yang dipilih
     const dayName = dayFormatter.format(date);
 
     const isAdultAnime = item.media.genres.includes("Hentai");
@@ -153,7 +137,6 @@ function groupSchedulesByDay(schedules: any[]) {
       title: item.media.title.english || item.media.title.romaji,
       episode: item.episode,
       color: item.media.coverImage.color,
-      // Jam tayang juga akan menyesuaikan timezone
       time: timeFormatter.format(date),
       image: item.media.coverImage.extraLarge || item.media.coverImage.large,
       genres: item.media.genres.slice(0, 3),

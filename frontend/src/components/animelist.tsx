@@ -12,8 +12,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader } from "./ui/card";
-import { Skeleton } from "./ui/skeleton";
-import { H3, H4 } from "./ui/typography";
+import { Loader } from "./ui/loader";
 import {
   Select,
   SelectContent,
@@ -21,6 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Skeleton } from "./ui/skeleton";
+import { H3, H4 } from "./ui/typography";
 
 export const List = ({
   anime,
@@ -42,11 +43,11 @@ export const List = ({
   }
 
   return (
-    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 md:mx-0 mx-4 flex flex-col">
+    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 flex flex-col">
       {/* <div className="flex items-center justify-between">
         <H3 text={"Latest Episode"} />
       </div> */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
             href={`/anime/${anime.id}`}
@@ -96,7 +97,6 @@ export const List = ({
 
 export const LatestList = () => {
   const { anime, isLoading, error } = useLatestAnime();
-
   if (isLoading) {
     return (
       <div className="mx-auto grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-6">
@@ -112,10 +112,10 @@ export const LatestList = () => {
       <div className="flex items-center justify-between">
         <H3 text={"Latest Episode"} />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 2xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 2xl:grid-cols-5 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
-            href={`/anime/${anime.id}/watch?ep=${anime.episodes.eps}`}
+            href={`/anime/${anime.id}/watch?ep=${anime.episodes.sub}`}
             className="relative group rounded-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-sm h-auto flex flex-col gap-2"
             key={index}
           >
@@ -130,7 +130,7 @@ export const LatestList = () => {
               </p>
               <div className="flex items-center justify-between">
                 <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
-                  Episode {anime.episodes.eps}
+                  Episode {anime.episodes.sub}
                 </p>
                 {/* <p className="text-[9px] font-bold">{anime.episodes.}</p> */}
               </div>
@@ -298,43 +298,41 @@ export const ScheduleList = () => {
   const { data, isLoading, error } = useSchedule(page);
   if (isLoading) {
     return (
-      <div className="w-full mx-auto py-12 px-12 flex flex-wrap gap-4 justify-center">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Skeleton key={index} className="w-48 h-24 rounded-lg" />
-        ))}
+      <div className="w-full h-screen flex items-center justify-center bg-background/50">
+        <Loader />
       </div>
     );
   }
 
-  if (error) return toast.error("Something wrong :(. Please try again.");
+  if (error) return toast.error("Something wrong :( Please try again.");
 
   return (
-    <div className="flex flex-col gap-4 my-16 mx-8">
-        <H3 text={"Schedules"} />
-        <div className="flex flex-col gap-2">
-          <p className="text-xs font-semibold">Page</p>
-          <Select
-            value={page.toString()}
-            onValueChange={(value) => setPage(Number(value))}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Page" />
-            </SelectTrigger>
-            <SelectContent>
-              {Array.from({ length: 3 }).map((_, index) => (
-                <SelectItem key={index} value={String(index + 1)}>
-                  {index + 1}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+    <div className="flex flex-col gap-4 md:my-16 my-24 mx-4 md:mx-8">
+      <H3 text={"Schedules"} />
+      <div className="flex flex-col gap-2">
+        <p className="text-xs font-semibold">Page</p>
+        <Select
+          value={page.toString()}
+          onValueChange={(value) => setPage(Number(value))}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select Page" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <SelectItem key={index} value={String(index + 1)}>
+                {index + 1}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="flex flex-col gap-16">
         {data &&
           data.map((item) => (
             <div className="flex flex-col gap-6" key={item.day}>
               <h2 className="text-xl font-semibold">{item.day}</h2>
-              <div className="grid grid-cols-3 gap-12">
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-12">
                 {item.animes.map((anime, index) => (
                   <div
                     key={anime.id}

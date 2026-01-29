@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabaseClient";
-import { BackendIP, cn } from "@/lib/utils";
+import { BackendIP2, cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@supabase/supabase-js";
 import { Eye, EyeClosed, Mail, MailCheck, User } from "lucide-react";
@@ -61,7 +61,7 @@ export const SignupForm = ({
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     const supabasee = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     );
 
     const validation = formSchema.safeParse(values);
@@ -70,11 +70,14 @@ export const SignupForm = ({
       return;
     }
 
-    const upload = await fetch(`${BackendIP}/api/auth/signup`, {
+    console.log(values);
+
+    const upload = await fetch(`${BackendIP2}/auth/signup`, {
       method: "POST",
       body: JSON.stringify({
         email: values.email,
         username: values.username,
+        password: values.password,
       }),
     });
     const data = await upload.json();
@@ -115,7 +118,7 @@ export const SignupForm = ({
                         <FormLabel>Username</FormLabel>
                         <div className="relative">
                           <Input placeholder="uchiha_sasuke" {...field} />
-                          <User className="w-5 h-5 absolute top-1.5 right-3.5 text-muted-foreground" />
+                          <User className="w-5 h-5 absolute top-3.5 right-3.5 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </FormItem>
@@ -129,7 +132,7 @@ export const SignupForm = ({
                         <FormLabel>Email</FormLabel>
                         <div className="relative">
                           <Input placeholder="sasuke@example.com" {...field} />
-                          <Mail className="w-5 h-5 absolute top-1.5 right-3.5 text-muted-foreground" />
+                          <Mail className="w-5 h-5 absolute top-3.5 right-3.5 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </FormItem>
@@ -152,9 +155,9 @@ export const SignupForm = ({
                             onClick={() => setShowPass(!showPass)}
                           >
                             {showPass ? (
-                              <EyeClosed className="w-5 h-5 absolute top-1/5 right-3.5 text-muted-foreground" />
+                              <EyeClosed className="w-5 h-5 absolute top-3.5 right-3.5 text-muted-foreground" />
                             ) : (
-                              <Eye className="w-5 h-5 absolute top-1.5 right-3.5 text-muted-foreground" />
+                              <Eye className="w-5 h-5 absolute top-3.5 right-3.5 text-muted-foreground" />
                             )}
                           </button>
                         </div>

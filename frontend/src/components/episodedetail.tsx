@@ -15,7 +15,6 @@ import {
 } from "./ui/breadcrumb";
 import { Loader } from "./ui/loader";
 import { H3 } from "./ui/typography";
-import { VideoPlayer } from "./videosupported";
 
 export const EpisodeDetail = ({
   slug,
@@ -26,13 +25,12 @@ export const EpisodeDetail = ({
 }) => {
   const { anime, isLoading: isLoadingDetail } = useDetailAnime(slug);
   const { episodes, streamData, isLoading } = useWatchEpisode(episodeNow, slug);
-  console.log(streamData);
   const episodeListData = anime?.episodes;
-
   const [initialProgress, setInitialProgress] = useState(0);
 
-    const episode_id = episodes?.filter((ep) => ep.episodeNumber === episodeNow)[0]?.id;
-
+  const episode_id = episodes?.filter(
+    (ep) => ep.episodeNumber === episodeNow,
+  )[0]?.id;
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -45,9 +43,9 @@ export const EpisodeDetail = ({
     };
     fetchHistory();
   }, [anime?.id, episode_id]);
-  const subtitle = streamData?.tracks.filter((t) => t.label === "English");
+  const subtitle =
+    streamData?.tracks.filter((t) => t.label === "English") || [];
   // console.log(episodeData)
-
   if (isLoading || isLoadingDetail) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-background/50">
@@ -58,7 +56,7 @@ export const EpisodeDetail = ({
 
   return (
     <div>
-      <div className="max-w-7xl w-full mx-auto md:py-30 py-24 md:px-24 px-0 flex flex-col gap-6">
+      <div className="max-w-7xl w-full md:mx-auto px-4 md:py-30 py-24 md:px-24 px-0 flex flex-col gap-6 min-h-[72vh]">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -86,10 +84,17 @@ export const EpisodeDetail = ({
           </BreadcrumbList>
         </Breadcrumb>
         <div className="bg-card w-full aspect-video border border-border rounded-lg">
-          <div className="w-full">
+          <div className="w-full rounded-lg overflow-hidden">
             <video controls autoPlay>
-              <track kind="captions" srcLang="en" src={`/api/proxy/subtitle?url=${encodeURIComponent(streamData?.tracks?.[0]?.file || "")}`} />
-              <source src={streamData?.link?.file || ""} type="application/x-mpegURL" />
+              <track
+                kind="captions"
+                srcLang="en"
+                src={`/api/proxy/subtitle?url=${encodeURIComponent(subtitle[0]?.file || "")}`}
+              />
+              <source
+                src={streamData?.link?.file}
+                type="application/x-mpegURL"
+              />
             </video>
             {/* <VideoPlayer
               subtitles={

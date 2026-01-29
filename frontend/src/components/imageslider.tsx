@@ -1,6 +1,7 @@
 "use client";
 
 import { useSpotlightAnime } from "@/hooks/use-anime";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Link from "next/link";
@@ -25,7 +26,7 @@ const variants = {
 
 export const ImageSlider = () => {
   const [[index, direction], setIndex] = useState([1, 0]);
-
+  const isMobile = useIsMobile();
   const { anime, isLoading } = useSpotlightAnime();
 
   const imagesList = anime.map((item) => item.poster).splice(0, 10);
@@ -57,7 +58,7 @@ export const ImageSlider = () => {
     );
 
   return (
-    <Card className="w-[95%] overflow-hidden border-primary/30 shadow-lg h-[35vh] md:h-[55vh] p-0 mx-auto relative rounded-xl">
+    <Card className="md:w-[95%] w-full overflow-hidden border-primary/30 shadow-lg h-[35vh] md:h-[55vh] p-0 mx-auto relative rounded-xl">
       <motion.img
         custom={direction}
         variants={variants}
@@ -110,17 +111,17 @@ export const ImageSlider = () => {
               </p>
               <div className="flex gap-2 items-center">
                 <Link
-                  href={`/anime/${anime[index].id}/watch?episode=1`}
+                  href={`/anime/${anime[index].id}/watch?ep=1`}
                   className="font-semibold md:text-base px-5 py-3 bg-primary text-primary-foreground rounded-full flex items-center justify-center gap-2 text-xs"
                 >
                   <Play className="w-4 h-4" />
-                  Watch Now
+                  {isMobile ? "" : "Watch Now"}
                 </Link>
                 <Link
                   href={`/anime/${anime[index].id}`}
                   className="font-semibold md:text-base px-5 py-3 bg-card border border-border text-foreground hover:text-accent-foreground rounded-full flex items-center justify-center gap-1 text-xs"
                 >
-                  Detail
+                  {isMobile ? "Detail" : "Detail"}
                   <ChevronRight className="w-5 h-5" />
                 </Link>
               </div>

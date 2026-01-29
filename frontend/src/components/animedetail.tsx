@@ -1,8 +1,10 @@
 "use client";
 import { useDetailAnime } from "@/hooks/use-anime";
-import { Home, Play, Star } from "lucide-react";
+import { Home, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { FaBoxArchive, FaClock, FaStar, FaVideo } from "react-icons/fa6";
 import { toast } from "sonner";
 import {
   Breadcrumb,
@@ -13,10 +15,8 @@ import {
   BreadcrumbSeparator,
 } from "./ui/breadcrumb";
 import { Button } from "./ui/button";
+import { Loader } from "./ui/loader";
 import { Skeleton } from "./ui/skeleton";
-import { useState } from "react";
-import { FaBoxArchive, FaClock, FaStar, FaVideo } from "react-icons/fa6";
-
 
 export const AnimeDetail = ({ slug }: { slug: string }) => {
   // console.log(slug);
@@ -26,60 +26,49 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
   const listDetail = [
     {
       title: "Episodes",
-      icon: <FaBoxArchive/>,
-      detail: anime?.episodes.eps
+      icon: <FaBoxArchive />,
+      detail: anime?.episodes.eps,
     },
     {
       title: "Aired",
-      icon: <FaClock/>,
-      detail: anime?.aired.from.slice(-4)
+      icon: <FaClock />,
+      detail: anime?.aired.from.slice(-4),
     },
     {
       title: "Format",
-      icon: <FaVideo/>,
-      detail: anime?.type
+      icon: <FaVideo />,
+      detail: anime?.type,
     },
     {
       title: "Status",
-      icon: <FaClock/>,
-      detail: anime?.status
+      icon: <FaClock />,
+      detail: anime?.status,
     },
     {
       title: "Rating",
-      icon: <FaStar/>,
-      detail: anime?.MAL_score
+      icon: <FaStar />,
+      detail: anime?.MAL_score,
     },
     {
       title: "Studios",
-      icon: <FaBoxArchive/>,
-      detail: anime?.studios
-    }
-  ]
+      icon: <FaBoxArchive />,
+      detail: anime?.studios,
+    },
+  ];
   // console.log(anime);
 
   if (isLoading)
     return (
-      <div className="flex flex-col gap-4 px-12 py-30 mx-auto w-full">
-        <div className="flex flex-col md:flex-row justify-between w-full">
-          <Skeleton className="w-1/5 h-[40vh] rounded-sm shadow-lg" />
-          <div className="flex flex-col gap-4">
-          {Array.from({length: 3}).map((_, index) => (
-            <Skeleton key={index} className="w-full h-12" />
-          ))}
-          </div>
-          <Skeleton className="w-1/4 h-[50vh] rounded-sm shadow-lg" />
-        </div>
-        <div>
-          <Skeleton className="w-full h-[20vh] rounded-sm shadow-lg" />
-        </div>
+      <div className="w-full h-screen flex items-center justify-center bg-background/50">
+        <Loader />
       </div>
     );
 
   if (isError) return toast.error("Something went wrong :(");
 
   return (
-    <div className="flex flex-col gap-4 px-12">
-      <div className="relative md:shrink-0 max-h-[400px] h-[70vh] w-full flex md:mt-12 mt-32 mb-4">
+    <div className="flex flex-col gap-4 md:px-12 px-4 pt-24">
+      <div className="relative md:shrink-0 md:max-h-[400px] md:h-[70vh] w-full flex mb-4">
         {anime?.poster ? (
           <Image
             alt={`cover`}
@@ -92,7 +81,7 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
           <Skeleton className="w-full aspect-[1/1.45] rounded-sm" />
         )}
 
-        <div className="flex flex-col md:flex-row px-4 md:gap-18 gap-6 md:mt-12 mt-0">
+        <div className="flex flex-col md:flex-row md:justify-start justify-center items-center px-4 md:gap-18 gap-6 md:mt-12 mt-0">
           <Image
             src={anime?.poster || ""}
             width={480}
@@ -135,14 +124,30 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
               </p>
             </div>
             <div className="flex gap-4 items-center">
-           {anime?.genres?.map((genre) => (
-            <p key={genre} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-sm font-semibold">{genre}</p>
-           ))}
+              {anime?.genres?.map((genre) => (
+                <p
+                  key={genre}
+                  className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-sm font-semibold"
+                >
+                  {genre}
+                </p>
+              ))}
             </div>
             <div className="flex flex-col gap-2">
-              <p className="font-semibold md:text-start text-center">Overview</p>
-              <p className={`text-sm md:text-start text-center leading-wide ${showMore ? "" : "line-clamp-4 text-ellipsis"}`}>{anime?.synopsis}</p>
-              <span className="w-max text-xs cursor-pointer hover:text-primary transition-colors" onClick={() => setShowMore(!showMore)}>{showMore ? "Show Less" : "Show More"}</span>
+              <p className="font-semibold md:text-start text-center">
+                Overview
+              </p>
+              <p
+                className={`md:text-sm text-xs md:text-start text-center leading-wide ${showMore ? "" : "line-clamp-4 text-ellipsis"}`}
+              >
+                {anime?.synopsis}
+              </p>
+              <span
+                className="text-xs md:text-start text-center underline cursor-pointer hover:text-primary transition-colors"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? "Show Less" : "Show More"}
+              </span>
             </div>
             <Button
               variant={"default"}
@@ -160,15 +165,22 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:p-6 p-2">
-          {listDetail.map((detail, index) => (
-            <div key={index} className="flex flex-col gap-4 bg-primary/10 p-4 border border-border rounded-sm">
-              <div className="flex items-center gap-2">
+        {listDetail.map((detail, index) => (
+          <div
+            key={index}
+            className="flex flex-col gap-4 bg-primary/10 md:justify-start justify-center md:items-start items-center p-4 border border-border rounded-sm"
+          >
+            <div className="flex items-center gap-2">
               <span className="text-xs">{detail.icon}</span>
-              <p className="font text-sm md:text-start text-center">{detail.title}</p>
-              </div>
-              <p className="font-semibold md:text-start text-center">{detail.detail}</p>
+              <p className="font md:text-sm text-xs md:text-start text-center">
+                {detail.title}
+              </p>
             </div>
-          ))}
+            <p className="font-semibold md:text-start text-center">
+              {detail.detail}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

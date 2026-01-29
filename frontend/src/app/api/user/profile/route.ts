@@ -1,4 +1,3 @@
-import prisma from "@/lib/prisma";
 import { supabaseServer } from "@/lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -31,7 +30,11 @@ export async function PUT(req: NextRequest) {
           upsert: true,
         });
 
-      if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 400 });
+      if (uploadError)
+        return NextResponse.json(
+          { error: uploadError.message },
+          { status: 400 },
+        );
 
       const { data: publicUrlData } = supabase.storage
         .from("avatars")
@@ -40,12 +43,16 @@ export async function PUT(req: NextRequest) {
       imageUrl = publicUrlData.publicUrl;
     }
 
-    const {error} = await supabase.from("user").update({
-      username: name,
-      picture: imageUrl,
-    }).eq("id", user.id);
+    const { error } = await supabase
+      .from("user")
+      .update({
+        username: name,
+        picture: imageUrl,
+      })
+      .eq("id", user.id);
 
-    if(error) return NextResponse.json({ error: error.message }, { status: 400 });
+    if (error)
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
     return NextResponse.json(
       { message: "Updated successfully", data: { name, picture: imageUrl } },
@@ -54,7 +61,7 @@ export async function PUT(req: NextRequest) {
   } catch (error: any) {
     console.log(error);
     return NextResponse.json(
-      { message: "Failed to update :(" , error: error.message},
+      { message: "Failed to update :(", error: error.message },
       { status: 500 },
     );
   }

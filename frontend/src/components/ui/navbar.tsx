@@ -9,7 +9,7 @@ import { H4 } from "./typography";
 const MobileNavbar = () => {
   const { toggleSidebar } = useSidebar();
   return (
-    <div className="justify-between flex items-center px-8 py-3 border-b border-white/30">
+    <div className="justify-between flex items-center px-5 py-3 border-b border-white/30">
       <div className="max-w-64 w-1/4">
         <Menu
           className="w-6 h-6 text-white cursor-pointer"

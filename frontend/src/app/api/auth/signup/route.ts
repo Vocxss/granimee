@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   if (!email || !username || !password) {
     return NextResponse.json(
       { message: "Email, username and password are required!" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
 
   if (existed) {
     return NextResponse.json(
-      { message: "Invalid email or password!" },
-      { status: 400 }
+      { message: "Email already exists!" },
+      { status: 400 },
     );
   }
 
@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
 
   if (authErr) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
+      { message: authErr.message, error: authErr.message },
+      { status: 500 },
     );
   }
 
@@ -43,29 +43,29 @@ export async function POST(req: NextRequest) {
 
   if (!userId) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
+      { message: "User ID not found!", error: "User ID not found!" },
+      { status: 500 },
     );
   }
 
-  const { error: insertErr } = await supabase.from("users").insert({
+  const { error: insertErr } = await supabase.from("user").insert({
     id: userId,
     username,
     email,
-    role: "user",
+    picture: "",
     createdAt: new Date(),
     updatedAt: new Date(),
   });
 
   if (insertErr) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 400 }
+      { message: insertErr.message, error: insertErr.message },
+      { status: 400 },
     );
   }
 
   return NextResponse.json(
     { message: "Account created successfully!" },
-    { status: 200 }
+    { status: 200 },
   );
 }

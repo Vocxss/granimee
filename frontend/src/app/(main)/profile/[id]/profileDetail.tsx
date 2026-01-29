@@ -1,5 +1,4 @@
 "use client";
-import { Profile } from "@/lib/getProfile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +24,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { Profile } from "@/lib/getProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageUp, Pencil } from "lucide-react";
 import { useEffect } from "react";
@@ -73,8 +73,8 @@ export const ProfileDetail = ({ session }: { session: Profile | null }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row md:gap-0 gap-6 w-full justify-between items-center">
-      <div className="flex gap-8 flex-wrap md:justify-normal justify-center items-center">
+    <div className="flex flex-col md:flex-row md:gap-0 gap-2 w-full justify-between items-center">
+      <div className="flex md:gap-8 gap-4 md:p-0 p-8 md:flex-row flex-col md:justify-normal justify-center items-center">
         <div className="flex max-w-[200px] w-full justify-center items-center relative">
           <Avatar className="w-[200px] h-[200px]">
             {session?.picture && session?.picture !== "" ? (
