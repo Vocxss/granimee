@@ -132,7 +132,7 @@ function groupSchedulesByDay(schedules: any[]) {
   const timeFormatter = new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
+    hour12: true,
     timeZone: TARGET_TIMEZONE, // <--- INI JUGA PENTING
   });
 

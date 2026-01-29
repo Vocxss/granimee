@@ -95,12 +95,6 @@ export const ProfileDetail = ({ session }: { session: Profile | null }) => {
               type="file"
               className="absolute bottom-0 right-0 z-10 opacity-0 w-full h-full cursor-pointer"
             />
-            <Button
-              variant={"outline"}
-              className="text-sm aspect-square absolute bottom-0 right-0 group-hover:text-accent-foreground group-hover:bg-background"
-            >
-              <ImageUp className="w-5 h-5" />
-            </Button>
           </div>
         </div>
         <p className="text-2xl font-bold ">{session?.username}</p>

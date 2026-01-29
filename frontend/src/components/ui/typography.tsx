@@ -15,7 +15,7 @@ export function H2({ text }: { text?: string }) {
 
 export function H3({ text }: { text: string }) {
   return (
-    <h3 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+    <h3 className="scroll-m-20 pb-2 text-2xl font-bold tracking-tight first:mt-0 bg-linear-to-r from-primary to-accent-foreground text-transparent bg-clip-text">
       {text}
     </h3>
   );

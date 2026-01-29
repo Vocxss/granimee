@@ -1,6 +1,7 @@
 import { AnimeSchedule, DaySchedule } from "@/lib/types";
 import {
   AnimeDetail,
+  AnimeList,
   AnimeListEpisode,
   AnimeStreamData,
   AnimeWithEpisodes,
@@ -162,7 +163,8 @@ export const useSpotlightAnime = () => {
 };
 
 export const useAnime = (page: number, letter: string) => {
-  const { data, isLoading, error } = useQuery<AnimeWithEpisodes[]>({
+  console.log(letter, page);
+  const { data, isLoading, error } = useQuery({
     queryKey: ["list", `${letter}-${page}`],
     queryFn: async () => {
       const response = await fetch(
@@ -172,8 +174,8 @@ export const useAnime = (page: number, letter: string) => {
         throw new Error("Response was not ok");
       }
       const data = await response.json();
-      // console.log(data.data.spotlight);
-      return data.data.responses;
+      // console.log(data);
+      return data.data;
     },
     placeholderData: keepPreviousData,
     ...DEFAULT_QUERY_OPTIONS,

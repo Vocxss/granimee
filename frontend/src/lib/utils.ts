@@ -150,6 +150,12 @@ export interface BaseAnime {
   poster: string;
 }
 
+export interface AnimeList extends BaseAnime {
+  episodes: AnimeEpisodes;
+  type: string;
+  duration: string;
+}
+
 export interface AnimeDetail extends BaseAnime {
   episodes: AnimeEpisodes;
   rating: string;
@@ -167,7 +173,7 @@ export interface AnimeDetail extends BaseAnime {
   producers: string[];
   related: RelatedAnime[];
   mostPopular: RelatedAnime[];
-  recommended: RelatedAnime[];
+  recommended: AnimeList[];
 }
 
 export interface SpotlightAnime extends BaseAnime {

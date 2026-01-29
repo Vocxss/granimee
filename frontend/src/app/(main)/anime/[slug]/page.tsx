@@ -1,5 +1,5 @@
 import { AnimeDetail } from "@/components/animedetail";
-import { RelatedList } from "@/components/animelist";
+import { RecommendedList } from "@/components/animelist";
 
 export default async function DetailPage({
   params,
@@ -9,7 +9,7 @@ export default async function DetailPage({
   return (
     <div className="relative flex flex-col gap-2 mb-6">
       <AnimeDetail slug={slug} />
-      <RelatedList slug={slug} header="Maybe you like this" />
+      <RecommendedList slug={slug} header="Maybe you like this" />
     </div>
   );
 }

@@ -87,7 +87,11 @@ export const EpisodeDetail = ({
         </Breadcrumb>
         <div className="bg-card w-full aspect-video border border-border rounded-lg">
           <div className="w-full">
-            <VideoPlayer
+            <video controls autoPlay>
+              <track kind="captions" srcLang="en" src={`/api/proxy/subtitle?url=${encodeURIComponent(streamData?.tracks?.[0]?.file || "")}`} />
+              <source src={streamData?.link?.file || ""} type="application/x-mpegURL" />
+            </video>
+            {/* <VideoPlayer
               subtitles={
                 streamData?.tracks
                   ?.filter((t) => t.kind === "captions")
@@ -103,7 +107,7 @@ export const EpisodeDetail = ({
               title={anime?.title}
               image={anime?.poster}
               initialProgress={initialProgress}
-            />
+            /> */}
           </div>
         </div>
         <div className="flex flex-col gap-4">

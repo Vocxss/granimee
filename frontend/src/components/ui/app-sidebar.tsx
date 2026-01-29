@@ -14,6 +14,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Archive, CalendarClock, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 // This is sample data.
 const data = [
@@ -62,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarHeader>
       )}
       <SidebarContent className="flex flex-col justify-center items-center px-4">
-        <SidebarTrigger />
+        {/* <SidebarTrigger /> */}
         <SidebarMenu className="flex flex-col gap-6">
           {navList.map((item) => (
             <SidebarMenuItem key={item.title}>
@@ -72,7 +73,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 className="p-6"
               >
                 <Link href={item.url} className="flex items-center gap-4">
-                  {item.icon} {item.title}
+                <Tooltip key={item.title}>
+                  <TooltipTrigger className="relative flex items-center justify-center" asChild>
+                    <span className="absolute z-20">{item.icon}</span>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    {item.title}
+                  </TooltipContent>
+                </Tooltip>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

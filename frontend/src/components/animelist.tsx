@@ -5,7 +5,7 @@ import {
   usePopularAnime,
   useSchedule,
 } from "@/hooks/use-anime";
-import { AnimeWithEpisodes } from "@/lib/utils";
+import { AnimeList } from "@/lib/utils";
 import { Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,6 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 import { H3, H4 } from "./ui/typography";
-import { AnimeSchedule } from "@/lib/types";
 import {
   Select,
   SelectContent,
@@ -27,9 +26,11 @@ export const List = ({
   anime,
   isLoading,
 }: {
-  anime?: AnimeWithEpisodes[];
+  anime: AnimeList[];
   isLoading: boolean;
 }) => {
+  console.log(anime);
+
   if (isLoading) {
     return (
       <div className="mx-auto grid grid-cols-3 sm:grid-cols-4 2xl:grid-cols-5 gap-6">
@@ -41,14 +42,14 @@ export const List = ({
   }
 
   return (
-    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 md:mx-12 mx-4 flex flex-col">
-      <div className="flex items-center justify-between">
+    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 md:mx-0 mx-4 flex flex-col">
+      {/* <div className="flex items-center justify-between">
         <H3 text={"Latest Episode"} />
-      </div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 2xl:grid-cols-5 gap-6">
+      </div> */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
-            href={`/anime/${anime.id}/watch?ep=${anime.episodes.eps}`}
+            href={`/anime/${anime.id}`}
             className="relative group rounded-lg hover:-translate-y-2 transition-all duration-300 hover:shadow-sm h-auto flex flex-col gap-2"
             key={index}
           >
@@ -63,7 +64,10 @@ export const List = ({
               </p>
               <div className="flex items-center justify-between">
                 <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
-                  Episode {anime.episodes.eps}
+                  {anime.episodes.eps} Episode
+                </p>
+                <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
+                  {anime.type}
                 </p>
                 {/* <p className="text-[9px] font-bold">{anime?.}</p> */}
               </div>
@@ -104,11 +108,11 @@ export const LatestList = () => {
   }
 
   return (
-    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 md:mx-12 mx-4 flex flex-col">
+    <div className="z-20 overflow-hidden bg-transparent gap-8 md:my-12 my-8 md:mx-8 mx-4 flex flex-col">
       <div className="flex items-center justify-between">
         <H3 text={"Latest Episode"} />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 2xl:grid-cols-4 gap-6">
         {anime?.map((anime, index: number) => (
           <Link
             href={`/anime/${anime.id}/watch?ep=${anime.episodes.eps}`}
@@ -149,7 +153,7 @@ export const LatestList = () => {
   );
 };
 
-export const RelatedList = ({
+export const RecommendedList = ({
   slug,
   header,
 }: {
@@ -197,15 +201,13 @@ export const RelatedList = ({
               </p>
               <div className="flex items-center justify-between">
                 <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
-                  Episode {anime.type}
+                  {anime.episodes.eps} Episodes
                 </p>
-                {/* <p className="text-[9px] font-bold">{anime?.}</p> */}
+                <p className="rounded-sm text-[9px] font-semibold p-2 bg-accent text-accent-foreground">
+                  {anime.type}
+                </p>
               </div>
             </div>
-
-            {/* <p className="absolute top-1 right-1 rounded-sm opacity-85 text-xs font-semibold p-2 bg-border text-primary">
-              {anime?.}
-            </p> */}
             {anime?.poster ? (
               <Image
                 alt={`${index}`}
@@ -296,9 +298,9 @@ export const ScheduleList = () => {
   const { data, isLoading, error } = useSchedule(page);
   if (isLoading) {
     return (
-      <div className="w-full mx-auto bg-card rounded-sm py-12 px-12 flex flex-wrap gap-4 justify-center">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Skeleton key={index} className="w-48 h-64 rounded" />
+      <div className="w-full mx-auto py-12 px-12 flex flex-wrap gap-4 justify-center">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <Skeleton key={index} className="w-48 h-24 rounded-lg" />
         ))}
       </div>
     );
@@ -307,26 +309,27 @@ export const ScheduleList = () => {
   if (error) return toast.error("Something wrong :(. Please try again.");
 
   return (
-    <div className="flex flex-col gap-4 my-16 mx-6">
-      <div className="flex justify-between items-center">
+    <div className="flex flex-col gap-4 my-16 mx-8">
         <H3 text={"Schedules"} />
-        <Select
-          value={page.toString()}
-          onValueChange={(value) => setPage(Number(value))}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select Page" />
-          </SelectTrigger>
-          <SelectContent>
-            {Array.from({ length: 3 }).map((_, index) => (
-              <SelectItem key={index} value={String(index + 1)}>
-                {index + 1}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-semibold">Page</p>
+          <Select
+            value={page.toString()}
+            onValueChange={(value) => setPage(Number(value))}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Page" />
+            </SelectTrigger>
+            <SelectContent>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <SelectItem key={index} value={String(index + 1)}>
+                  {index + 1}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
       </div>
-      <div className="flex flex-col gap-16 p-4 bg-black/30 rounded-lg border border-border/20">
+      <div className="flex flex-col gap-16">
         {data &&
           data.map((item) => (
             <div className="flex flex-col gap-6" key={item.day}>
@@ -335,22 +338,24 @@ export const ScheduleList = () => {
                 {item.animes.map((anime, index) => (
                   <div
                     key={anime.id}
-                    className="flex gap-6 items-center py-4 px-6 rounded-lg border border-border/10 bg-primary/10 backdrop-blur-lg transition-transform duration-300 hover:scale-105 hover:bg-accent/80 shadow-lg"
+                    className="bg-linear-to-tr from-blue-400/30 via-primary/30 to-accent-foreground/30 p-0.5 ransition-transform duration-300 hover:scale-105 rounded-lg"
                   >
-                    <Image
-                      alt={`${index}`}
-                      width={480}
-                      height={720}
-                      src={anime.image}
-                      className="object-cover rounded-md max-w-24 aspect-[1/0.8]"
-                    />
-                    <div className="flex flex-col gap-2">
-                      <p className="text-sm font-semibold line-clamp-2 w-full">
-                        {anime.title}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {anime.time}
-                      </p>
+                    <div className="flex gap-6 items-center rounded-md bg-background">
+                      <Image
+                        alt={`${index}`}
+                        width={480}
+                        height={720}
+                        src={anime.image}
+                        className="object-cover rounded-tl-md rounded-bl-md max-w-20 w-full aspect-[1/1.3]"
+                      />
+                      <div className="flex flex-col gap-2 md:mr-4 mr-2">
+                        <p className="text-sm font-semibold line-clamp-2 w-full">
+                          {anime.title}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Episode {anime.episode} will be aired at {anime.time}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
