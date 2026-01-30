@@ -25,6 +25,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Profile } from "@/lib/getProfile";
+import { BackendIP2 } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageUp, Pencil } from "lucide-react";
 import { useEffect } from "react";
@@ -59,7 +60,7 @@ export const ProfileDetail = ({ session }: { session: Profile | null }) => {
     formData.append("username", values.username);
     formData.append("image", values.image);
 
-    const response = await fetch("http://localhost:3000/api/user/profile", {
+    const response = await fetch(`${BackendIP2}/user/profile`, {
       method: "PUT",
       body: formData,
     });

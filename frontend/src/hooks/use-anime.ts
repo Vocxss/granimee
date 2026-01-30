@@ -6,6 +6,7 @@ import {
   AnimeStreamData,
   AnimeWithEpisodes,
   BackendIP,
+  BackendIP2,
   SpotlightAnime,
   TopTenSection,
 } from "@/lib/utils";
@@ -91,7 +92,7 @@ export const usePopularAnime = () => {
   const { data: anime, isLoading } = useQuery<TopTenSection>({
     queryKey: ["top"],
     queryFn: async () => {
-      const response = await fetch(`http://localhost:3030/api/v1/topten`, {
+      const response = await fetch(`${BackendIP}/topten`, {
         method: "GET",
       });
       const data = await response.json();
@@ -193,7 +194,7 @@ export const useSchedule = (page: number) => {
     queryKey: ["schedule", page],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3000/api/schedule?page=${page}`,
+        `${BackendIP2}/schedule?page=${page}`,
       );
       if (!response.ok) {
         throw new Error("Response was not ok");
