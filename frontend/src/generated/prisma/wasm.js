@@ -173,7 +173,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/media/vocxss/Punya acuu/Coding/granimee/frontend/src/generated/prisma",
+      "value": "E:\\Coding\\granimee\\frontend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -182,12 +182,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/media/vocxss/Punya acuu/Coding/granimee/frontend/prisma/schema.prisma",
+    "sourceFilePath": "E:\\Coding\\granimee\\frontend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -201,7 +201,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
