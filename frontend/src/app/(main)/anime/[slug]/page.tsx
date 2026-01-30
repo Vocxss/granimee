@@ -3,8 +3,10 @@ import { RecommendedList } from "@/components/animelist";
 
 export default async function DetailPage({
   params,
-}: Promise<{ slug: string }>) {
-  const { slug } = await params;
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = params;
 
   return (
     <div className="relative flex flex-col gap-2 mb-6">
@@ -13,3 +15,5 @@ export default async function DetailPage({
     </div>
   );
 }
+
+
