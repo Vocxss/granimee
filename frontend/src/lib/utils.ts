@@ -6,8 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const BackendIP = process.env.BACKEND_IP
-  ? process.env.BACKEND_IP
-  : "http://localhost:3030/api/v1";
 
 export const BackendIP2 = process.env.BACKEND_IP2
   ? process.env.BACKEND_IP2

@@ -11,7 +11,7 @@ export default function AnimeDetailPage({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative mx-auto">
       <div className="fixed inset-0 -z-10 w-screen h-screen">
         {/* <div className="absolute top-12 left-12 w-32 aspect-square rounded-full blur-2xl bg-primary/20"></div> */}
         <Image src={"/8309.webp"} fill alt="mesh" className="" />
@@ -33,7 +33,7 @@ export default function AnimeDetailPage({
             <Navbar />
           </div>
           <AppSidebar />
-          <SidebarInset className="md:mt-12">{children}</SidebarInset>
+          <SidebarInset className="md:mt-12 overflow-x-hidden">{children}</SidebarInset>
           <Toaster />
         </SidebarProvider>
         <Footer />

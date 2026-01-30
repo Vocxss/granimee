@@ -72,10 +72,10 @@ export const LatestWatched = async () => {
     return;
   }
   return (
-    <div className="relative w-[95%] bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 group overflow-hidden">
+    <div className="relative w-[95%] bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 group">
       <Link
         href={`/anime/${latest.anime_id}/watch?ep=${latest.episode_number}`}
-        className={`w-full h-full flex justify-between pr-6 relative group-hover:scale-105 items-center rounded-md hover:bg-accent/10 transition-transform group`}
+        className={`w-full h-full flex justify-between md:py-0 py-4 md:pr-6 pr-0 relative group-hover:scale-95 items-center rounded-md hover:bg-accent/10 transition-transform group`}
       >
         <div className="flex items-center gap-6">
           <Image
@@ -84,20 +84,22 @@ export const LatestWatched = async () => {
             height={1080}
             src={latest.image}
             alt={latest.title || "Episode"}
-            className="object-cover rounded-md max-w-48 aspect-[1/0.8] animate-in fade-in-0 zoom-in-95 dat group-hover:zoom-in-110 transition-transform"
+            className="object-cover rounded-md max-w-24 md:max-w-48 aspect-[1/0.8] animate-in fade-in-0 zoom-in-95 group-hover:zoom-in-110 transition-transform"
           />
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 md:w-full w-1/2">
             <p className="text-xs text-muted-foreground">Continue Watch</p>
-            <p className="text-base font-semibold truncate">
+            <p className="text-base font-semibold truncate w-full line-clamp-1 text-ellipsis">
               {latest.title || `Episode ${latest.episode_number}`}
             </p>
-            <p className="text-xs text-muted-foreground">
-              Episode {latest.episode_number}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {Math.floor(latest.progress / 60)}m /{" "}
-              {Math.floor(latest.duration / 60)}m
-            </p>
+            <div className="flex md:flex-col flex-row md:gap-2 gap-4">
+              <p className="text-xs text-muted-foreground">
+                Episode {latest.episode_number}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {Math.floor(latest.progress / 60)}m /{" "}
+                {Math.floor(latest.duration / 60)}m
+              </p>
+            </div>
           </div>
         </div>
         <FaChevronCircleRight />

@@ -15,6 +15,7 @@ import {
 } from "./ui/breadcrumb";
 import { Loader } from "./ui/loader";
 import { H3 } from "./ui/typography";
+import { VideoPlayer } from "./videosupported";
 
 export const EpisodeDetail = ({
   slug,
@@ -56,7 +57,7 @@ export const EpisodeDetail = ({
 
   return (
     <div>
-      <div className="max-w-7xl w-full md:mx-auto px-4 md:py-30 py-24 md:px-24 px-0 flex flex-col gap-6 min-h-[72vh]">
+      <div className="max-w-7xl w-full md:mx-auto px-4 md:py-30 py-24 md:px-24 flex flex-col gap-6 md:min-h-auto min-h-[72vh]">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -85,7 +86,7 @@ export const EpisodeDetail = ({
         </Breadcrumb>
         <div className="bg-card w-full aspect-video border border-border rounded-lg">
           <div className="w-full rounded-lg overflow-hidden">
-            <video controls autoPlay>
+            {/* <video controls autoPlay>
               <track
                 kind="captions"
                 srcLang="en"
@@ -95,8 +96,8 @@ export const EpisodeDetail = ({
                 src={streamData?.link?.file}
                 type="application/x-mpegURL"
               />
-            </video>
-            {/* <VideoPlayer
+            </video> */}
+            <VideoPlayer
               subtitles={
                 streamData?.tracks
                   ?.filter((t) => t.kind === "captions")
@@ -112,7 +113,7 @@ export const EpisodeDetail = ({
               title={anime?.title}
               image={anime?.poster}
               initialProgress={initialProgress}
-            /> */}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-4">

@@ -61,19 +61,34 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // Stream media segments directly
-  const responseHeaders = new Headers();
-  responseHeaders.set("Content-Type", contentType);
-  responseHeaders.set("Access-Control-Allow-Origin", "*");
-  if (upstream.headers.get("content-range")) {
-    responseHeaders.set("Content-Range", upstream.headers.get("content-range")!);
-  }
-  if (upstream.headers.get("accept-ranges")) {
-    responseHeaders.set("Accept-Ranges", upstream.headers.get("accept-ranges")!);
-  }
+// 🔹 SEGMENT STREAM (TS / MP4)
+const passthroughHeaders = [
+  "content-type",
+  "content-length",
+  "accept-ranges",
+  "content-range",
+  "cache-control",
+  "etag",
+  "last-modified",
+];
 
-  return new Response(upstream.body, {
-    status: upstream.status,
-    headers: responseHeaders,
-  });
+const headersOut: Record<string, string> = {
+  "Access-Control-Allow-Origin": "*",
+};
+
+for (const key of passthroughHeaders) {
+  const value = upstream.headers.get(key);
+  if (value) headersOut[key] = value;
+}
+
+// pastikan tidak reset cache setiap segmen
+if (!headersOut["cache-control"]) {
+  headersOut["cache-control"] = "public, max-age=3600, immutable";
+}
+
+return new Response(upstream.body, {
+  status: upstream.status,
+  headers: headersOut,
+});
+
 }

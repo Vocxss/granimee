@@ -81,7 +81,7 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
           <Skeleton className="w-full aspect-[1/1.45] rounded-sm" />
         )}
 
-        <div className="flex flex-col md:flex-row md:justify-start justify-center items-center px-4 md:gap-18 gap-6 md:mt-12 mt-0">
+        <div className="flex flex-col md:flex-row md:justify-start justify-center items-center px-4 md:gap-18 gap-6 md:mt-12 mt-0 w-full">
           <Image
             src={anime?.poster || ""}
             width={480}
@@ -123,7 +123,7 @@ export const AnimeDetail = ({ slug }: { slug: string }) => {
                 {anime?.alternativeTitle}
               </p>
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-wrap justify-center gap-4 items-center">
               {anime?.genres?.map((genre) => (
                 <p
                   key={genre}

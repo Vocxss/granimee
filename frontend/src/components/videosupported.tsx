@@ -43,22 +43,18 @@ export const VideoPlayer = ({
 
     // Initialize Video.js player
    const player = videojs(videoRef.current, {
-  controls: true,
+    controls: true,
   fluid: true,
   preload: "auto",
-  controlBar: { volumePanel: { inline: false } },
+  controlBar: { volumePanel: { inline: true } },
 });
 
 player.ready(() => {
-  if ((player as any).hlsQualitySelector) {
-    (player as any).hlsQualitySelector({ displayCurrentQuality: true });
-  }
+ player.hlsQualitySelector({ displayCurrentQuality: true });
 });
-
-console.log("src", src);
     // Use videoRef.current directly as it is the HTMLVideoElement
     const videoEl = videoRef.current;
-    const proxiedSrc = src
+    const proxiedSrc = `/api/proxy/stream?server=hd-2&type=sub&url=${encodeURIComponent(src)}`;
 
     if (Hls.isSupported() && videoEl) {
       const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
@@ -71,7 +67,6 @@ console.log("src", src);
       // Cleanup HLS when component unmounts or src changes
       return () => {
         hls.destroy();
-        player.dispose();
       };
     } else {
       player.src({ src: proxiedSrc, type: "application/x-mpegURL" });
@@ -133,12 +128,25 @@ console.log("src", src);
   }, [initialProgress, saveProgress]);
 
   return (
-    <div className="w-full h-full rounded-lg overflow-hidden">
-      <video
-        ref={videoRef}
-        className="video-js vjs-default-skin"
-        poster={image}
-      ></video>
+   <div className="w-full aspect-video rounded-lg overflow-hidden">
+    <video
+      ref={videoRef}
+      className="video-js vjs-default-skin"
+      poster={image}
+      crossOrigin="anonymous"
+      controls
+    >
+      {subtitles.map((s, i) => (
+        <track
+          key={i}
+          src={`/api/proxy/subtitle?url=${encodeURIComponent(s.file)}`}
+          kind="subtitles"
+          label={s.label}
+          srcLang={s.label.toLowerCase()}
+          default={s.label === "English"}
+        />
+      ))}
+    </video>
     </div>
   );
 };

@@ -260,7 +260,7 @@ export const TopList = () => {
           <Link
             key={index}
             href={`/anime/${anime.id}`}
-            className={`flex gap-4 hover:border-r-2 hover:border-r-accent-foreground hover:-translate-x-2 transition-transform items-center pb-4 ${
+            className={`flex gap-4 hover:border-r-2 pr-4 hover:border-r-accent-foreground hover:-translate-x-2 transition-transform items-center pb-4 ${
               index < animes?.length - 1 ? "border-b border-b-border" : ""
             }`}
           >
@@ -279,7 +279,7 @@ export const TopList = () => {
               <Skeleton className="w-12 aspect-square rounded-full" />
             )}
             <div className="flex flex-col gap-2">
-              <p className="text-sm line-clamp-2 max-w-28 w-full">
+              <p className="text-sm line-clamp-2">
                 {anime?.title}
               </p>
               {/* <span className="text-xs px-2 py-1 bg-accent text-accent-foreground font-semibold rounded-full w-max">
