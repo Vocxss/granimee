@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { supabaseServer } from "@/lib/supabaseServer";
 import { ProfileDetail } from "./profileDetail";
 import { WatchHistory } from "./watchhistory";

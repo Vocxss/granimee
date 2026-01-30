@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import prisma from "@/lib/prisma";
 import { supabaseServer } from "@/lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
@@ -17,7 +19,8 @@ export async function POST(req: NextRequest) {
 
     const userId = session.user.id;
     const userEmail = session.user.email;
-    const userName = session.user.user_metadata?.name || userEmail?.split("@")[0];
+    const userName =
+      session.user.user_metadata?.name || userEmail?.split("@")[0];
     const userImage = session.user.user_metadata?.picture || "";
 
     const existingUser = await prisma.user.findUnique({
@@ -45,16 +48,19 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    return NextResponse.json({
-      message: "User initialized successfully",
-    }, {
-      status: 200,
-    });
+    return NextResponse.json(
+      {
+        message: "User initialized successfully",
+      },
+      {
+        status: 200,
+      },
+    );
   } catch (error) {
     console.error("Error initializing user:", error);
     return NextResponse.json(
       { message: "Failed to initialize user", error: String(error) },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -3,7 +3,9 @@ import { RecommendedList } from "@/components/animelist";
 
 export default async function DetailPage({
   params,
-}: Promise<{ slug: string }>) {
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   return (

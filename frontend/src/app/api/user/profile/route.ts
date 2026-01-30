@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { supabaseServer } from "@/lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
 

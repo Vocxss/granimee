@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,15 +8,12 @@ export async function GET(req: NextRequest) {
   const query = searchParams.get("q");
 
   if (!query) {
-    return NextResponse.json(
-      { error: 'Query is required' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Query is required" }, { status: 400 });
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 
   const { data: anime, error } = await supabase

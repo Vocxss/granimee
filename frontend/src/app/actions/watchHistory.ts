@@ -1,5 +1,7 @@
 "use server";
 
+export const runtime = "nodejs";
+
 import { supabaseServer } from "@/lib/supabaseServer";
 
 export async function saveWatchProgress(
@@ -9,7 +11,7 @@ export async function saveWatchProgress(
   title: string,
   image: string,
   progress: number,
-  duration: number
+  duration: number,
 ) {
   const supabase = await supabaseServer();
   const {
@@ -32,7 +34,7 @@ export async function saveWatchProgress(
     },
     {
       onConflict: "user_id, anime_id, episode_id",
-    }
+    },
   );
 
   if (error) {
