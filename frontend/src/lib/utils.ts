@@ -6,10 +6,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const BackendIP = process.env.BACKEND_IP
+  ? process.env.BACKEND_IP
+  : "https://granime.up.railway.app/api/v1";
 
 export const BackendIP2 = process.env.BACKEND_IP2
   ? process.env.BACKEND_IP2
-  : "http://localhost:3000/api/";
+  : "https://granime.vercel.app/api";
 
 // User tanpa relasi
 export interface IUser {
