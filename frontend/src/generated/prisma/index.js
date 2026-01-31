@@ -185,6 +185,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -202,7 +210,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -211,8 +219,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DIRECT_URL\")\n  schemas  = [\"public\"]\n}\n\nmodel anime {\n  id          String   @id\n  title       String\n  synopsis    String?\n  coverImage  String?\n  bannerImage String?\n  genre       String[]\n  status      String   @default(\"ongoing\")\n  rating      Float\n  releaseDate Int\n\n  episodes episode[]\n\n  @@schema(\"public\")\n}\n\nmodel episode {\n  id          String   @id\n  animeId     String\n  title       String\n  episodeNum  Int\n  duration    String\n  videoUrl    String\n  subtitleUrl String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  anime anime @relation(fields: [animeId], references: [id])\n\n  @@index([animeId])\n  @@schema(\"public\")\n}\n\nmodel user {\n  id        String   @id @db.Uuid\n  email     String   @unique\n  username  String?\n  picture   String?\n  role      String   @default(\"user\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  watchHistory watch_history[]\n\n  @@schema(\"public\")\n}\n\nmodel watch_history {\n  id              String   @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  user_id         String   @db.Uuid\n  anime_id        String\n  episode_id      String\n  episode_number  Int\n  title           String?\n  image           String?\n  progress        Int      @default(0)\n  duration        Int      @default(0)\n  last_watched_at DateTime @default(now()) @db.Timestamptz(6)\n\n  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)\n\n  @@unique([user_id, anime_id, episode_id])\n  @@index([user_id])\n  @@schema(\"public\")\n}\n",
-  "inlineSchemaHash": "7a6f9270538bf5eec9ad6745c30233ccf056459ef7b6f4bba96d97affbf4e460",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"windows\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DIRECT_URL\")\n  schemas  = [\"public\"]\n}\n\nmodel anime {\n  id          String   @id\n  title       String\n  synopsis    String?\n  coverImage  String?\n  bannerImage String?\n  genre       String[]\n  status      String   @default(\"ongoing\")\n  rating      Float\n  releaseDate Int\n\n  episodes episode[]\n\n  @@schema(\"public\")\n}\n\nmodel episode {\n  id          String   @id\n  animeId     String\n  title       String\n  episodeNum  Int\n  duration    String\n  videoUrl    String\n  subtitleUrl String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  anime anime @relation(fields: [animeId], references: [id])\n\n  @@index([animeId])\n  @@schema(\"public\")\n}\n\nmodel user {\n  id        String   @id @db.Uuid\n  email     String   @unique\n  username  String?\n  picture   String?\n  role      String   @default(\"user\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  watchHistory watch_history[]\n\n  @@schema(\"public\")\n}\n\nmodel watch_history {\n  id              String   @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  user_id         String   @db.Uuid\n  anime_id        String\n  episode_id      String\n  episode_number  Int\n  title           String?\n  image           String?\n  progress        Int      @default(0)\n  duration        Int      @default(0)\n  last_watched_at DateTime @default(now()) @db.Timestamptz(6)\n\n  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)\n\n  @@unique([user_id, anime_id, episode_id])\n  @@index([user_id])\n  @@schema(\"public\")\n}\n",
+  "inlineSchemaHash": "cbc0867605facaf0cfb908cf8a9efd5a2f104add4f8821f76cf89c7cd2ae86c7",
   "copyEngine": true
 }
 
@@ -253,6 +261,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
