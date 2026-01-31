@@ -1,7 +1,4 @@
 "use server";
-
-export const runtime = "nodejs";
-
 import { supabaseServer } from "@/lib/supabaseServer";
 
 export async function saveWatchProgress(
@@ -83,3 +80,4 @@ export async function getAllWatchHistory() {
   // console.log(data);
   return data;
 }
+
