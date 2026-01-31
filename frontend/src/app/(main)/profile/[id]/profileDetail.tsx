@@ -58,7 +58,9 @@ export const ProfileDetail = ({ session }: { session: Profile | null }) => {
   const profileSubmit = async (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();
     formData.append("username", values.username);
-    formData.append("image", values.image);
+    if (values.image) {
+      formData.append("image", values.image);
+    }
 
     const response = await fetch(`${BackendIP2}/user/profile`, {
       method: "PUT",
