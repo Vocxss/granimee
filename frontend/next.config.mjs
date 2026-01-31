@@ -1,4 +1,5 @@
-export default {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   async redirects() {
     return [
       {
@@ -9,3 +10,5 @@ export default {
     ];
   },
 };
+
+export default nextConfig;
