@@ -9,7 +9,7 @@ import { FaChevronCircleRight } from "react-icons/fa";
 export const WatchHistory = async () => {
   const history = await getAllWatchHistory();
   return (
-    <div className="flex bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 p-6 md:p-8 w-full flex-col gap-6">
+    <div className="flex bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 p-4 md:p-8 w-full flex-col gap-6">
       <div className="border-b-2 border-border py-4">
         <p className="md:text-2xl text-lg font-bold">Watch History</p>
       </div>
@@ -26,7 +26,7 @@ export const WatchHistory = async () => {
                 <Link
                   key={item.id}
                   href={`/anime/${item.anime_id}/watch?ep=${item.episode_number}`}
-                  className={`w-full h-[200px] flex justify-between px-6 relative group-hover:-scale-y-110 group-hover:-translate-y-1 items-center rounded-md hover:bg-accent/50 transition-colors group`}
+                  className={`w-full h-[200px] flex justify-between md:px-6 px-2 relative group-hover:-scale-y-110 group-hover:-translate-y-1 items-center rounded-md hover:bg-accent/50 transition-colors group`}
                 >
                   <div className="flex items-center gap-6">
                     <Image
@@ -35,10 +35,10 @@ export const WatchHistory = async () => {
                       height={1080}
                       src={item.image}
                       alt={item.title || "Episode"}
-                      className="object-cover rounded-md max-w-48 aspect-[1/0.8] animate-in fade-in-0 zoom-in-95 dat group-hover:zoom-in-110 transition-transform"
+                      className="object-cover rounded-md md:max-w-48 max-w-24 md:aspect-[1/0.8] aspect-[1/1.3] animate-in fade-in-0 zoom-in-95 dat group-hover:zoom-in-110 transition-transform"
                     />
                     <div className="flex flex-col gap-2">
-                      <p className="text-base font-medium truncate">
+                      <p className="text-base text-wrap font-medium truncate w-[4/5]">
                         {item.title || `Episode ${item.episode_number}`}
                       </p>
                       <p className="text-xs text-muted-foreground">

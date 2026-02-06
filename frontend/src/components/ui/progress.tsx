@@ -1,9 +1,13 @@
+"use client";
+import { useIsMobile } from "@/hooks/use-mobile";
+
 const CircularProgress = ({
   value = 0,
-  size = 96,
   strokeWidth = 10,
   color = "text-primary/70",
 }) => {
+  const isMobile = useIsMobile();
+  const size = isMobile ? 48 : 96;
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
@@ -46,9 +50,7 @@ const CircularProgress = ({
       </svg>
 
       {/* Center text */}
-      <span className="absolute text-lg font-semibold">
-        {value}%
-      </span>
+      <span className="absolute text-lg font-semibold">{value}%</span>
     </div>
   );
 };
