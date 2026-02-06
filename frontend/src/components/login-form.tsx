@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabaseClient";
-import { cn } from "@/lib/utils";
+import { BackendIP2, cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeClosed, User } from "lucide-react";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export const LoginForm = ({
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `http://localhost:3000/auth/callback`,
+        redirectTo: `/auth/callback`,
       },
     });
 
