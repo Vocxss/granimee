@@ -1,10 +1,10 @@
 "use client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Menu } from "lucide-react";
+import Image from "next/image";
 import { ProfileButton } from "../profilebutton";
 import { SearchTrigger } from "./search";
 import { useSidebar } from "./sidebar";
-import { H4 } from "./typography";
 
 const MobileNavbar = () => {
   const { toggleSidebar } = useSidebar();
@@ -27,8 +27,15 @@ const MobileNavbar = () => {
 const DekstopNavbar = () => {
   return (
     <div className="justify-between flex items-center px-8 py-3 border-b border-white/30">
-      <div className="max-w-64 w-1/4">
-        <H4 text="Granime" />
+      <div className="max-w-24 ">
+        <Image
+          src={"/logo-detail.webp"}
+          width={1280}
+          height={567}
+          alt="logo"
+          className="object-cover w-full aspect-auto"
+        />
+        {/* <H4 text="Granime" /> */}
       </div>
       <div className="w-1/3">
         <SearchTrigger />
