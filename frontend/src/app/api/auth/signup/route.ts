@@ -1,6 +1,5 @@
 export const runtime = "nodejs";
 
-
 import { supabaseServer } from "@/lib/supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
     email,
     password,
     options: {
-      emailRedirectTo: "http://localhost:3000/auth/login",
+      emailRedirectTo: "/auth/login",
     },
   });
 
